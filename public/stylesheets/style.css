@@ -1,0 +1,19 @@
+body {
+  padding: 50px;
+  font: 16px "Raleway Thin", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#flex-panel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 18px;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  grid-row-start: 1;
+}
