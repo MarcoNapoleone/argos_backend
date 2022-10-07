@@ -5,9 +5,6 @@ FROM node:12-alpine
 # Create and change to the app directory.
 WORKDIR /usr/src/app
 
-RUN apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python
-RUN npm install --quiet node-gyp -g
-
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure both package.json AND package-lock.json are copied.
 # Copying this separately prevents re-running npm install on every code change.
