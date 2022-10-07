@@ -36,4 +36,10 @@ export class UsersController extends Controller {
         return await UsersService.logicDelete(id)
     }
 
+
+    @Post("/login")
+    async login(@Body() params: { email: string, password: string }) {
+        return await UsersService.login(params)
+    }
+
 }

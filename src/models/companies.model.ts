@@ -1,5 +1,5 @@
 import helper from '../utils/helper';
-import {database} from '../utils/database';
+import {query} from '../utils/query';
 import {UUID} from "../utils/uuid";
 
 
@@ -14,7 +14,7 @@ export class Company {
 }
 
 export async function getAll() {
-    const rows = await database(`
+    const rows = await query(`
         SELECT *
         FROM companies
     `);
@@ -23,7 +23,7 @@ export async function getAll() {
 
 export async function getById(id: number | string) {
 
-    const row = await database(`
+    const row = await query(`
         SELECT *
         FROM companies
         WHERE id = '${id}'
@@ -32,13 +32,13 @@ export async function getById(id: number | string) {
 }
 
 export async function create(company: Company) {
-    return await database(`
+    return await query(`
     `)
 }
 
 export async function update(id: number | string, company: Company) {
 
-    return await database(`
+    return await query(`
         
     `);
 }
@@ -46,7 +46,7 @@ export async function update(id: number | string, company: Company) {
 export async function logicDelete(id: number | string) {
 
     const now = Date();
-    return await database(`
+    return await query(`
         UPDATE companies t
         SET t.deleted_at = ${now}
         WHERE t.id = ${id};

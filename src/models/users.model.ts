@@ -1,7 +1,7 @@
 import helper from '../utils/helper';
-import {database} from '../utils/database';
+import {query} from '../utils/query';
 import {UUID} from "../utils/uuid";
-import {IsDate, IsEmail, IsUUID} from "class-validator";
+import {IsDate, IsEmail, IsLowercase, IsUUID} from "class-validator";
 
 export class User {
 
@@ -15,6 +15,7 @@ export class User {
     surname?: string;
 
     @IsEmail()
+    @IsLowercase()
     email?: string;
 
     password?: string;
@@ -34,7 +35,7 @@ export class User {
 }
 
 export async function getAll() {
-    const rows = await database(`
+    const rows = await query(`
         SELECT *
         FROM users
     `);
@@ -43,7 +44,7 @@ export async function getAll() {
 
 export async function getById(id: number | string) {
 
-    const row = await database(`
+    const row = await query(`
         SELECT *
         FROM users
         WHERE id = '${id}'
@@ -51,8 +52,18 @@ export async function getById(id: number | string) {
     return helper.emptyOrRows(row)
 }
 
+export async function findOne(param: string, value: string | number) {
+
+    const row = await query(`
+        SELECT *
+        FROM users
+        WHERE ? = ?
+    `, [param, value]);
+    return helper.emptyOrRows(row)
+}
+
 export async function create(user: User) {
-    return await database(`
+    return await query(`
         INSERT INTO users(uuid,
                           name,
                           surname,
@@ -70,7 +81,7 @@ export async function create(user: User) {
 
 export async function update(id: number | string, user: User) {
 
-    return await database(`
+    return await query(`
         UPDATE users t
         SET t.name    = '${user.name}',
             t.surname = '${user.surname}',
@@ -83,7 +94,7 @@ export async function update(id: number | string, user: User) {
 export async function logicDelete(id: number | string) {
 
     const now = Date();
-    return await database(`
+    return await query(`
         UPDATE users t
         SET t.deleted_at = ${now}
         WHERE t.id = ${id};

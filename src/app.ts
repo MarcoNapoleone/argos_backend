@@ -31,20 +31,20 @@ app.use(cookieParser());
 app.use(morgan('tiny'));
 
 app.use(express.static("public"));
-app.use('/api.ico', express.static('public/api.ico'));
-app.use('/404.ico', express.static('public/404.ico'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/companies', companiesRouter);
 app.use('/localUnits', localUnitsRouter);
-app.use(notFound());
 app.use("/docs", swaggerUi.serve,
     swaggerUi.setup(undefined, {
         swaggerOptions: {
             url: "/swagger.json",
         },
     }));
+app.use(notFound());
+app.use('/api.ico', express.static('public/api.ico'));
+app.use('/404.ico', express.static('public/404.ico'));
 
 server.on('error', onError);
 server.on('listening', onListening);

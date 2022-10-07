@@ -1,6 +1,7 @@
 import * as UsersModel from "../models/users.model";
 import {User} from "../models/users.model";
 import {getUuid} from "../utils/uuid";
+import bcrypt from 'bcrypt';
 
 export async function getAll(): Promise<Array<User>> {
     return await UsersModel.getAll();
@@ -8,6 +9,10 @@ export async function getAll(): Promise<Array<User>> {
 
 export async function getById(id: number | string): Promise<User> {
     return await UsersModel.getById(id);
+}
+
+export async function findOne(param: string, value: string | number): Promise<User> {
+    return await UsersModel.findOne(param, value);
 }
 
 export async function create(user: User): Promise<User> {
@@ -31,4 +36,14 @@ export async function logicDelete(id: number | string): Promise<{}>{
     return await UsersModel.logicDelete(id);
 }
 
+export async function login(params: { email: string, password: string }): Promise<User> {
+
+    const user = await findOne("email", params.email)
+    console.log(await bcrypt.hash("password", 10))
+    if (user && (await bcrypt.compare(params.password, user.password)))
+        return UsersModel.getById(1);
+    else return {}
+}
+
+//https://www.section.io/engineering-education/how-to-build-authentication-api-with-jwt-token-in-nodejs/
 
