@@ -11,15 +11,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "outDir": "build",
-    "baseUrl": ".",
-    "paths": {
-      "*": [
-        "node_modules/*"
-      ]
-    }
+    "outDir": "/build",
+    "baseUrl": "./",
+    "incremental": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "exclude": ["node_modules", "build", "dist"],
 }
