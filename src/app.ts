@@ -50,7 +50,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 app.listen(PORT, () => {
-    console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+    console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 });
 
 module.exports = app;

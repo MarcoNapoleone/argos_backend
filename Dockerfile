@@ -19,7 +19,5 @@ COPY . ./
 # Run the build
 RUN npm run build
 
-EXPOSE 8000
-
 # Run the web service on container startup.
 CMD [ "npm", "run", "start:prod" ]
