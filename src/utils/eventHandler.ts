@@ -33,7 +33,7 @@ export function onListening(server: any) {
 
 export function notFound() {
     return (req: any, res: any, next: any) => {
-        res.render('error', {'message': 'Not Found', 'error': 'Error'});
+        res.json({'error': {'code': '404', 'message': 'Not Found'}});
         next(createError(404));
     };
 }

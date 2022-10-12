@@ -17,11 +17,9 @@ const app = express();
 const server = http.createServer(app);
 
 dotenv.config();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 
 app.set('port', PORT);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(json());
@@ -30,7 +28,7 @@ app.use(urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(morgan('tiny'));
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -43,14 +41,12 @@ app.use("/docs", swaggerUi.serve,
         },
     }));
 app.use(notFound());
-app.use('/api.ico', express.static('public/api.ico'));
-app.use('/404.ico', express.static('public/404.ico'));
 
 server.on('error', onError);
 server.on('listening', onListening);
 
 app.listen(PORT, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+    console.log(`⚡[server]: Server is running at http://localhost:${PORT}`);
 });
 
 module.exports = app;
