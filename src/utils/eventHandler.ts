@@ -31,9 +31,8 @@ export function onListening(server: any) {
         : 'port ' + addr.port;
 }
 
-export function notFound() {
-    return (req: any, res: any, next: any) => {
-        res.json({'error': {'code': '404', 'message': 'Not Found'}});
-        next(createError(404));
-    };
+export function notFound(req: any, res: any, next: any) {
+    res.status(404);
+    res.json({'error': {'code': '404', 'message': 'Not Found'}});
+    next(createError(404));
 }

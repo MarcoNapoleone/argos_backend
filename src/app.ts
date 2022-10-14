@@ -34,13 +34,15 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/companies', companiesRouter);
 app.use('/localUnits', localUnitsRouter);
+app.use('/favicon.ico', express.static('public/icons/api.ico'));
 app.use("/docs", swaggerUi.serve,
     swaggerUi.setup(undefined, {
         swaggerOptions: {
             url: "/swagger.json",
         },
-    }));
-app.use(notFound());
+    })
+);
+app.use(notFound);
 
 server.on('error', onError);
 server.on('listening', onListening);

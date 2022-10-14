@@ -1,9 +1,13 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 export const config = {
     db: {
-        host: '35.214.213.135',
-        user: 'us6drvhgbtr2i',
-        password: 'pmjrgvymqzeg',
-        database: 'dbkgjb6upfgbzq'
+        host: process.env.HOST,
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE
     },
     listPerPage: 10,
 };
