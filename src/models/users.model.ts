@@ -1,5 +1,5 @@
 import helper from '../utils/helper';
-import {query} from '../utils/query';
+import {Id, query} from '../utils/query';
 import {UUID} from "../utils/uuid";
 import {IsDate, IsEmail, IsLowercase, IsUUID} from "class-validator";
 
@@ -42,13 +42,13 @@ export async function getAll() {
     return helper.emptyOrRows(rows)
 }
 
-export async function getById(id: number | string) {
+export async function getById(id: Id) {
 
     const row = await query(`
         SELECT *
         FROM users
-        WHERE id = '${id}'
-    `);
+        WHERE id = ?
+    `, [id]);
     return helper.emptyOrRows(row)
 }
 
@@ -70,35 +70,43 @@ export async function create(user: User) {
                           email,
                           password,
                           role_id)
-        VALUES ('${user?.uuid}',
-                '${user?.name}',
-                '${user?.surname}',
-                '${user?.email}',
-                '${user?.password}',
-                '${user?.roleId}')
-    `)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `, [
+        user?.uuid,
+        user?.name,
+        user?.surname,
+        user?.email,
+        user?.password,
+        user?.roleId
+    ])
 }
 
-export async function update(id: number | string, user: User) {
+export async function update(id: Id, user: User) {
 
     return await query(`
         UPDATE users t
-        SET t.name    = '${user.name}',
-            t.surname = '${user.surname}',
-            t.email   = '${user.email}',
-            t.role_id = '${user.roleId}'
-        WHERE t.id = ${id};
-    `);
+        SET t.name    = ?,
+            t.surname = ?,
+            t.email   = ?,
+            t.role_id = ?
+        WHERE t.id = ?;
+    `, [
+        user.name,
+        user.surname,
+        user.email,
+        user.roleId,
+        id
+    ]);
 }
 
-export async function logicDelete(id: number | string) {
+export async function logicDelete(id: Id) {
 
     const now = Date();
     return await query(`
         UPDATE users t
-        SET t.deleted_at = ${now}
-        WHERE t.id = ${id};
-    `);
+        SET t.deleted_at = ?
+        WHERE t.id = ?;
+    `, [now, id]);
 }
 
 

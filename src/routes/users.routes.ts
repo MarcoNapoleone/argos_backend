@@ -17,7 +17,6 @@ usersRouter.get('/', async (req: Request, res: Response) => {
     }
 });
 
-
 /* GET users/:id - get user by id */
 usersRouter.get('/:id', async(req: Request, res: Response) => {
 

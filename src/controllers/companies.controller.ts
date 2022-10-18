@@ -1,6 +1,7 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags} from "tsoa";
 import * as companiesService from "../services/companies.service";
 import {Company} from "../models/companies.model";
+import {Id} from "../utils/query";
 
 @Route("companies")
 @Tags("Company")
@@ -8,11 +9,11 @@ export class companiesController extends Controller {
 
     @Get("/")
     async getAll() {
-        return await companiesService.getAll()
+        return await companiesService.getAll(1)
     }
 
     @Get("/:id")
-    async getById(@Path() id: number | string) {
+    async getById(@Path() id: Id) {
         return await companiesService.getById(id)
     }
 
@@ -23,7 +24,7 @@ export class companiesController extends Controller {
     }
 
     @Put("/:id")
-    async update(@Path() id: number | string, @Body() company: Company) {
+    async update(@Path() id: Id, @Body() company: Company) {
         return await companiesService.update(id, company)
     }
 
@@ -32,7 +33,7 @@ export class companiesController extends Controller {
      */
     @SuccessResponse("204")
     @Delete("/:id")
-    async logicDelete(@Path() id: number | string) {
+    async logicDelete(@Path() id: Id) {
         return await companiesService.logicDelete(id)
     }
 

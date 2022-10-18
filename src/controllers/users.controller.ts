@@ -1,6 +1,7 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags} from "tsoa";
 import * as UsersService from "../services/users.service";
 import {User} from "../models/users.model";
+import {Id} from "../utils/query";
 
 @Route("Users")
 @Tags("User")
@@ -12,7 +13,7 @@ export class UsersController extends Controller {
     }
 
     @Get("/:id")
-    async getById(@Path() id: number | string) {
+    async getById(@Path() id: Id) {
         return await UsersService.getById(id)
     }
 
@@ -23,7 +24,7 @@ export class UsersController extends Controller {
     }
 
     @Put("/:id")
-    async update(@Path() id: number | string, @Body() user: User) {
+    async update(@Path() id: Id, @Body() user: User) {
         return await UsersService.update(id, user)
     }
 
@@ -32,7 +33,7 @@ export class UsersController extends Controller {
      */
     @SuccessResponse("204")
     @Delete("/:id")
-    async logicDelete(@Path() id: number | string) {
+    async logicDelete(@Path() id: Id) {
         return await UsersService.logicDelete(id)
     }
 

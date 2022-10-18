@@ -8,3 +8,5 @@ export async function query(sql: string, params?: any | any[] | { [param: string
     const [rows, fields] = await connection.execute(sql, params);
     return rows as OkPacket;
 }
+
+export type Id = string | number;

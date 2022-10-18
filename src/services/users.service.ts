@@ -2,12 +2,13 @@ import * as UsersModel from "../models/users.model";
 import {User} from "../models/users.model";
 import {getUuid} from "../utils/uuid";
 import bcrypt from 'bcrypt';
+import {Id} from "../utils/query";
 
 export async function getAll(): Promise<Array<User>> {
     return await UsersModel.getAll();
 }
 
-export async function getById(id: number | string): Promise<User> {
+export async function getById(id: Id): Promise<User> {
     return await UsersModel.getById(id);
 }
 
@@ -24,7 +25,7 @@ export async function create(user: User): Promise<User> {
     return UsersModel.getById(response.insertId);
 }
 
-export async function update(id: number | string, user: User) :Promise<User>{
+export async function update(id: Id, user: User) :Promise<User>{
     let _user: User = await UsersModel.getById(id);
 
     // updates only new passed fields
@@ -32,7 +33,7 @@ export async function update(id: number | string, user: User) :Promise<User>{
     return UsersModel.getById(response.insertId);
 }
 
-export async function logicDelete(id: number | string): Promise<{}>{
+export async function logicDelete(id: Id): Promise<{}>{
     return await UsersModel.logicDelete(id);
 }
 

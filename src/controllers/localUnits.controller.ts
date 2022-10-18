@@ -1,6 +1,7 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags} from "tsoa";
 import * as LocalUnitsService from "../services/localUnits.service";
 import {LocalUnit} from "../models/localUnits.model";
+import {Id} from "../utils/query";
 
 @Route("LocalUnits")
 @Tags("Local unit")
@@ -12,7 +13,7 @@ export class LocalUnitsController extends Controller {
     }
 
     @Get("/:id")
-    async getById(@Path() id: number | string) {
+    async getById(@Path() id: Id) {
         return await LocalUnitsService.getById(id)
     }
 
@@ -23,7 +24,7 @@ export class LocalUnitsController extends Controller {
     }
 
     @Put("/:id")
-    async update(@Path() id: number | string, @Body() localUnit: LocalUnit) {
+    async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
         return await LocalUnitsService.update(id, localUnit)
     }
 
@@ -32,7 +33,7 @@ export class LocalUnitsController extends Controller {
      */
     @SuccessResponse("204")
     @Delete("/:id")
-    async logicDelete(@Path() id: number | string) {
+    async logicDelete(@Path() id: Id) {
         return await LocalUnitsService.logicDelete(id)
     }
 

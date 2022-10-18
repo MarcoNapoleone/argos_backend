@@ -1,5 +1,5 @@
 import helper from '../utils/helper';
-import {query} from '../utils/query';
+import {Id, query} from '../utils/query';
 import {UUID} from "../utils/uuid";
 
 export class LocalUnit {
@@ -19,13 +19,13 @@ export async function getAll() {
     return helper.emptyOrRows(rows)
 }
 
-export async function getById(id: number | string) {
+export async function getById(id: Id) {
 
     const row = await query(`
         SELECT *
         FROM local_units
-        WHERE id = '${id}'
-    `);
+        WHERE id = ?
+    `, [id]);
     return helper.emptyOrRows(row)
 }
 
@@ -35,21 +35,21 @@ export async function create(localUnit: LocalUnit) {
     `)
 }
 
-export async function update(id: number | string, localUnit: LocalUnit) {
+export async function update(id: Id, localUnit: LocalUnit) {
 
     return await query(`
        
     `);
 }
 
-export async function logicDelete(id: number | string) {
+export async function logicDelete(id: Id) {
 
     const now = Date();
     return await query(`
         UPDATE local_units t
         SET t.deleted_at = ${now}
-        WHERE t.id = ${id};
-    `);
+        WHERE t.id = ?;
+    `,[id]);
 }
 
 

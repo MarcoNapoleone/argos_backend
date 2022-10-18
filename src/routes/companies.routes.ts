@@ -10,7 +10,7 @@ companiesRouter.get('/', async (req: Request, res: Response) => {
         const response = await controller.getAll();
         return res.json(response);
     } catch (error) {
-        // console.error('[companies.controller][getAll][error] ', error);
+        console.error('[companies.controller][getAll][error] ', error);
         res.status(500).json({
             message: 'There was an error while fetching the companies'
         });

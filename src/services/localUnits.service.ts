@@ -1,12 +1,13 @@
 import * as LocalUnitsModel from "../models/localUnits.model";
 import {LocalUnit} from "../models/localUnits.model";
 import {getUuid} from "../utils/uuid";
+import {Id} from "../utils/query";
 
 export async function getAll(): Promise<Array<LocalUnit>> {
     return await LocalUnitsModel.getAll();
 }
 
-export async function getById(id: number | string): Promise<LocalUnit> {
+export async function getById(id: Id): Promise<LocalUnit> {
     return await LocalUnitsModel.getById(id);
 }
 
@@ -19,7 +20,7 @@ export async function create(localUnit: LocalUnit): Promise<LocalUnit> {
     return LocalUnitsModel.getById(response.insertId);
 }
 
-export async function update(id: number | string, localUnit: LocalUnit) :Promise<LocalUnit>{
+export async function update(id: Id, localUnit: LocalUnit) :Promise<LocalUnit>{
     let _localUnit: LocalUnit = await LocalUnitsModel.getById(id);
 
     // updates only new passed fields
@@ -27,7 +28,7 @@ export async function update(id: number | string, localUnit: LocalUnit) :Promise
     return LocalUnitsModel.getById(response.insertId);
 }
 
-export async function logicDelete(id: number | string): Promise<{}>{
+export async function logicDelete(id: Id): Promise<{}>{
     return await LocalUnitsModel.logicDelete(id);
 }
 

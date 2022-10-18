@@ -1,11 +1,13 @@
-import express from "express";
+import express, {Request, Response} from "express";
+import {serverStatus} from "../utils/serverStatus";
 
 const indexRouter = express.Router();
 
 
 /* GET home page. */
-indexRouter.get('/', (req, res, next) => {
-    res.json({status: 'ok'})
+indexRouter.get('/', async  (req: Request, res: Response)  => {
+    const status = await serverStatus()
+    return res.json({status: status})
 });
 
 export default indexRouter;
