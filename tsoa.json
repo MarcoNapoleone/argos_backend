@@ -3,9 +3,20 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "spec": {
     "outputDirectory": "public",
+    "basePath": "api/v1",
     "specVersion": 3,
+    "version": "0.0.1",
     "name": "Argos-IoT APIs",
     "description": "Restful APIs by Argos-IoT",
+    "securityDefinitions": {
+      "jwt": {
+        "type": "http",
+        "scheme" : "bearer",
+        "bearerFormat": "JWT",
+        "name": "access_token",
+        "in": "header"
+      }
+    },
     "contact": {
       "name": "Marco Napoleone",
       "email": "napoleonemarco25@gmial.com"

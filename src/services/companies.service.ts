@@ -1,9 +1,9 @@
 import * as companiesModel from "../models/companies.model";
 import {Company} from "../models/companies.model";
 import {getUuid} from "../utils/uuid";
-import {Id} from "../utils/query";
+import {Id} from "../entities/enums";
 
-export async function getAll(userId: Id ): Promise<Array<Company>> {
+export async function getAll(userId: Id ): Promise<Array<Company> |  {}> {
     return await companiesModel.getAll(userId);
 }
 

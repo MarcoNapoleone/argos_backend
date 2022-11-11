@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const config = {
-    db: {
+export const database = {
+    credential: {
         host: process.env.HOST,
         user: process.env.USER,
         password: process.env.PASSWORD,

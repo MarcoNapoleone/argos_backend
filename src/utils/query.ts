@@ -1,12 +1,10 @@
-import {OkPacket} from "mysql2";
 import mysql from "mysql2/promise"
-import {config} from "../config/config"
+import {database} from "../config/database"
 
 
 export async function query(sql: string, params?: any | any[] | { [param: string]: any }){
-    const connection = await mysql.createConnection(config.db);
+    const connection = await mysql.createConnection(database.credential);
     const [rows, fields] = await connection.execute(sql, params);
-    return rows as OkPacket;
+    return rows as mysql.OkPacket
 }
 
-export type Id = string | number;

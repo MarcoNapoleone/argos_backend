@@ -32,7 +32,6 @@ export function onListening(server: any) {
 }
 
 export function notFound(req: any, res: any, next: any) {
-    res.status(404);
-    res.json({'error': {'code': '404', 'message': 'Not Found'}});
+    res.status(404).json({message: 'Not Found'})
     next(createError(404));
 }

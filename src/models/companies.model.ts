@@ -1,10 +1,10 @@
-import helper from '../utils/helper';
-import {Id, query} from '../utils/query';
-import {UUID} from "../utils/uuid";
+import {query} from '../utils/query';
+import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
+import {Id, UUID} from "../entities/enums";
 
 
 export class Company {
-    id?: number;
+    id?: Id;
     uuid?: UUID;
     name?: string;
     createdAt?: Date;
@@ -23,7 +23,7 @@ export async function getAll(userId: Id) {
                               INNER JOIN companies c ON uc.company_id = c.id
                      WHERE uc.user_id = ?)
     `, [userId]);
-    return helper.emptyOrRows(rows)
+    return emptyOrRows(rows)
 }
 
 export async function getById(id: Id) {
@@ -33,7 +33,7 @@ export async function getById(id: Id) {
         FROM companies
         WHERE id = ?
     `, [id]);
-    return helper.emptyOrRows(row)
+    return emptyOrRow(row)
 }
 
 export async function create(company: Company) {

@@ -18,7 +18,7 @@ usersRouter.get('/', async (req: Request, res: Response) => {
 });
 
 /* GET users/:id - get user by id */
-usersRouter.get('/:id', async(req: Request, res: Response) => {
+usersRouter.get('/:id', async (req: Request, res: Response) => {
 
     const {params: {id}} = req;
     if (!id) return;
@@ -36,7 +36,7 @@ usersRouter.get('/:id', async(req: Request, res: Response) => {
 });
 
 /* POST users/:id - create new user */
-usersRouter.post('/', async(req: Request, res: Response) => {
+usersRouter.post('/', async (req: Request, res: Response) => {
 
     try {
         const controller = new UsersController();
@@ -90,23 +90,5 @@ usersRouter.delete('/:id', async (req: Request, res: Response) => {
     }
 });
 
-/* POST users/login - login user */
-usersRouter.post('/login', async(req: Request, res: Response) => {
-
-    try {
-        const { email, password } = req.body;
-        const controller = new UsersController();
-        if (!(email && password)) {
-            res.status(400).send("All input is required");
-        }
-        return await controller.login({email, password})
-            } catch (error) {
-        console.error('[users.controller][login][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while login user'
-        });
-    }
-
-});
 
 export default usersRouter;

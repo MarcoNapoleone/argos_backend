@@ -1,9 +1,9 @@
-import helper from '../utils/helper';
-import {Id, query} from '../utils/query';
-import {UUID} from "../utils/uuid";
+import {query} from '../utils/query';
+import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
+import {Id, UUID} from "../entities/enums";
 
 export class LocalUnit {
-    id?: number;
+    id?: Id;
     uuid?: UUID;
     createdAt?: Date;
     deletedAt?: Date;
@@ -16,7 +16,7 @@ export async function getAll() {
         SELECT *
         FROM local_units
     `);
-    return helper.emptyOrRows(rows)
+    return emptyOrRows(rows)
 }
 
 export async function getById(id: Id) {
@@ -26,7 +26,7 @@ export async function getById(id: Id) {
         FROM local_units
         WHERE id = ?
     `, [id]);
-    return helper.emptyOrRows(row)
+    return emptyOrRow(row)
 }
 
 export async function create(localUnit: LocalUnit) {

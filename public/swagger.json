@@ -6,17 +6,42 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Id": {
+				"anyOf": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "number",
+						"format": "double"
+					}
+				]
+			},
 			"UUID": {
 				"type": "string",
 				"format": "uuid",
 				"description": "Stringified UUIDv4.\r\nSee [RFC 4112](https://tools.ietf.org/html/rfc4122)",
 				"pattern": "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}"
 			},
+			"Status": {
+				"type": "string",
+				"enum": [
+					"ACTIVE",
+					"INACTIVE",
+					"DISABLED"
+				]
+			},
+			"Role": {
+				"type": "string",
+				"enum": [
+					"BASIC",
+					"ADMIN"
+				]
+			},
 			"User": {
 				"properties": {
 					"id": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/Id"
 					},
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
@@ -33,9 +58,11 @@
 					"password": {
 						"type": "string"
 					},
-					"roleId": {
-						"type": "number",
-						"format": "double"
+					"status": {
+						"$ref": "#/components/schemas/Status"
+					},
+					"role": {
+						"$ref": "#/components/schemas/Role"
 					},
 					"createdAt": {
 						"type": "string",
@@ -57,22 +84,10 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Id": {
-				"anyOf": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "number",
-						"format": "double"
-					}
-				]
-			},
 			"Company": {
 				"properties": {
 					"id": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/Id"
 					},
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
@@ -103,8 +118,7 @@
 			"LocalUnit": {
 				"properties": {
 					"id": {
-						"type": "number",
-						"format": "double"
+						"$ref": "#/components/schemas/Id"
 					},
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
@@ -130,11 +144,19 @@
 				"additionalProperties": false
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT",
+				"name": "access_token",
+				"in": "header"
+			}
+		}
 	},
 	"info": {
 		"title": "Argos-IoT APIs",
-		"version": "0.0.0",
+		"version": "0.0.1",
 		"description": "Restful APIs by Argos-IoT",
 		"contact": {
 			"name": "Marco Napoleone",
@@ -143,7 +165,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/Users": {
+		"/users": {
 			"get": {
 				"operationId": "GetAll",
 				"responses": {
@@ -152,10 +174,18 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/User"
-									},
-									"type": "array"
+									"anyOf": [
+										{
+											"properties": {},
+											"type": "object"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/User"
+											},
+											"type": "array"
+										}
+									]
 								}
 							}
 						}
@@ -164,7 +194,11 @@
 				"tags": [
 					"User"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -184,7 +218,11 @@
 				"tags": [
 					"User"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -198,7 +236,7 @@
 				}
 			}
 		},
-		"/Users/{id}": {
+		"/users/{id}": {
 			"get": {
 				"operationId": "GetById",
 				"responses": {
@@ -216,7 +254,11 @@
 				"tags": [
 					"User"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -245,7 +287,11 @@
 				"tags": [
 					"User"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -286,7 +332,11 @@
 				"tags": [
 					"User"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -299,50 +349,6 @@
 				]
 			}
 		},
-		"/Users/login": {
-			"post": {
-				"operationId": "Login",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"User"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"password": {
-										"type": "string"
-									},
-									"email": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"password",
-									"email"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/companies": {
 			"get": {
 				"operationId": "GetAll",
@@ -352,10 +358,18 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Company"
-									},
-									"type": "array"
+									"anyOf": [
+										{
+											"properties": {},
+											"type": "object"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/Company"
+											},
+											"type": "array"
+										}
+									]
 								}
 							}
 						}
@@ -364,7 +378,11 @@
 				"tags": [
 					"Company"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -384,7 +402,11 @@
 				"tags": [
 					"Company"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -416,7 +438,11 @@
 				"tags": [
 					"Company"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -445,7 +471,11 @@
 				"tags": [
 					"Company"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -486,7 +516,11 @@
 				"tags": [
 					"Company"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -499,7 +533,7 @@
 				]
 			}
 		},
-		"/LocalUnits": {
+		"/localUnits": {
 			"get": {
 				"operationId": "GetAll",
 				"responses": {
@@ -508,10 +542,18 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/LocalUnit"
-									},
-									"type": "array"
+									"anyOf": [
+										{
+											"properties": {},
+											"type": "object"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/LocalUnit"
+											},
+											"type": "array"
+										}
+									]
 								}
 							}
 						}
@@ -520,7 +562,11 @@
 				"tags": [
 					"Local unit"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -540,7 +586,11 @@
 				"tags": [
 					"Local unit"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -554,7 +604,7 @@
 				}
 			}
 		},
-		"/LocalUnits/{id}": {
+		"/localUnits/{id}": {
 			"get": {
 				"operationId": "GetById",
 				"responses": {
@@ -572,7 +622,11 @@
 				"tags": [
 					"Local unit"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -601,7 +655,11 @@
 				"tags": [
 					"Local unit"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -642,7 +700,11 @@
 				"tags": [
 					"Local unit"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -654,11 +716,117 @@
 					}
 				]
 			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"token": {},
+										"result": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"token",
+										"result"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"password": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"password",
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/register": {
+			"post": {
+				"operationId": "Register",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"surname": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									},
+									"password": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"surname",
+									"name",
+									"password",
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"servers": [
 		{
-			"url": "/"
+			"url": "/api/v1"
 		}
 	]
 }
