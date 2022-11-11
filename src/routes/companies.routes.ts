@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import {companiesController} from "../controllers/companies.controller";
+import {User} from "../models/users.model";
 
 const companiesRouter = express.Router();
 
@@ -7,7 +8,8 @@ const companiesRouter = express.Router();
 companiesRouter.get('/', async (req: Request, res: Response) => {
     try {
         const controller = new companiesController();
-        const response = await controller.getAll();
+        const user: User = req.body.user
+        const response = await controller.getAll(user.id);
         return res.json(response);
     } catch (error) {
         console.error('[companies.controller][getAll][error] ', error);

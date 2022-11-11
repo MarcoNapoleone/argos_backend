@@ -1,10 +1,11 @@
 import express, {Request, Response} from 'express';
 import {UsersController} from "../controllers/users.controller";
+import {guard} from "../middleware/auth.middleware";
 
 const usersRouter = express.Router();
 
 /* GET users - get all users */
-usersRouter.get('/', async (req: Request, res: Response) => {
+usersRouter.get('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
     try {
         const controller = new UsersController();
         const response = await controller.getAll();
@@ -18,7 +19,7 @@ usersRouter.get('/', async (req: Request, res: Response) => {
 });
 
 /* GET users/:id - get user by id */
-usersRouter.get('/:id', async (req: Request, res: Response) => {
+usersRouter.get('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
 
     const {params: {id}} = req;
     if (!id) return;
@@ -36,7 +37,7 @@ usersRouter.get('/:id', async (req: Request, res: Response) => {
 });
 
 /* POST users/:id - create new user */
-usersRouter.post('/', async (req: Request, res: Response) => {
+usersRouter.post('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
 
     try {
         const controller = new UsersController();
@@ -52,7 +53,7 @@ usersRouter.post('/', async (req: Request, res: Response) => {
 });
 
 /* PUT users/:id - update user */
-usersRouter.put('/:id', async (req: Request, res: Response) => {
+usersRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
 
     const {
         params: {id},
@@ -72,7 +73,7 @@ usersRouter.put('/:id', async (req: Request, res: Response) => {
 });
 
 /* PUT users/:id - logic delete user */
-usersRouter.delete('/:id', async (req: Request, res: Response) => {
+usersRouter.delete('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
     const {
         params: {id},
     } = req;

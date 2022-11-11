@@ -1,15 +1,28 @@
 import {query} from '../utils/query';
 import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {Id, UUID} from "../entities/enums";
+import {UUID} from "../entities/UUID";
+import {Id} from "../entities/Id";
+import {IsDate, IsUUID} from "class-validator";
 
 
 export class Company {
+
     id?: Id;
+
+    @IsUUID()
     uuid?: UUID;
+
     name?: string;
+
+    @IsDate()
     createdAt?: Date;
+
+    @IsDate()
     deletedAt?: Date;
+
     version?: number;
+
+    @IsDate()
     updatedAt?: Date;
 }
 
@@ -18,21 +31,26 @@ export async function getAll(userId: Id) {
     const rows = await query(`
         SELECT *
         FROM companies
-        WHERE id IN (SELECT uc.company_id
-                     FROM user_company uc
-                              INNER JOIN companies c ON uc.company_id = c.id
-                     WHERE uc.user_id = ?)
+        WHERE id IN (SELECT ucr.company_id
+                     FROM user_company_roles ucr
+                              INNER JOIN companies c ON ucr.company_id = c.id
+                     WHERE ucr.user_id = ?)
     `, [userId]);
     return emptyOrRows(rows)
 }
 
-export async function getById(id: Id) {
+export async function getById(userId?: Id, id?: Id) {
 
     const row = await query(`
         SELECT *
-        FROM companies
-        WHERE id = ?
-    `, [id]);
+        FROM   companies
+        WHERE  id = (SELECT ucr.company_id
+                     FROM   user_company_roles ucr
+                                INNER JOIN companies c
+                                           ON ucr.company_id = c.id
+                     WHERE  ucr.user_id = ?
+                       AND ucr.company_id = ?)
+    `, [userId, id]);
     return emptyOrRow(row)
 }
 

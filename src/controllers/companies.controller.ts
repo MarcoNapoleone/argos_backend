@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
 import * as companiesService from "../services/companies.service";
 import {Company} from "../models/companies.model";
-import {Id} from "../entities/enums";
+import {Id} from "../entities/Id";
 
 @Route("companies")
 @Tags("Company")
@@ -9,7 +9,7 @@ export class companiesController extends Controller {
 
     @Security("jwt", [])
     @Get("/")
-    async getAll() {
+    async getAll(userId: Id) {
         return await companiesService.getAll(1)
     }
 
@@ -19,7 +19,7 @@ export class companiesController extends Controller {
         return await companiesService.getById(id)
     }
 
-    @Security("jwt", [])
+    @Security("jwt", ["ADMIN"])
     @SuccessResponse('201', 'Created')
     @Post("/")
     async create(@Body() company: Company) {
@@ -27,7 +27,7 @@ export class companiesController extends Controller {
     }
 
 
-    @Security("jwt", [])
+    @Security("jwt", ["ADMIN"])
     @Put("/:id")
     async update(@Path() id: Id, @Body() company: Company) {
         return await companiesService.update(id, company)
@@ -36,7 +36,7 @@ export class companiesController extends Controller {
     /**
      * Logic delete a company
      */
-    @Security("jwt", [])
+    @Security("jwt", ["ADMIN"])
     @SuccessResponse("204")
     @Delete("/:id")
     async logicDelete(@Path() id: Id) {

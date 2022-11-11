@@ -1,5 +1,3 @@
-export type Id = string | number;
-
 /**
  * Stringified UUIDv4.
  * See [RFC 4112](https://tools.ietf.org/html/rfc4122)

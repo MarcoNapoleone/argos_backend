@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
 import * as LocalUnitsService from "../services/localUnits.service";
 import {LocalUnit} from "../models/localUnits.model";
-import {Id} from "../entities/enums";
+import {Id} from "../entities/Id";
 
 @Route("localUnits")
 @Tags("Local unit")

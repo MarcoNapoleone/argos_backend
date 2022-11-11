@@ -196,7 +196,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": []
@@ -220,7 +222,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": [],
@@ -256,7 +260,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": [
@@ -289,7 +295,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": [
@@ -334,7 +342,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": [
@@ -404,7 +414,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": [],
@@ -473,7 +485,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": [
@@ -518,7 +532,9 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"jwt": [
+							"ADMIN"
+						]
 					}
 				],
 				"parameters": [

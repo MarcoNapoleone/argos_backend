@@ -1,7 +1,7 @@
 import * as LocalUnitsModel from "../models/localUnits.model";
 import {LocalUnit} from "../models/localUnits.model";
 import {getUuid} from "../utils/uuid";
-import {Id} from "../entities/enums";
+import {Id} from "../entities/Id";
 
 export async function getAll(): Promise<Array<LocalUnit> | {}> {
     return await LocalUnitsModel.getAll();

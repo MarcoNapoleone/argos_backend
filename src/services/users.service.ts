@@ -1,7 +1,8 @@
 import * as UsersModel from "../models/users.model";
 import {User} from "../models/users.model";
 import {getUuid} from "../utils/uuid";
-import {Id} from "../entities/enums";
+import {UUID} from "../entities/UUID";
+import {Id} from "../entities/Id";
 
 export async function getAll(): Promise<Array<User> | {}> {
     return await UsersModel.getAll();
@@ -10,6 +11,11 @@ export async function getAll(): Promise<Array<User> | {}> {
 export async function getById(id: Id): Promise<User> {
     return await UsersModel.getById(id);
 }
+
+export async function getByUUID(uuid: UUID): Promise<User> {
+    return await UsersModel.getByUUID(uuid);
+}
+
 
 export async function findOne(param: string, value: string | number): Promise<User> {
     return await UsersModel.findOne(param, value);

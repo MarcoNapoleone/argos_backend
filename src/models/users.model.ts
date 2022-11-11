@@ -1,10 +1,11 @@
 import {query} from '../utils/query';
 import {IsDate, IsEmail, IsLowercase, IsUUID} from "class-validator";
 import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {Id, UUID} from "../entities/enums";
+import {UUID} from "../entities/UUID";
+import {Id} from "../entities/Id";
+import {Role} from "../entities/Role";
 
 type Status = 'ACTIVE' | 'INACTIVE' | 'DISABLED';
-type Role = 'BASIC' | 'ADMIN';
 
 export class User {
 
@@ -55,6 +56,16 @@ export async function getById(id: Id) {
         FROM users
         WHERE id = ?
     `, [id]);
+    return emptyOrRow(row)
+}
+
+export async function getByUUID(uuid: UUID) {
+
+    const row = await query(`
+        SELECT *
+        FROM users
+        WHERE uuid = ?
+    `, [uuid]);
     return emptyOrRow(row)
 }
 

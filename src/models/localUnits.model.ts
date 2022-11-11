@@ -1,6 +1,7 @@
 import {query} from '../utils/query';
 import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {Id, UUID} from "../entities/enums";
+import {UUID} from "../entities/UUID";
+import {Id} from "../entities/Id";
 
 export class LocalUnit {
     id?: Id;
