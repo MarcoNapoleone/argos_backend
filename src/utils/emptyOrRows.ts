@@ -7,7 +7,7 @@ export const emptyOrRows = (rows: any) => {
 }
 
 export const emptyOrRow = (row: any) => {
-    if (!row) {
+    if (!row.length) {
         return {};
     }
     return row[0];

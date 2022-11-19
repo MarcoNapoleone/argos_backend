@@ -5,16 +5,19 @@
     "outputDirectory": "public",
     "basePath": "api/v1",
     "specVersion": 3,
-    "version": "0.0.1",
+    "version": "0.0.2",
     "name": "Argos-IoT APIs",
     "description": "Restful APIs by Argos-IoT",
     "securityDefinitions": {
       "jwt": {
         "type": "http",
-        "scheme" : "bearer",
+        "scheme": "bearer",
         "bearerFormat": "JWT",
+        "authorizationUrl": "http://localhost:8080/api/v1/auth/login",
         "name": "access_token",
-        "in": "header"
+        "scopes": {
+          "ADMIN": "full crud auth"
+        }
       }
     },
     "contact": {

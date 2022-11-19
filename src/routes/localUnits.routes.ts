@@ -1,52 +1,80 @@
 import express, {Request, Response} from 'express';
 import {LocalUnitsController} from "../controllers/localUnits.controller";
+import {User} from "../models/users.model";
+import {formattedResponse} from "../utils/formattedResponse";
 
-const localUnitsRouter = express.Router();
+const localUnitsRouter = express.Router({mergeParams: true});
 
 /* GET localUnits - get all localUnits */
 localUnitsRouter.get('/', async (req: Request, res: Response) => {
+
+    const {params: {companyId}} = req;
     try {
+        const user: User = req.body.user
         const controller = new LocalUnitsController();
-        const response = await controller.getAll();
-        return res.json(response);
+        const response = await controller.getAll(user.id, companyId);
+        if (response.statusCode >= 400) {
+            return res.status(response.statusCode).json(
+                formattedResponse({
+                    status: response.statusCode,
+                    object: "local unit",
+                })
+            );
+        }
+        return res.json(response.data);
     } catch (error) {
-        console.error('[localUnits.controller][getAll][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while fetching the localUnits'
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "local unit",
+            })
+        );
     }
 });
 
 /* GET localUnits/:id - get localUnit by id */
-localUnitsRouter.get('/:id', async(req: Request, res: Response) => {
+localUnitsRouter.get('/:id', async (req: Request, res: Response) => {
 
     const {params: {id}} = req;
     if (!id) return;
 
     try {
         const controller = new LocalUnitsController();
+        const user: User = req.body.user
         const response = await controller.getById(id);
-        return res.json(response);
+
+        if (response.statusCode === 404) {
+            res.status(404).json(
+                formattedResponse({
+                    status: 404,
+                    object: "local unit",
+                })
+            )
+        }
+        return res.json(response.data);
     } catch (error) {
-        console.error('[localUnits.controller][getById][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while fetching the localUnit with id: ' + String(id)
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "local unit",
+            })
+        )
     }
 });
 
 /* POST localUnits/:id - create new localUnit */
-localUnitsRouter.post('/', async(req: Request, res: Response) => {
+localUnitsRouter.post('/', async (req: Request, res: Response) => {
 
     try {
         const controller = new LocalUnitsController();
         const response = await controller.create(req.body);
-        res.status(200).json(response);
+        res.status(200).json(response.data);
     } catch (error) {
-        console.error('[localUnits.controller][create][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while creating the new localUnit'
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "local unit",
+            }))
     }
 
 });
@@ -60,14 +88,17 @@ localUnitsRouter.put('/:id', async (req: Request, res: Response) => {
     if (!id) return;
 
     try {
+        const user: User = req.body.user
         const controller = new LocalUnitsController();
         const response = await controller.update(id, req.body);
-        res.status(200).json(response);
+        res.status(200).json(response.data);
     } catch (error) {
-        console.error('[localUnits.controller][update][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while updating the localUnit'
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "local unit",
+            })
+        )
     }
 });
 
@@ -79,14 +110,15 @@ localUnitsRouter.delete('/:id', async (req: Request, res: Response) => {
     if (!id) return;
 
     try {
+        const user: User = req.body.user
         const controller = new LocalUnitsController();
         const response = await controller.logicDelete(id);
-        res.status(200).json(response);
+        res.status(200).json(response.data);
     } catch (error) {
-        console.error('[localUnits.controller][delete][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while deleting the localUnit'
-        });
+        res.status(500).json(formattedResponse({
+            status: 500,
+            object: "local unit",
+        }));
     }
 });
 

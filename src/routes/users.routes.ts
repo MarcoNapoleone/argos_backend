@@ -1,21 +1,27 @@
 import express, {Request, Response} from 'express';
 import {UsersController} from "../controllers/users.controller";
 import {guard} from "../middleware/auth.middleware";
+import {formattedResponse} from "../utils/formattedResponse";
+import {User} from "../models/users.model";
 
 const usersRouter = express.Router();
 
 /* GET users - get all users */
 usersRouter.get('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
+    const user: User = req.body.user
     try {
         const controller = new UsersController();
         const response = await controller.getAll();
-        return res.json(response);
+        res.json(response.data);
     } catch (error) {
-        console.error('[users.controller][getAll][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while fetching the users'
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "user",
+            })
+        );
     }
+    return;
 });
 
 /* GET users/:id - get user by id */
@@ -27,12 +33,22 @@ usersRouter.get('/:id', guard(["ADMIN"]), async (req: Request, res: Response) =>
     try {
         const controller = new UsersController();
         const response = await controller.getById(id);
-        return res.json(response);
+        if (response.statusCode === 404) {
+            res.status(404).json(
+                formattedResponse({
+                    status: 404,
+                    object: "user",
+                })
+            )
+        }
+        return res.json(response.data);
     } catch (error) {
-        console.error('[users.controller][getById][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while fetching the user with id: ' + String(id)
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "user",
+            })
+        )
     }
 });
 
@@ -42,12 +58,14 @@ usersRouter.post('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
     try {
         const controller = new UsersController();
         const response = await controller.create(req.body);
-        res.status(200).json(response);
+        res.status(200).json(response.data);
     } catch (error) {
-        console.error('[users.controller][create][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while creating the new user'
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "user",
+            })
+        )
     }
 
 });
@@ -63,12 +81,14 @@ usersRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response) =>
     try {
         const controller = new UsersController();
         const response = await controller.update(id, req.body);
-        res.status(200).json(response);
+        res.status(200).json(response.data);
     } catch (error) {
-        console.error('[users.controller][update][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while updating the user'
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "user",
+            })
+        )
     }
 });
 
@@ -82,14 +102,15 @@ usersRouter.delete('/:id', guard(["ADMIN"]), async (req: Request, res: Response)
     try {
         const controller = new UsersController();
         const response = await controller.logicDelete(id);
-        res.status(200).json(response);
+        res.status(200).json(response.data);
     } catch (error) {
-        console.error('[users.controller][delete][error] ', error);
-        res.status(500).json({
-            message: 'There was an error while deleting the user'
-        });
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "user",
+            })
+        )
     }
 });
-
 
 export default usersRouter;

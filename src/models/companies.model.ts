@@ -1,9 +1,8 @@
 import {query} from '../utils/query';
 import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {UUID} from "../entities/UUID";
 import {Id} from "../entities/Id";
 import {IsDate, IsUUID} from "class-validator";
-
+import {UUID} from "../utils/uuid";
 
 export class Company {
 
@@ -39,17 +38,17 @@ export async function getAll(userId: Id) {
     return emptyOrRows(rows)
 }
 
-export async function getById(userId?: Id, id?: Id) {
+export async function getById(userId: Id, id: Id) {
 
     const row = await query(`
         SELECT *
-        FROM   companies
-        WHERE  id = (SELECT ucr.company_id
-                     FROM   user_company_roles ucr
-                                INNER JOIN companies c
-                                           ON ucr.company_id = c.id
-                     WHERE  ucr.user_id = ?
-                       AND ucr.company_id = ?)
+        FROM companies
+        WHERE id = (SELECT ucr.company_id
+                    FROM user_company_roles ucr
+                             INNER JOIN companies c
+                                        ON ucr.company_id = c.id
+                    WHERE ucr.user_id = ?
+                      AND ucr.company_id = ?)
     `, [userId, id]);
     return emptyOrRow(row)
 }

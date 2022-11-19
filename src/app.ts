@@ -21,7 +21,6 @@ const app = express();
 const server = http.createServer(app);
 const router = express.Router();
 
-
 dotenv.config();
 const PORT = process.env.PORT || 8080;
 
@@ -46,15 +45,15 @@ app.use(logger('dev'));
 app.use(morgan('tiny'));
 app.use(limiter)
 app.use(urlencoded({extended: false}));
-
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
+app.use("/api/v1", router);
 router.use('/', indexRouter);
 router.use('/auth', authRouter);
 router.use('/users', auth, usersRouter);
 router.use('/companies', auth, companiesRouter);
-router.use('/localUnits', auth, localUnitsRouter);
+router.use('/companies/:companyId/local-units', auth, localUnitsRouter);
 router.use('/favicon.ico', express.static('public/icons/api.ico'));
 router.use("/docs", swaggerUi.serve, swaggerSetup);
 router.use(notFound);
@@ -62,7 +61,6 @@ router.use(notFound);
 server.on('error', onError);
 server.on('listening', onListening);
 
-app.use("/api/v1", router);
 app.listen(PORT, () => {
     console.log(`⚡[server]: Server is running at http://localhost:${PORT}/api/v1`);
 });

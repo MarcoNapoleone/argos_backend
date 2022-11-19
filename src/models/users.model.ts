@@ -1,9 +1,9 @@
 import {query} from '../utils/query';
 import {IsDate, IsEmail, IsLowercase, IsUUID} from "class-validator";
 import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {UUID} from "../entities/UUID";
 import {Id} from "../entities/Id";
 import {Role} from "../entities/Role";
+import {UUID} from "../utils/uuid";
 
 type Status = 'ACTIVE' | 'INACTIVE' | 'DISABLED';
 
