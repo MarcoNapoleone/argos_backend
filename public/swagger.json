@@ -9,11 +9,11 @@
 			"Id": {
 				"anyOf": [
 					{
-						"type": "string"
-					},
-					{
 						"type": "number",
 						"format": "double"
+					},
+					{
+						"type": "string"
 					}
 				]
 			},
@@ -84,108 +84,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"HttpStatusCode": {
-				"description": "Hypertext Transfer Protocol (HTTP) response status codes.",
-				"enum": [
-					100,
-					101,
-					102,
-					200,
-					201,
-					202,
-					203,
-					204,
-					205,
-					206,
-					207,
-					208,
-					226,
-					300,
-					301,
-					302,
-					303,
-					304,
-					305,
-					306,
-					307,
-					308,
-					400,
-					401,
-					402,
-					403,
-					404,
-					405,
-					406,
-					407,
-					408,
-					409,
-					410,
-					411,
-					412,
-					413,
-					414,
-					415,
-					416,
-					417,
-					418,
-					421,
-					422,
-					423,
-					424,
-					426,
-					428,
-					429,
-					431,
-					451,
-					500,
-					501,
-					502,
-					503,
-					504,
-					505,
-					506,
-					507,
-					508,
-					510,
-					511
-				],
-				"type": "number"
-			},
-			"UsersServiceResponse": {
-				"properties": {
-					"statusCode": {
-						"$ref": "#/components/schemas/HttpStatusCode"
-					},
-					"data": {
-						"items": {
-							"$ref": "#/components/schemas/User"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"statusCode",
-					"data"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"UserServiceResponse": {
-				"properties": {
-					"statusCode": {
-						"$ref": "#/components/schemas/HttpStatusCode"
-					},
-					"data": {
-						"$ref": "#/components/schemas/User"
-					}
-				},
-				"required": [
-					"statusCode",
-					"data"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"Company": {
 				"properties": {
 					"id": {
@@ -217,41 +115,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"CompaniesServiceResponse": {
-				"properties": {
-					"statusCode": {
-						"$ref": "#/components/schemas/HttpStatusCode"
-					},
-					"data": {
-						"items": {
-							"$ref": "#/components/schemas/Company"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"statusCode",
-					"data"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"CompanyServiceResponse": {
-				"properties": {
-					"statusCode": {
-						"$ref": "#/components/schemas/HttpStatusCode"
-					},
-					"data": {
-						"$ref": "#/components/schemas/Company"
-					}
-				},
-				"required": [
-					"statusCode",
-					"data"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"LocalUnit": {
 				"properties": {
 					"id": {
@@ -259,6 +122,12 @@
 					},
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"companyId": {
+						"$ref": "#/components/schemas/Id"
 					},
 					"createdAt": {
 						"type": "string",
@@ -279,41 +148,6 @@
 				},
 				"type": "object",
 				"additionalProperties": false
-			},
-			"LocalUnitsServiceResponse": {
-				"properties": {
-					"statusCode": {
-						"$ref": "#/components/schemas/HttpStatusCode"
-					},
-					"data": {
-						"items": {
-							"$ref": "#/components/schemas/LocalUnit"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"statusCode",
-					"data"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"LocalUnitServiceResponse": {
-				"properties": {
-					"statusCode": {
-						"$ref": "#/components/schemas/HttpStatusCode"
-					},
-					"data": {
-						"$ref": "#/components/schemas/LocalUnit"
-					}
-				},
-				"required": [
-					"statusCode",
-					"data"
-				],
-				"type": "object",
-				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -321,11 +155,7 @@
 				"type": "http",
 				"scheme": "bearer",
 				"bearerFormat": "JWT",
-				"authorizationUrl": "http://localhost:8080/api/v1/auth/login",
-				"name": "access_token",
-				"scopes": {
-					"ADMIN": "full crud auth"
-				}
+				"name": "access_token"
 			}
 		}
 	},
@@ -349,7 +179,10 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UsersServiceResponse"
+									"items": {
+										"$ref": "#/components/schemas/User"
+									},
+									"type": "array"
 								}
 							}
 						}
@@ -375,7 +208,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UserServiceResponse"
+									"$ref": "#/components/schemas/User"
 								}
 							}
 						}
@@ -413,7 +246,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UserServiceResponse"
+									"$ref": "#/components/schemas/User"
 								}
 							}
 						}
@@ -448,7 +281,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UserServiceResponse"
+									"$ref": "#/components/schemas/User"
 								}
 							}
 						}
@@ -493,7 +326,8 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UserServiceResponse"
+									"properties": {},
+									"type": "object"
 								}
 							}
 						}
@@ -531,12 +365,16 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CompaniesServiceResponse"
+									"items": {
+										"$ref": "#/components/schemas/Company"
+									},
+									"type": "array"
 								}
 							}
 						}
 					}
 				},
+				"description": "Get all companies for a given user",
 				"tags": [
 					"Company"
 				],
@@ -555,7 +393,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CompanyServiceResponse"
+									"$ref": "#/components/schemas/Company"
 								}
 							}
 						}
@@ -566,9 +404,7 @@
 				],
 				"security": [
 					{
-						"jwt": [
-							"ADMIN"
-						]
+						"jwt": []
 					}
 				],
 				"parameters": [],
@@ -593,7 +429,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CompanyServiceResponse"
+									"$ref": "#/components/schemas/Company"
 								}
 							}
 						}
@@ -626,7 +462,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CompanyServiceResponse"
+									"$ref": "#/components/schemas/Company"
 								}
 							}
 						}
@@ -637,9 +473,7 @@
 				],
 				"security": [
 					{
-						"jwt": [
-							"ADMIN"
-						]
+						"jwt": []
 					}
 				],
 				"parameters": [
@@ -671,7 +505,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CompanyServiceResponse"
+									"$ref": "#/components/schemas/Company"
 								}
 							}
 						}
@@ -683,9 +517,7 @@
 				],
 				"security": [
 					{
-						"jwt": [
-							"ADMIN"
-						]
+						"jwt": []
 					}
 				],
 				"parameters": [
@@ -700,23 +532,27 @@
 				]
 			}
 		},
-		"/companies/{companyId}/local-units": {
+		"/companies/{id}/local-units": {
 			"get": {
-				"operationId": "GetAll",
+				"operationId": "GetLocalUnits",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/LocalUnitsServiceResponse"
+									"items": {
+										"$ref": "#/components/schemas/LocalUnit"
+									},
+									"type": "array"
 								}
 							}
 						}
 					}
 				},
 				"tags": [
-					"Local unit"
+					"Local unit",
+					"Company"
 				],
 				"security": [
 					{
@@ -726,50 +562,16 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "companyId",
+						"name": "id",
 						"required": true,
 						"schema": {
 							"$ref": "#/components/schemas/Id"
 						}
 					}
 				]
-			},
-			"post": {
-				"operationId": "Create",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/LocalUnitServiceResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Local unit"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/LocalUnit"
-							}
-						}
-					}
-				}
 			}
 		},
-		"/companies/{companyId}/local-units/{id}": {
+		"/local-units/{id}": {
 			"get": {
 				"operationId": "GetById",
 				"responses": {
@@ -778,7 +580,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/LocalUnitServiceResponse"
+									"$ref": "#/components/schemas/LocalUnit"
 								}
 							}
 						}
@@ -811,7 +613,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/LocalUnitServiceResponse"
+									"$ref": "#/components/schemas/LocalUnit"
 								}
 							}
 						}
@@ -854,7 +656,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/LocalUnitServiceResponse"
+									"$ref": "#/components/schemas/LocalUnit"
 								}
 							}
 						}
@@ -862,6 +664,78 @@
 				},
 				"description": "Logic delete a localUnit",
 				"tags": [
+					"Local unit"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/local-units": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LocalUnit"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Local unit"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocalUnit"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/local-units/{id}/departments": {
+			"get": {
+				"operationId": "GetDepartments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LocalUnit"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department",
 					"Local unit"
 				],
 				"security": [
@@ -981,6 +855,536 @@
 									"email"
 								],
 								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/departments/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocalUnit"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "LogicDelete",
+				"responses": {
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Logic delete a department",
+				"tags": [
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/departments": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocalUnit"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/departments/{id}/hr": {
+			"get": {
+				"operationId": "GetHR",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department",
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/departments/{id}/vehicles": {
+			"get": {
+				"operationId": "GetVehicles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department",
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/hr/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"HR"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"HR"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocalUnit"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "LogicDelete",
+				"responses": {
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Logic delete a localUnit",
+				"tags": [
+					"HR"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/hr": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"HR"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocalUnit"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vehicles/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vehicle"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vehicle"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocalUnit"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "LogicDelete",
+				"responses": {
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Logic delete a localUnit",
+				"tags": [
+					"Vehicle"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/vehicles": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vehicle"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LocalUnit"
 							}
 						}
 					}

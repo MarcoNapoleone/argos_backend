@@ -1,46 +1,56 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags} from "tsoa";
-import * as companiesService from "../services/companies.service";
+import * as CompaniesService from "../services/companies.service";
 import {Company} from "../models/companies.model";
 import {Id} from "../entities/Id";
 
 @Route("companies")
 @Tags("Company")
-export class companiesController extends Controller {
+export class CompaniesController extends Controller {
 
+    /**
+     * Get all companies for a given user
+     */
     @Security("jwt", [])
     @Get("/")
     async getAll(@Request() userId: Id) {
-        return await companiesService.getAll(userId)
+        return await CompaniesService.getAll(userId)
     }
 
     @Security("jwt", [])
     @Get("/:id")
     async getById(@Request() userId: Id, @Path() id: Id) {
-        return await companiesService.getById(userId, id)
+        return await CompaniesService.getById(userId, id)
     }
 
-    @Security("jwt", ["ADMIN"])
+    @Security("jwt", [])
     @SuccessResponse('201', 'Created')
     @Post("/")
     async create(@Request() userId: Id, @Body() company: Company) {
-        return await companiesService.create(userId, company)
+        return await CompaniesService.create(userId, company)
     }
 
 
-    @Security("jwt", ["ADMIN"])
+    @Security("jwt", [])
     @Put("/:id")
     async update(@Request() userId: Id, @Path() id: Id, @Body() company: Company) {
-        return await companiesService.update(userId, id, company)
+        return await CompaniesService.update(userId, id, company)
     }
 
     /**
      * Logic delete a company
      */
-    @Security("jwt", ["ADMIN"])
+    @Security("jwt", [])
     @SuccessResponse("204")
     @Delete("/:id")
     async logicDelete(@Request() userId: Id, @Path() id: Id) {
-        return await companiesService.logicDelete(userId, id)
+        return await CompaniesService.logicDelete(userId, id)
+    }
+
+    @Security("jwt", [])
+    @Get("/:id/local-units")
+    @Tags("Local unit")
+    async getLocalUnits(@Request() userId: Id, @Path() id: Id) {
+        return await CompaniesService.getLocalUnits(userId, id)
     }
 
 }

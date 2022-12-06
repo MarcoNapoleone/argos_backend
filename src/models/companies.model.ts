@@ -31,7 +31,7 @@ export async function getAll(userId: Id) {
         SELECT *
         FROM companies
         WHERE id IN (SELECT ucr.company_id
-                     FROM user_company_roles ucr
+                     FROM user_companies ucr
                               INNER JOIN companies c ON ucr.company_id = c.id
                      WHERE ucr.user_id = ?)
     `, [userId]);
@@ -44,7 +44,7 @@ export async function getById(userId: Id, id: Id) {
         SELECT *
         FROM companies
         WHERE id = (SELECT ucr.company_id
-                    FROM user_company_roles ucr
+                    FROM user_companies ucr
                              INNER JOIN companies c
                                         ON ucr.company_id = c.id
                     WHERE ucr.user_id = ?
@@ -75,4 +75,13 @@ export async function logicDelete(id: Id) {
     `, [id]);
 }
 
-
+export async function getLocalUnits(userId: Id, id: Id) {
+    const rows = await query(`
+        SELECT *
+        FROM local_units lu
+                 INNER JOIN user_companies ucr ON ucr.company_id = lu.company_id
+        WHERE ucr.user_id = ?
+          AND ucr.company_id = ?
+    `, [userId, id]);
+    return emptyOrRows(rows)
+}

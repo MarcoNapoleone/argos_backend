@@ -1,18 +1,19 @@
 import express, {Request, Response} from 'express';
 import {UsersController} from "../controllers/users.controller";
-import {guard} from "../middleware/auth.middleware";
 import {formattedResponse} from "../utils/formattedResponse";
 import {User} from "../models/users.model";
+import {isAdmin} from "../middleware/isAdmin.middleware";
+import {bodyParser} from "../utils/bodyParser";
 
 const usersRouter = express.Router();
 
 /* GET users - get all users */
-usersRouter.get('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
+usersRouter.get('/', isAdmin, async (req: Request, res: Response) => {
     const user: User = req.body.user
     try {
         const controller = new UsersController();
         const response = await controller.getAll();
-        res.json(response.data);
+        res.json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -25,7 +26,7 @@ usersRouter.get('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
 });
 
 /* GET users/:id - get user by id */
-usersRouter.get('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
+usersRouter.get('/:id', isAdmin, async (req: Request, res: Response) => {
 
     const {params: {id}} = req;
     if (!id) return;
@@ -33,7 +34,7 @@ usersRouter.get('/:id', guard(["ADMIN"]), async (req: Request, res: Response) =>
     try {
         const controller = new UsersController();
         const response = await controller.getById(id);
-        if (response.statusCode === 404) {
+        if (response === 404) {
             res.status(404).json(
                 formattedResponse({
                     status: 404,
@@ -41,7 +42,7 @@ usersRouter.get('/:id', guard(["ADMIN"]), async (req: Request, res: Response) =>
                 })
             )
         }
-        return res.json(response.data);
+        return res.json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -53,12 +54,12 @@ usersRouter.get('/:id', guard(["ADMIN"]), async (req: Request, res: Response) =>
 });
 
 /* POST users/:id - create new user */
-usersRouter.post('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
+usersRouter.post('/', isAdmin, async (req: Request, res: Response) => {
 
     try {
         const controller = new UsersController();
-        const response = await controller.create(req.body);
-        res.status(200).json(response.data);
+        const response = await controller.create(bodyParser(req.body));
+        res.status(200).json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -71,7 +72,7 @@ usersRouter.post('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
 });
 
 /* PUT users/:id - update user */
-usersRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
+usersRouter.put('/:id', isAdmin, async (req: Request, res: Response) => {
 
     const {
         params: {id},
@@ -80,8 +81,8 @@ usersRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response) =>
 
     try {
         const controller = new UsersController();
-        const response = await controller.update(id, req.body);
-        res.status(200).json(response.data);
+        const response = await controller.update(id, bodyParser(req.body));
+        res.status(200).json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -93,7 +94,7 @@ usersRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response) =>
 });
 
 /* PUT users/:id - logic delete user */
-usersRouter.delete('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
+usersRouter.delete('/:id', isAdmin, async (req: Request, res: Response) => {
     const {
         params: {id},
     } = req;
@@ -101,8 +102,8 @@ usersRouter.delete('/:id', guard(["ADMIN"]), async (req: Request, res: Response)
 
     try {
         const controller = new UsersController();
-        const response = await controller.logicDelete(id);
-        res.status(200).json(response.data);
+        await controller.logicDelete(id);
+        res.status(204);
     } catch (error) {
         res.status(500).json(
             formattedResponse({

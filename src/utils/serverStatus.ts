@@ -1,10 +1,12 @@
-import mysql from "mysql2";
-import {database} from "../config/database";
+import {query} from "./query";
 
 export async function serverStatus() {
-    const db = await mysql.createConnection(database.credential);
-    await db.execute('SELECT 1=1', (err)=>{
-        if (err) return "service not available";
-    })
-    return "ok"
+    try {
+        const result = await query('SELECT 1=1')
+        if (!result) new Error()
+        return true
+    } catch (err) {
+        return false
+    }
+
 }

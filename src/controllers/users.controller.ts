@@ -7,7 +7,7 @@ import {Id} from "../entities/Id";
 @Tags("User")
 export class UsersController extends Controller {
 
-    @Security("jwt",["ADMIN"])
+    @Security("jwt", ["ADMIN"])
     @Get("/")
     async getAll() {
         return await UsersService.getAll()

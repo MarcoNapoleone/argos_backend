@@ -1,17 +1,11 @@
-import {Body, Controller, Delete, Get, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags} from "tsoa";
+import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
 import * as LocalUnitsService from "../services/localUnits.service";
 import {LocalUnit} from "../models/localUnits.model";
 import {Id} from "../entities/Id";
 
-@Route("/companies/:companyId/local-units")
+@Route("/local-units")
 @Tags("Local unit")
 export class LocalUnitsController extends Controller {
-
-    @Security("jwt", [])
-    @Get("/")
-    async getAll(@Request() userId: Id, @Path() companyId: Id) {
-        return await LocalUnitsService.getAll(userId, companyId)
-    }
 
     @Security("jwt", [])
     @Get("/:id")
@@ -41,5 +35,13 @@ export class LocalUnitsController extends Controller {
     async logicDelete(@Path() id: Id) {
         return await LocalUnitsService.logicDelete(id)
     }
+
+    @Security("jwt", [])
+    @Get("/:id/departments")
+    @Tags("Department")
+    async getDepartments(@Path() id: Id) {
+        return await LocalUnitsService.getDepartments(id)
+    }
+
 
 }

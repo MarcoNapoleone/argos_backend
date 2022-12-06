@@ -13,11 +13,7 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT",
-        "authorizationUrl": "http://localhost:8080/api/v1/auth/login",
-        "name": "access_token",
-        "scopes": {
-          "ADMIN": "full crud auth"
-        }
+        "name": "access_token"
       }
     },
     "contact": {

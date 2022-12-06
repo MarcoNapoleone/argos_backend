@@ -24,6 +24,8 @@ export const formattedResponse = (
 
 const getResponseMessage = (code: httpStatusCode, object: string) => {
     switch (code) {
+        case HttpStatusCode.OK:
+            return "Server online."
         case HttpStatusCode.BAD_REQUEST:
             return "The server cannot or will not process the request due to an apparent client error."
         case HttpStatusCode.UNAUTHORIZED:

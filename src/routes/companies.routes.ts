@@ -1,8 +1,9 @@
 import express, {Request, Response} from 'express';
-import {companiesController} from "../controllers/companies.controller";
+import {CompaniesController} from "../controllers/companies.controller";
 import {User} from "../models/users.model";
 import {formattedResponse} from "../utils/formattedResponse";
-import {guard} from "../middleware/auth.middleware";
+import {isAdmin} from "../middleware/isAdmin.middleware";
+import {bodyParser} from "../utils/bodyParser";
 
 const companiesRouter = express.Router();
 
@@ -10,9 +11,9 @@ const companiesRouter = express.Router();
 companiesRouter.get('/', async (req: Request, res: Response) => {
     try {
         const user: User = req.body.user
-        const controller = new companiesController();
+        const controller = new CompaniesController();
         const response = await controller.getAll(user.id);
-        return res.json(response.data);
+        return res.json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -30,11 +31,11 @@ companiesRouter.get('/:id', async (req: Request, res: Response) => {
     if (!id) return;
 
     try {
-        const controller = new companiesController();
+        const controller = new CompaniesController();
         const user: User = req.body.user
         const response = await controller.getById(user.id, id);
-        if (response.statusCode === 404) {
-            res.status(404).json(
+        if (Object.keys(response).length === 0) {
+            return res.status(404).json(
                 formattedResponse({
                     status: 404,
                     object: "company",
@@ -53,13 +54,13 @@ companiesRouter.get('/:id', async (req: Request, res: Response) => {
 });
 
 /* POST companies/:id - create new company */
-companiesRouter.post('/', guard(["ADMIN"]), async (req: Request, res: Response) => {
+companiesRouter.post('/', isAdmin, async (req: Request, res: Response) => {
 
     try {
         const user: User = req.body.user
-        const controller = new companiesController();
-        const response = await controller.create(user.id, req.body);
-        res.status(200).json(response.data);
+        const controller = new CompaniesController();
+        const response = await controller.create(user.id, bodyParser(req.body));
+        res.status(200).json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -71,7 +72,7 @@ companiesRouter.post('/', guard(["ADMIN"]), async (req: Request, res: Response) 
 });
 
 /* PUT companies/:id - update company */
-companiesRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
+companiesRouter.put('/:id', isAdmin, async (req: Request, res: Response) => {
 
     const {
         params: {id},
@@ -80,9 +81,9 @@ companiesRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response
 
     try {
         const user: User = req.body.user
-        const controller = new companiesController();
-        const response = await controller.update(user.id, id, req.body);
-        res.status(200).json(response.data);
+        const controller = new CompaniesController();
+        const response = await controller.update(user.id, id, bodyParser(req.body));
+        res.status(200).json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -94,7 +95,7 @@ companiesRouter.put('/:id', guard(["ADMIN"]), async (req: Request, res: Response
 });
 
 /* PUT companies/:id - logic delete company */
-companiesRouter.delete('/:id', guard(["ADMIN"]), async (req: Request, res: Response) => {
+companiesRouter.delete('/:id', isAdmin, async (req: Request, res: Response) => {
     const {
         params: {id},
     } = req;
@@ -103,9 +104,28 @@ companiesRouter.delete('/:id', guard(["ADMIN"]), async (req: Request, res: Respo
 
     try {
         const user: User = req.body.user
-        const controller = new companiesController();
+        const controller = new CompaniesController();
         const response = await controller.logicDelete(user.id, id);
-        res.status(200).json(response.data);
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json(
+            formattedResponse({
+                status: 500,
+                object: "company",
+            })
+        );
+    }
+});
+
+/* GET local-units - get all localUnits */
+companiesRouter.get('/:id/local-units', async (req: Request, res: Response) => {
+
+    const {params: {id}} = req;
+    try {
+        const user: User = req.body.user
+        const controller = new CompaniesController();
+        const response = await controller.getLocalUnits(user.id, id);
+        return res.json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({

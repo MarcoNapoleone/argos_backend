@@ -97,7 +97,6 @@ export async function create(user: User) {
 }
 
 export async function update(id: Id, user: User) {
-
     return await query(`
         UPDATE users t
         SET t.name     = ?,

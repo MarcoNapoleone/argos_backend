@@ -1,5 +1,4 @@
 import cookieParser from "cookie-parser";
-import logger from "morgan";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
@@ -16,6 +15,9 @@ import cors from "cors";
 import {auth} from "./middleware/auth.middleware";
 import rateLimit from "express-rate-limit";
 import authRouter from "./routes/auth.routes";
+import departmentsRouter from "./routes/departments.routes";
+import hrRouter from "./routes/hr.routes";
+import vehiclesRouter from "./routes/vehicles.routes";
 
 const app = express();
 const server = http.createServer(app);
@@ -41,19 +43,23 @@ app.use(json());
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(logger('dev'));
-app.use(morgan('tiny'));
+app.use(morgan('tiny', {}));
 app.use(limiter)
 app.use(urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
 app.use("/api/v1", router);
+
 router.use('/', indexRouter);
 router.use('/auth', authRouter);
 router.use('/users', auth, usersRouter);
 router.use('/companies', auth, companiesRouter);
-router.use('/companies/:companyId/local-units', auth, localUnitsRouter);
+router.use('/local-units', auth, localUnitsRouter);
+router.use('/departments', auth, departmentsRouter);
+router.use('/hr', auth, hrRouter);
+router.use('/vehicles', auth, vehiclesRouter);
+
 router.use('/favicon.ico', express.static('public/icons/api.ico'));
 router.use("/docs", swaggerUi.serve, swaggerSetup);
 router.use(notFound);
@@ -62,7 +68,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 app.listen(PORT, () => {
-    console.log(`⚡[server]: Server is running at http://localhost:${PORT}/api/v1`);
+    console.info(`⚡[server]: Server is running at http://localhost:${PORT}/api/v1`);
 });
 
 module.exports = app;

@@ -4,7 +4,7 @@ import {create, findOne} from "./users.service";
 
 export async function login(params: { email: string, password: string }) {
 
-    const {data: user} = await findOne("email", params.email)
+    const user = await findOne("email", params.email)
 
     if (!user) return {result: false, token: {}}
 
