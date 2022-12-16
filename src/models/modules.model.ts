@@ -1,5 +1,4 @@
 import {Id} from "../entities/Id";
-import {IsDate, IsUUID} from "class-validator";
 import {UUID} from "../utils/uuid";
 import {query} from "../utils/query";
 import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
@@ -7,21 +6,11 @@ import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
 
 export class Module {
     id?: Id;
-
-    @IsUUID()
     uuid?: UUID;
-
     name?: string;
-
-    @IsDate()
     createdAt?: Date;
-
-    @IsDate()
     deletedAt?: Date;
-
     version?: number;
-
-    @IsDate()
     updatedAt?: Date;
 }
 

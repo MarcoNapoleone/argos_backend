@@ -1,27 +1,22 @@
 import {query} from '../utils/query';
 import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
 import {Id} from "../entities/Id";
-import {IsDate, IsUUID} from "class-validator";
 import {UUID} from "../utils/uuid";
 
 export class Company {
 
     id?: Id;
 
-    @IsUUID()
     uuid?: UUID;
 
     name?: string;
 
-    @IsDate()
     createdAt?: Date;
 
-    @IsDate()
     deletedAt?: Date;
 
     version?: number;
 
-    @IsDate()
     updatedAt?: Date;
 }
 
@@ -60,9 +55,7 @@ export async function create(company: Company) {
 
 export async function update(id: Id, company: Company) {
 
-    return await query(`
-        
-    `);
+    return await query(``);
 }
 
 export async function logicDelete(id: Id) {
