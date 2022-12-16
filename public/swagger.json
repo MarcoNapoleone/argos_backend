@@ -20,7 +20,7 @@
 			"UUID": {
 				"type": "string",
 				"format": "uuid",
-				"description": "Stringified UUIDv4.\r\nSee [RFC 4112](https://tools.ietf.org/html/rfc4122)",
+				"description": "Stringified UUIDv4.\nSee [RFC 4112](https://tools.ietf.org/html/rfc4122)",
 				"pattern": "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}"
 			},
 			"Status": {
@@ -764,17 +764,66 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"token": {},
-										"result": {
-											"type": "boolean"
+									"anyOf": [
+										{
+											"properties": {
+												"user": {},
+												"token": {
+													"properties": {},
+													"type": "object"
+												},
+												"result": {
+													"type": "boolean"
+												}
+											},
+											"required": [
+												"token",
+												"result"
+											],
+											"type": "object"
+										},
+										{
+											"properties": {
+												"user": {
+													"properties": {
+														"role": {
+															"$ref": "#/components/schemas/Role"
+														},
+														"email": {
+															"type": "string"
+														},
+														"surname": {
+															"type": "string"
+														},
+														"name": {
+															"type": "string"
+														},
+														"uuid": {
+															"type": "string"
+														}
+													},
+													"required": [
+														"role",
+														"email",
+														"surname",
+														"name",
+														"uuid"
+													],
+													"type": "object"
+												},
+												"token": {},
+												"result": {
+													"type": "boolean"
+												}
+											},
+											"required": [
+												"user",
+												"token",
+												"result"
+											],
+											"type": "object"
 										}
-									},
-									"required": [
-										"token",
-										"result"
-									],
-									"type": "object"
+									]
 								}
 							}
 						}

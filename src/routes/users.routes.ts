@@ -34,12 +34,12 @@ usersRouter.get('/:id', isAdmin, async (req: Request, res: Response) => {
     try {
         const controller = new UsersController();
         const response = await controller.getById(id);
-        if (response === 404) {
-            res.status(404).json(
-                formattedResponse({
-                    status: 404,
-                    object: "user",
-                })
+        if (Object.keys(response).length === 0) {
+            return res.status(404).json(
+              formattedResponse({
+                  status: 404,
+                  object: "user",
+              })
             )
         }
         return res.json(response);

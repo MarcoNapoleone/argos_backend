@@ -24,7 +24,7 @@ authRouter.post('/login',
         try {
             const {email, password} = req.body;
             const controller = new AuthController();
-            const {result, token} = await controller.login({email, password})
+            const {result, token, user} = await controller.login({email, password})
 
             if (!result) {
                 res.status(401).json(
@@ -40,7 +40,8 @@ authRouter.post('/login',
             res.status(200).json({
                 status: 200,
                 message: "User login complete.",
-                token: token
+                token,
+                user
             });
 
         } catch (error) {

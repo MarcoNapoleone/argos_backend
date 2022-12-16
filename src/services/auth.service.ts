@@ -21,7 +21,14 @@ export async function login(params: { email: string, password: string }) {
             {
                 expiresIn: `${process.env.JWT_EXPIRES_IN}`
             }
-        )
+        ),
+        user: {
+            uuid: user.uuid,
+            name: user.name,
+            surname: user.surname,
+            email: user.email,
+            role: user.role
+        }
     }
 
 
