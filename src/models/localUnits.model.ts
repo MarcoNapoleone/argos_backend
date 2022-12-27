@@ -1,5 +1,5 @@
 import {query} from '../utils/query';
-import {emptyOrRow} from "../utils/emptyOrRows";
+import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
 import {Id} from "../entities/Id";
 import {UUID} from "../utils/uuid";
 
@@ -7,6 +7,11 @@ export class LocalUnit {
     id?: Id;
     uuid?: UUID;
     name?: string;
+    email?: string;
+    address?: string;
+    municipality?: string;
+    postalCode?: string;
+    phone?: string;
     companyId?: Id;
     createdAt?: Date;
     deletedAt?: Date;
@@ -58,12 +63,12 @@ export async function logicDelete(id: Id) {
 }
 
 export async function getDepartments(id: Id) {
-    const row = await query(`
+    const rows = await query(`
         SELECT *
         FROM departments d
         WHERE d.local_unit_id = ?
     `, [id]);
-    return emptyOrRow(row);
+    return emptyOrRows(rows);
 }
 
 

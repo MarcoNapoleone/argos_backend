@@ -14,7 +14,7 @@ export async function getById(userId: Id, id: Id): Promise<Company> {
 
 export async function create(userId: Id, company: Company): Promise<Company> {
 
-    let _company: Company = {
+    const _company: Company = {
         uuid: getUuid(), ...company
     }
     const response = await companiesModel.create(_company)
@@ -22,7 +22,7 @@ export async function create(userId: Id, company: Company): Promise<Company> {
 }
 
 export async function update(userId: Id, id: Id, company: Company): Promise<Company> {
-    let _company: Company = await companiesModel.getById(userId, id);
+    const _company: Company = await companiesModel.getById(userId, id);
     // updates only new passed fields
     const response = await companiesModel.update(id, Object.assign({}, _company, company))
     return await companiesModel.getById(userId, response.insertId);

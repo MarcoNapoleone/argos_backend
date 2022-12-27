@@ -95,6 +95,30 @@
 					"name": {
 						"type": "string"
 					},
+					"address": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"province": {
+						"type": "string"
+					},
+					"postalCode": {
+						"type": "string"
+					},
+					"fiscalCode": {
+						"type": "string"
+					},
+					"vatCode": {
+						"type": "string"
+					},
+					"registeredMunicipality": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
@@ -124,6 +148,21 @@
 						"$ref": "#/components/schemas/UUID"
 					},
 					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"municipality": {
+						"type": "string"
+					},
+					"postalCode": {
+						"type": "string"
+					},
+					"phone": {
 						"type": "string"
 					},
 					"companyId": {
