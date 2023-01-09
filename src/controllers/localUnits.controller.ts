@@ -39,9 +39,15 @@ export class LocalUnitsController extends Controller {
     @Security("jwt", [])
     @Get("/:id/departments")
     @Tags("Department")
-    async getDepartments(@Path() id: Id) {
-        return await LocalUnitsService.getDepartments(id)
+    async getAllDepartments(@Path() id: Id) {
+        return await LocalUnitsService.getAllDepartments(id)
     }
 
+    @Security("jwt", [])
+    @Get("/:id/vehicles")
+    @Tags("Vehicle")
+    async getAllVehicles(@Path() id: Id) {
+        return await LocalUnitsService.getAllVehicles(id)
+    }
 
 }

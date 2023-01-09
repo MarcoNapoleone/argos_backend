@@ -187,6 +187,288 @@
 				},
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Department": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"localUnitId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Vehicle": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"localUnitId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Equipment": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"departmentId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HR": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"surname": {
+						"type": "string"
+					},
+					"departmentId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Property": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"companyId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Document": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"companyId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"path": {
+						"type": "string"
+					},
+					"refId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"description": {
+						"type": "string"
+					},
+					"moduleId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"fileType": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Timetable": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"moduleId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"refId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"alert": {
+						"type": "boolean"
+					},
+					"closedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "string"
+					},
+					"companyId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -573,7 +855,7 @@
 		},
 		"/companies/{id}/local-units": {
 			"get": {
-				"operationId": "GetLocalUnits",
+				"operationId": "GetAllLocalUnits",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -591,6 +873,279 @@
 				},
 				"tags": [
 					"Local unit",
+					"Company"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/companies/{id}/departments": {
+			"get": {
+				"operationId": "GetAllDepartments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Department"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department",
+					"Company"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/companies/{id}/vehicles": {
+			"get": {
+				"operationId": "GetAllVehicles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Vehicle"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vehicle",
+					"Company"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/companies/{id}/equipments": {
+			"get": {
+				"operationId": "GetAllEquipments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Equipment"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equipment",
+					"Company"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/companies/{id}/hr": {
+			"get": {
+				"operationId": "GetAllHR",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/HR"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"HR",
+					"Company"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/companies/{id}/properties": {
+			"get": {
+				"operationId": "GetAllProperties",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Property"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Property",
+					"Company"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/companies/{id}/documents": {
+			"get": {
+				"operationId": "GetAllDocuments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Document"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Document",
+					"Company"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/companies/{id}/timetables": {
+			"get": {
+				"operationId": "GetAllTimetables",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Timetable"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Timetable",
 					"Company"
 				],
 				"security": [
@@ -760,14 +1315,17 @@
 		},
 		"/local-units/{id}/departments": {
 			"get": {
-				"operationId": "GetDepartments",
+				"operationId": "GetAllDepartments",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/LocalUnit"
+									"items": {
+										"$ref": "#/components/schemas/Department"
+									},
+									"type": "array"
 								}
 							}
 						}
@@ -775,6 +1333,45 @@
 				},
 				"tags": [
 					"Department",
+					"Local unit"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/local-units/{id}/vehicles": {
+			"get": {
+				"operationId": "GetAllVehicles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Vehicle"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vehicle",
 					"Local unit"
 				],
 				"security": [
@@ -1103,7 +1700,7 @@
 		},
 		"/departments/{id}/hr": {
 			"get": {
-				"operationId": "GetHR",
+				"operationId": "GetAllHR",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -1138,9 +1735,9 @@
 				]
 			}
 		},
-		"/departments/{id}/vehicles": {
+		"/departments/{id}/equipment": {
 			"get": {
-				"operationId": "GetVehicles",
+				"operationId": "GetAllVehicles",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -1155,7 +1752,7 @@
 					}
 				},
 				"tags": [
-					"Department",
+					"Equipment",
 					"Department"
 				],
 				"security": [

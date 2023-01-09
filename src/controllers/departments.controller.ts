@@ -38,14 +38,14 @@ export class DepartmentsController extends Controller {
     @Security("jwt", [])
     @Get("/:id/hr")
     @Tags("Department")
-    async getHR(@Request() userId: Id, @Path() id: Id) {
+    async getAllHR(@Request() userId: Id, @Path() id: Id) {
         return {}
     }
 
     @Security("jwt", [])
-    @Get("/:id/vehicles")
-    @Tags("Department")
-    async getVehicles(@Request() userId: Id, @Path() id: Id) {
+    @Get("/:id/equipment")
+    @Tags("Equipment")
+    async getAllVehicles(@Request() userId: Id, @Path() id: Id) {
         return {}
     }
 

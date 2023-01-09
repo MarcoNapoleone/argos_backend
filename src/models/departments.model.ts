@@ -3,16 +3,11 @@ import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
 import {Id} from "../entities/Id";
 import {UUID} from "../utils/uuid";
 
-export class LocalUnit {
+export class Department {
     id?: Id;
     uuid?: UUID;
     name?: string;
-    email?: string;
-    address?: string;
-    municipality?: string;
-    postalCode?: string;
-    phone?: string;
-    companyId?: Id;
+    localUnitId?: Id;
     createdAt?: Date;
     deletedAt?: Date;
     version?: number;
@@ -22,33 +17,33 @@ export class LocalUnit {
 export async function getById(id: Id) {
     const row = await query(`
         SELECT *
-        FROM local_units lu
+        FROM departments lu
         WHERE lu.id = ?
     `, [id]);
     return emptyOrRow(row)
 }
 
-export async function create(localUnit: LocalUnit) {
+export async function create(document: Department) {
     return await query(`
-        INSERT INTO local_units(uuid,
+        INSERT INTO departments(uuid,
                                 name,
-                                company_id)
+                                local_unit_id)
         VALUES (?, ?, ?)
     `, [
-        localUnit.uuid,
-        localUnit.name,
-        localUnit.companyId
+        document.uuid,
+        document.name,
+        document.localUnitId
     ]);
 }
 
-export async function update(id: Id, localUnit: LocalUnit) {
+export async function update(id: Id, document: Department) {
     return await query(`
-        UPDATE local_units lu
-        SET lu.name       = ?,
-            lu.company_id = ?
+        UPDATE departments lu
+        SET lu.name          = ?,
+            lu.local_unit_id = ?
         WHERE lu.id = ?;
-    `, [localUnit.name,
-        localUnit.companyId,
+    `, [document.name,
+        document.localUnitId,
         id
     ]);
 }
@@ -56,13 +51,13 @@ export async function update(id: Id, localUnit: LocalUnit) {
 export async function logicDelete(id: Id) {
     const now = Date();
     return await query(`
-        UPDATE local_units t
+        UPDATE departments t
         SET t.deleted_at = ${now}
         WHERE t.id = ?;
     `, [id]);
 }
 
-export async function getAllDepartments(id: Id) {
+export async function getDepartments(id: Id) {
     const rows = await query(`
         SELECT *
         FROM departments d
@@ -71,12 +66,4 @@ export async function getAllDepartments(id: Id) {
     return emptyOrRows(rows);
 }
 
-export async function getAllVehicles(id: Id) {
-    const rows = await query(`
-        SELECT *
-        FROM vehicles v
-        WHERE v.local_unit_id = ?
-    `, [id]);
-    return emptyOrRows(rows);
-}
 

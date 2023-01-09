@@ -102,7 +102,7 @@ departmentsRouter.get('/:id/hr', async (req: Request, res: Response) => {
     try {
         const user: User = req.body.user
         const controller = new LocalUnitsController();
-        const response = await controller.getDepartments(id);
+        const response = await controller.getAllDepartments(id);
         return res.json(response);
     } catch (error) {
         res.status(500).json(
@@ -121,7 +121,7 @@ departmentsRouter.get('/:id/vehicles', async (req: Request, res: Response) => {
     try {
         const user: User = req.body.user
         const controller = new LocalUnitsController();
-        const response = await controller.getDepartments(id);
+        const response = await controller.getAllDepartments(id);
         return res.json(response);
     } catch (error) {
         res.status(500).json(

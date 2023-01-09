@@ -34,7 +34,7 @@ const swaggerSetup = swaggerUi.setup(undefined, {
     swaggerOptions: {
         url: "/swagger.json",
     },
-    customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.1/themes/3.x/theme-flattop.css',
+   // customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.1/themes/3.x/theme-flattop.css',
 });
 
 app.set('port', PORT);

@@ -69,13 +69,106 @@ export async function logicDelete(id: Id) {
   `, [id]);
 }
 
-export async function getLocalUnits(userId: Id, id: Id) {
+export async function getAllLocalUnits(userId: Id, id: Id) {
   const rows = await query(`
       SELECT lu.*
-      FROM local_units lu
-               INNER JOIN user_companies ucr ON ucr.company_id = lu.company_id
-      WHERE ucr.user_id = ?
-        AND ucr.company_id = ?
+      FROM user_companies uc
+               INNER JOIN local_units lu ON uc.company_id = lu.company_id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+export async function getAllDepartments(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT d.*
+      FROM user_companies uc
+               INNER JOIN local_units lu ON uc.company_id = lu.company_id
+               INNER JOIN departments d ON lu.id = d.local_unit_id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+export async function getAllVehicles(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT v.*
+      FROM user_companies uc
+               INNER JOIN local_units lu ON uc.company_id = lu.company_id
+               INNER JOIN vehicles v ON lu.id = v.local_unit_id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+export async function getAllHR(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT hr.*
+      FROM user_companies uc
+               INNER JOIN local_units lu ON uc.company_id = lu.company_id
+               INNER JOIN departments d ON lu.id = d.local_unit_id
+               INNER JOIN hr_departments hrd ON d.id = hrd.department_id
+               INNER JOIN hr ON hrd.hr_id = hr.id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+export async function getAllEquipments(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT e.*
+      FROM user_companies uc
+               INNER JOIN local_units lu ON uc.company_id = lu.company_id
+               INNER JOIN departments d ON lu.id = d.local_unit_id
+               INNER JOIN equipments e ON e.department_id = d.id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+export async function getAllProperties(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT p.*
+      FROM user_companies uc
+               INNER JOIN properties p ON uc.company_id = p.company_id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+export async function getAllDocuments(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT d.*
+      FROM user_companies uc
+               INNER JOIN documents d ON uc.company_id = d.company_id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+export async function getAllTimetables(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT t.*
+      FROM user_companies uc
+               INNER JOIN timetables t ON uc.company_id = t.company_id
+      WHERE uc.user_id = ?
+        AND uc.company_id = ?
+  `, [userId, id]);
+  return emptyOrRows(rows)
+}
+
+// todo: permissions handling
+export async function getAllModules(userId: Id, id: Id) {
+  const rows = await query(`
+      SELECT *
+      FROM modules
   `, [userId, id]);
   return emptyOrRows(rows)
 }
