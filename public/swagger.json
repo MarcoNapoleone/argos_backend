@@ -159,11 +159,53 @@
 					"municipality": {
 						"type": "string"
 					},
+					"province": {
+						"type": "string"
+					},
 					"postalCode": {
 						"type": "string"
 					},
 					"phone": {
 						"type": "string"
+					},
+					"itRea": {
+						"type": "string"
+					},
+					"itCodiceAteco": {
+						"type": "string"
+					},
+					"itAttivitaPrevalente": {
+						"type": "string"
+					},
+					"itCciaa": {
+						"type": "string"
+					},
+					"itIsArtigiana": {
+						"type": "boolean"
+					},
+					"itIsAgricola": {
+						"type": "boolean"
+					},
+					"itResponsabile": {
+						"type": "string"
+					},
+					"itDatoreDiLavoro": {
+						"type": "string"
+					},
+					"itDirigente": {
+						"type": "string"
+					},
+					"itPreposto": {
+						"type": "string"
+					},
+					"itRspp": {
+						"type": "string"
+					},
+					"itAspp": {
+						"type": "string"
+					},
+					"propertyId": {
+						"$ref": "#/components/schemas/Id"
 					},
 					"companyId": {
 						"$ref": "#/components/schemas/Id"

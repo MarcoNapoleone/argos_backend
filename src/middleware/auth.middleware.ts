@@ -6,45 +6,45 @@ import {UUID} from "../utils/uuid";
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
 
-    let token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json(
-            formattedResponse({
-                status: 401,
-                object: "authentication",
-                message: "Missing token"
-            })
-        )
+  let token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json(
+      formattedResponse({
+        status: 401,
+        object: "authentication",
+        message: "Missing token"
+      })
+    )
+  }
+
+  token = token.split(' ')[1];
+
+  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    if (err) {
+      return res.status(401).json(
+        formattedResponse({
+          status: 401,
+          object: "authentication",
+          message: "Could not verify token"
+        })
+      )
     }
 
-    token = token.split(' ')[1];
+    const uuid = decoded?.sub as UUID
+    const user = await getByUUID(uuid)
 
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-        if (err) {
-            return res.status(401).json(
-                formattedResponse({
-                    status: 401,
-                    object: "authentication",
-                    message: "Could not verify token"
-                })
-            )
-        }
+    if (user.status !== 'ACTIVE') {
+      return res.status(403).json(
+        formattedResponse({
+          status: 403,
+          object: "authentication",
+          message: "User account status is either inactive or disabled"
+        })
+      )
+    }
 
-        const uuid = decoded?.sub as UUID
-        const user = await getByUUID(uuid)
-
-        if (user.status !== 'ACTIVE') {
-            return res.status(403).json(
-                formattedResponse({
-                    status: 403,
-                    object: "authentication",
-                    message: "User account status is either inactive or disabled"
-                })
-            )
-        }
-
-        req.body = {'user': user}
-        next();
-    });
+    req.body = {'user': user, 'object': req.body}
+    next();
+  });
 };
 

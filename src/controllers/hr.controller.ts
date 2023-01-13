@@ -6,33 +6,33 @@ import {Id} from "../entities/Id";
 @Tags("HR")
 export class HRController extends Controller {
 
-    @Security("jwt", [])
-    @Get("/:id")
-    async getById(@Request() userId: Id, @Path() id: Id) {
-        return {}
-    }
+  @Security("jwt", [])
+  @Get("/:id")
+  async getById(@Request() userId: Id, @Path() id: Id) {
+    return {}
+  }
 
-    @Security("jwt", [])
-    @SuccessResponse('201', 'Created')
-    @Post("/")
-    async create(@Body() localUnit: LocalUnit) {
-        return {}
-    }
+  @Security("jwt", [])
+  @SuccessResponse('201', 'Created')
+  @Post("/")
+  async create(@Body() localUnit: LocalUnit) {
+    return {}
+  }
 
-    @Security("jwt", [])
-    @Put("/:id")
-    async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
-        return {}
-    }
+  @Security("jwt", [])
+  @Put("/:id")
+  async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
+    return {}
+  }
 
-    /**
-     * Logic delete a localUnit
-     */
-    @Security("jwt", [])
-    @SuccessResponse("204")
-    @Delete("/:id")
-    async logicDelete(@Path() id: Id) {
-        return await {}
-    }
+  /**
+   * Logic delete a localUnit
+   */
+  @Security("jwt", [])
+  @SuccessResponse("204")
+  @Delete("/:id")
+  async logicDelete(@Path() id: Id) {
+    return await {}
+  }
 
 }

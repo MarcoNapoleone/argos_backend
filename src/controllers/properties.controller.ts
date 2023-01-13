@@ -6,22 +6,22 @@ import {Id} from "../entities/Id";
 @Tags("Property")
 export class PropertiesController extends Controller {
 
-      @Security("jwt", [])
-      @Get("/:id")
-      async getById(@Request() userId: Id, @Path() id: Id) {
-            return {}
-      }
+  @Security("jwt", [])
+  @Get("/:id")
+  async getById(@Request() userId: Id, @Path() id: Id) {
+    return {}
+  }
 
-      @Security("jwt", [])
-      @SuccessResponse('201', 'Created')
-      @Post("/")
-      async create(@Body() localUnit: LocalUnit) {
-            return {}
-      }
+  @Security("jwt", [])
+  @SuccessResponse('201', 'Created')
+  @Post("/")
+  async create(@Body() localUnit: LocalUnit) {
+    return {}
+  }
 
-      @Security("jwt", [])
-      @Put("/:id")
-      async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
-            return {}
-      }
+  @Security("jwt", [])
+  @Put("/:id")
+  async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
+    return {}
+  }
 }

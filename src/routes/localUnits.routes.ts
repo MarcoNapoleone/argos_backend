@@ -2,7 +2,7 @@ import express, {Request, Response} from 'express';
 import {LocalUnitsController} from "../controllers/localUnits.controller";
 import {User} from "../models/users.model";
 import {formattedResponse} from "../utils/formattedResponse";
-import {bodyParser} from "../utils/bodyParser";
+import {objectParser} from "../middleware/objectParser.middleware";
 
 const localUnitsRouter = express.Router({mergeParams: true});
 
@@ -28,6 +28,7 @@ localUnitsRouter.get('/:id', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "local unit",
       })
     )
@@ -39,12 +40,13 @@ localUnitsRouter.post('/', async (req: Request, res: Response) => {
 
   try {
     const controller = new LocalUnitsController();
-    const response = await controller.create(bodyParser(req.body));
+    const response = await controller.create(req.body.object);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "local unit",
       }))
   }
@@ -62,12 +64,13 @@ localUnitsRouter.put('/:id', async (req: Request, res: Response) => {
   try {
     const user: User = req.body.user
     const controller = new LocalUnitsController();
-    const response = await controller.update(id, bodyParser(req.body));
+    const response = await controller.update(id, objectParser(req.body));
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "local unit",
       })
     )
@@ -107,6 +110,7 @@ localUnitsRouter.get('/:id/departments', async (req: Request, res: Response) => 
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "local unit",
       })
     );
@@ -126,6 +130,7 @@ localUnitsRouter.get('/:id/vehicles', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "local unit",
       })
     );

@@ -1,4 +1,3 @@
-
-export function getNowTime(){
-    return Date.now().toString()
+export function getNowTime() {
+  return Date.now().toString()
 }

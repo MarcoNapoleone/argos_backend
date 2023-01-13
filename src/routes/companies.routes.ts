@@ -3,7 +3,7 @@ import {CompaniesController} from "../controllers/companies.controller";
 import {User} from "../models/users.model";
 import {formattedResponse} from "../utils/formattedResponse";
 import {isAdmin} from "../middleware/isAdmin.middleware";
-import {bodyParser} from "../utils/bodyParser";
+import {objectParser} from "../middleware/objectParser.middleware";
 
 const companiesRouter = express.Router();
 
@@ -18,6 +18,7 @@ companiesRouter.get('/', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -47,6 +48,7 @@ companiesRouter.get('/:id', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     )
@@ -56,15 +58,17 @@ companiesRouter.get('/:id', async (req: Request, res: Response) => {
 /* POST companies/:id - create new company */
 companiesRouter.post('/', isAdmin, async (req: Request, res: Response) => {
 
+  console.log(objectParser(req.body));
   try {
     const user: User = req.body.user
     const controller = new CompaniesController();
-    const response = await controller.create(user.id, bodyParser(req.body));
+    const response = await controller.create(user.id, objectParser(req.body.object));
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       }))
   }
@@ -82,12 +86,13 @@ companiesRouter.put('/:id', isAdmin, async (req: Request, res: Response) => {
   try {
     const user: User = req.body.user
     const controller = new CompaniesController();
-    const response = await controller.update(user.id, id, bodyParser(req.body));
+    const response = await controller.update(user.id, id, objectParser(req.body));
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     )
@@ -111,6 +116,7 @@ companiesRouter.delete('/:id', isAdmin, async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -130,6 +136,7 @@ companiesRouter.get('/:id/local-units', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -149,6 +156,7 @@ companiesRouter.get('/:id/departments', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -168,6 +176,7 @@ companiesRouter.get('/:id/vehicles', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -187,6 +196,7 @@ companiesRouter.get('/:id/equipments', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -206,6 +216,7 @@ companiesRouter.get('/:id/hr', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -225,6 +236,7 @@ companiesRouter.get('/:id/properties', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -245,6 +257,7 @@ companiesRouter.get('/:id/documents', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
@@ -264,6 +277,7 @@ companiesRouter.get('/:id/timetables', async (req: Request, res: Response) => {
     res.status(500).json(
       formattedResponse({
         status: 500,
+        Error: error,
         object: "company",
       })
     );
