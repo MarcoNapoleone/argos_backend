@@ -1,7 +1,7 @@
 import * as LocalUnitsModel from "../models/localUnits.model";
 import {defaultLocalUnit, LocalUnit} from "../models/localUnits.model";
-import {getUuid} from "../utils/uuid";
-import {Id} from "../entities/Id";
+import {getUuid} from "../types/UUID";
+import {Id} from "../types/Id";
 import {Department} from "../models/departments.model";
 import {Vehicle} from "../models/vehicles.model";
 

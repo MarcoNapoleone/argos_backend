@@ -1,7 +1,7 @@
 import * as CompaniesModel from "../models/companies.model";
 import {Company, defaultCompany} from "../models/companies.model";
-import {getUuid} from "../utils/uuid";
-import {Id} from "../entities/Id";
+import {getUuid} from "../types/UUID";
+import {Id} from "../types/Id";
 import {LocalUnit} from "../models/localUnits.model";
 import {Department} from "../models/departments.model";
 import {Vehicle} from "../models/vehicles.model";
@@ -10,6 +10,7 @@ import {HR} from "../models/hr.model";
 import {Document} from "../models/documents.model";
 import {Property} from "../models/properties.model";
 import {Timetable} from "../models/timetables.model";
+import {objectFiller} from "../handlers/objects/objectFiller";
 
 export async function getAll(userId: Id): Promise<Company[]> {
   return await CompaniesModel.getAll(userId);
@@ -28,7 +29,7 @@ export async function create(userId: Id, company: Company): Promise<Company> {
 export async function update(userId: Id, id: Id, company: Company): Promise<Company> {
   const _company: Company = await CompaniesModel.getById(userId, id);
   // updates only new passed fields
-  const response = await CompaniesModel.update(id, Object.assign({}, _company, company))
+  const response = await CompaniesModel.update(id, objectFiller(company, _company))
   return await CompaniesModel.getById(userId, response.insertId);
 
 }

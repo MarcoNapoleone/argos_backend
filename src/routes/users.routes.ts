@@ -1,9 +1,9 @@
 import express, {Request, Response} from 'express';
 import {UsersController} from "../controllers/users.controller";
-import {formattedResponse} from "../utils/formattedResponse";
+import {formattedResponse} from "../handlers/http/formattedResponse";
 import {User} from "../models/users.model";
-import {isAdmin} from "../middleware/isAdmin.middleware";
-import {objectParser} from "../middleware/objectParser.middleware";
+import {isAdmin} from "../middlewares/isAdmin.middleware";
+import {objectParser} from "../handlers/objects/objectParser";
 
 const usersRouter = express.Router();
 

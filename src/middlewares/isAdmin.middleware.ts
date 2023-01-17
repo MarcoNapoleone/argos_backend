@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {formattedResponse} from "../utils/formattedResponse";
+import {formattedResponse} from "../handlers/http/formattedResponse";
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   const {user} = req.body;

@@ -1,9 +1,9 @@
 import express, {Request, Response} from 'express';
 import {DepartmentsController} from "../controllers/departments.controller";
 import {User} from "../models/users.model";
-import {formattedResponse} from "../utils/formattedResponse";
+import {formattedResponse} from "../handlers/http/formattedResponse";
 import {LocalUnitsController} from "../controllers/localUnits.controller";
-import {objectParser} from "../middleware/objectParser.middleware";
+import {objectParser} from "../handlers/objects/objectParser";
 
 const departmentsRouter = express.Router({mergeParams: true});
 

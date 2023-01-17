@@ -1,7 +1,7 @@
-import {Id} from "../entities/Id";
-import {UUID} from "../utils/uuid";
-import {query} from "../utils/query";
-import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
+import {Id} from "../types/Id";
+import {UUID} from "../types/UUID";
+import {query} from "../handlers/db/query";
+import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
 
 
 export class Module {

@@ -1,6 +1,6 @@
-import {query} from "../utils/query";
-import {Id} from "../entities/Id";
-import {emptyOrRow} from "../utils/emptyOrRows";
+import {query} from "../handlers/db/query";
+import {Id} from "../types/Id";
+import {emptyOrRow} from "../handlers/db/emptyOrRows";
 
 
 export const getUserPermission = async (userId: Id, companyId: Id, moduleId: Id) => {

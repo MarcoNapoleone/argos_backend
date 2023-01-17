@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
 import {DepartmentsController} from "../controllers/departments.controller";
 import {User} from "../models/users.model";
-import {formattedResponse} from "../utils/formattedResponse";
-import {objectParser} from "../middleware/objectParser.middleware";
+import {formattedResponse} from "../handlers/http/formattedResponse";
+import {objectParser} from "../handlers/objects/objectParser";
 
 const documentsRouter = express.Router({mergeParams: true});
 

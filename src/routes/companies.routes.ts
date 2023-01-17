@@ -1,9 +1,9 @@
 import express, {Request, Response} from 'express';
 import {CompaniesController} from "../controllers/companies.controller";
 import {User} from "../models/users.model";
-import {formattedResponse} from "../utils/formattedResponse";
-import {isAdmin} from "../middleware/isAdmin.middleware";
-import {objectParser} from "../middleware/objectParser.middleware";
+import {formattedResponse} from "../handlers/http/formattedResponse";
+import {isAdmin} from "../middlewares/isAdmin.middleware";
+import {objectParser} from "../handlers/objects/objectParser";
 
 const companiesRouter = express.Router();
 
@@ -58,7 +58,6 @@ companiesRouter.get('/:id', async (req: Request, res: Response) => {
 /* POST companies/:id - create new company */
 companiesRouter.post('/', isAdmin, async (req: Request, res: Response) => {
 
-  console.log(objectParser(req.body));
   try {
     const user: User = req.body.user
     const controller = new CompaniesController();
@@ -86,7 +85,7 @@ companiesRouter.put('/:id', isAdmin, async (req: Request, res: Response) => {
   try {
     const user: User = req.body.user
     const controller = new CompaniesController();
-    const response = await controller.update(user.id, id, objectParser(req.body));
+    const response = await controller.update(user.id, id, objectParser(req.body.object));
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(

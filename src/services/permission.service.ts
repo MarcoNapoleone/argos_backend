@@ -1,7 +1,7 @@
-import {Event} from "../entities/Event";
-import {crudsTest} from "../utils/cruds";
+import {Event} from "../types/Event";
+import {crudsTest} from "../handlers/db/cruds";
 import * as PermissionModel from "../models/permission.model";
-import {Id} from "../entities/Id";
+import {Id} from "../types/Id";
 
 function checkCruds(cruds: string, event: Event): boolean {
   if (!crudsTest(cruds)) return false;

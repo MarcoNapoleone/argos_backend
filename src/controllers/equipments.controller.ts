@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags} from "tsoa";
 import {LocalUnit} from "../models/localUnits.model";
-import {Id} from "../entities/Id";
+import {Id} from "../types/Id";
 
 @Route("/equipments")
 @Tags("Equipment")

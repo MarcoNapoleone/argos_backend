@@ -1,8 +1,8 @@
 import * as ModulesModel from "../models/modules.model";
 import {NextFunction, Request, Response} from "express";
-import {formattedResponse} from "../utils/formattedResponse";
+import {formattedResponse} from "../handlers/http/formattedResponse";
 import {checkPermission} from "../services/permission.service";
-import {Event} from "../entities/Event";
+import {Event} from "../types/Event";
 
 const getEvent = (req: Request): Event => {
   switch (req.method) {

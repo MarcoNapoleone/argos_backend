@@ -1,7 +1,7 @@
 import express, {NextFunction, Request, Response} from "express";
 import {AuthController} from "../controllers/auth.controller";
 import {body, validationResult} from "express-validator";
-import {formattedResponse} from "../utils/formattedResponse";
+import {formattedResponse} from "../handlers/http/formattedResponse";
 
 const authRouter = express.Router();
 

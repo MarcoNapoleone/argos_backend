@@ -1,8 +1,8 @@
-import {query} from '../utils/query';
-import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {Id} from "../entities/Id";
-import {Role} from "../entities/Role";
-import {UUID} from "../utils/uuid";
+import {query} from '../handlers/db/query';
+import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
+import {Id} from "../types/Id";
+import {Role} from "../types/Role";
+import {UUID} from "../types/UUID";
 
 type Status = 'ACTIVE' | 'INACTIVE' | 'DISABLED';
 

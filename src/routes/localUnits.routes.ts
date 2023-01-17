@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
 import {LocalUnitsController} from "../controllers/localUnits.controller";
 import {User} from "../models/users.model";
-import {formattedResponse} from "../utils/formattedResponse";
-import {objectParser} from "../middleware/objectParser.middleware";
+import {formattedResponse} from "../handlers/http/formattedResponse";
+import {objectParser} from "../handlers/objects/objectParser";
 
 const localUnitsRouter = express.Router({mergeParams: true});
 

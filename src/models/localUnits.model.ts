@@ -1,7 +1,7 @@
-import {query} from '../utils/query';
-import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {Id} from "../entities/Id";
-import {UUID} from "../utils/uuid";
+import {query} from '../handlers/db/query';
+import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
+import {Id} from "../types/Id";
+import {UUID} from "../types/UUID";
 
 export class LocalUnit {
   id?: Id;
@@ -65,7 +65,6 @@ export async function getById(id: Id) {
 }
 
 export async function create(localUnit: LocalUnit) {
-  console.log(localUnit)
   return await query(`
       INSERT INTO local_units(uuid,
                               name,

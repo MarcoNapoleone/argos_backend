@@ -5,19 +5,18 @@ import path from "path";
 import express, {json, urlencoded} from "express";
 import dotenv from "dotenv";
 import http from "http";
-import {notFound, onError, onListening} from "./utils/eventHandler";
+import {notFound, onError, onListening} from "./handlers/server/eventHandler";
 import usersRouter from "./routes/users.routes";
 import indexRouter from "./routes/index.routes";
 import companiesRouter from "./routes/companies.routes";
 import localUnitsRouter from "./routes/localUnits.routes";
 import cors from "cors";
-import {auth} from "./middleware/auth.middleware";
+import {auth} from "./middlewares/auth.middleware";
 import rateLimit from "express-rate-limit";
 import authRouter from "./routes/auth.routes";
 import departmentsRouter from "./routes/departments.routes";
 import hrRouter from "./routes/hr.routes";
 import vehiclesRouter from "./routes/vehicles.routes";
-import {isJSON} from "./middleware/isJSON.middleware";
 
 const app = express();
 const server = http.createServer(app);
@@ -25,6 +24,7 @@ const router = express.Router();
 
 dotenv.config();
 const PORT = process.env.PORT || 8080;
+app.set('port', PORT);
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minutes
@@ -39,10 +39,7 @@ const swaggerSetup = swaggerUi.setup(undefined, {
   customfavIcon: "/icons/api.ico",
 });
 
-app.set('port', PORT);
-
 app.use(json());
-app.use(isJSON);
 app.use(cors());
 app.use(cookieParser());
 app.use(morgan('dev'));

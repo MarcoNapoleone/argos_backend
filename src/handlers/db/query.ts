@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise"
-import {database} from "../config/database"
+import {database} from "../../config/database"
 
 
 export async function query(sql: string, params?: any | any[] | { [param: string]: any }) {

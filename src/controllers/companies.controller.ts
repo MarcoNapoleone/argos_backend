@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags} from "tsoa";
 import * as CompaniesService from "../services/companies.service";
 import {Company} from "../models/companies.model";
-import {Id} from "../entities/Id";
+import {Id} from "../types/Id";
 
 @Route("companies")
 @Tags("Company")

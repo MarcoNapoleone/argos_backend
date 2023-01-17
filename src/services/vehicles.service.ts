@@ -1,7 +1,7 @@
 import * as vehiclesModel from "../models/vehicles.model";
 import {Vehicle} from "../models/vehicles.model";
-import {getUuid} from "../utils/uuid";
-import {Id} from "../entities/Id";
+import {getUuid} from "../types/UUID";
+import {Id} from "../types/Id";
 
 
 export async function getById(userId: Id, id: Id): Promise<Vehicle> {

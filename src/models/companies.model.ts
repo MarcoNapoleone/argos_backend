@@ -1,7 +1,8 @@
-import {query} from '../utils/query';
-import {emptyOrRow, emptyOrRows} from "../utils/emptyOrRows";
-import {Id} from "../entities/Id";
-import {UUID} from "../utils/uuid";
+import {query} from '../handlers/db/query';
+import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
+import {Id} from "../types/Id";
+import {UUID} from "../types/UUID";
+import {queryDate} from "../handlers/dateTime/queryDate";
 
 export class Company {
   id?: Id;
@@ -41,7 +42,8 @@ export async function getAll(userId: Id) {
       WHERE id IN (SELECT ucr.company_id
                    FROM user_companies ucr
                             INNER JOIN companies c ON ucr.company_id = c.id
-                   WHERE ucr.user_id = ?)
+                   WHERE ucr.user_id = ?
+                     AND c.deleted_at IS NULL)
   `, [userId]);
   return emptyOrRows(rows)
 }
@@ -56,7 +58,8 @@ export async function getById(userId: Id, id: Id) {
                            INNER JOIN companies c
                                       ON ucr.company_id = c.id
                   WHERE ucr.user_id = ?
-                    AND ucr.company_id = ?)
+                    AND ucr.company_id = ?
+                    AND c.deleted_at IS NULL)
   `, [userId, id]);
   return emptyOrRow(row)
 }
@@ -89,18 +92,38 @@ export async function create(company: Company) {
 }
 
 export async function update(id: Id, company: Company) {
-
-  return await query(``);
+  return await query(`
+      UPDATE companies
+      SET name                    = ?,
+          address                 = ?,
+          email                   = ?,
+          province                = ?,
+          postal_code             = ?,
+          fiscal_code             = ?,
+          vat_code                = ?,
+          registered_municipality = ?,
+          phone                   = ?
+      WHERE id = ?
+  `, [
+    company.name,
+    company.address,
+    company.email,
+    company.province,
+    company.postalCode,
+    company.fiscalCode,
+    company.vatCode,
+    company.registeredMunicipality,
+    company.phone,
+    id
+  ])
 }
 
 export async function logicDelete(id: Id) {
 
-  const now = Date();
+  const now = queryDate(new Date());
   return await query(`
-      UPDATE
-          companies
-              t
-      SET t.deleted_at = ${now}
+      UPDATE companies t
+      SET t.deleted_at = "${now}"
       WHERE t.id = ?;
   `, [id]);
 }
@@ -115,6 +138,7 @@ export async function getAllLocalUnits(userId: Id, id: Id) {
                uc.company_id = lu.company_id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND lu.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }
@@ -133,6 +157,7 @@ export async function getAllDepartments(userId: Id, id: Id) {
                lu.id = d.local_unit_id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND d.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }
@@ -151,6 +176,7 @@ export async function getAllVehicles(userId: Id, id: Id) {
                lu.id = v.local_unit_id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND v.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }
@@ -177,6 +203,7 @@ export async function getAllHR(userId: Id, id: Id) {
                hrd.hr_id = hr.id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND hr.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }
@@ -199,6 +226,7 @@ export async function getAllEquipments(userId: Id, id: Id) {
                e.department_id = d.id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND e.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }
@@ -213,6 +241,7 @@ export async function getAllProperties(userId: Id, id: Id) {
                uc.company_id = p.company_id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND p.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }
@@ -227,6 +256,7 @@ export async function getAllDocuments(userId: Id, id: Id) {
                uc.company_id = d.company_id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND d.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }
@@ -241,6 +271,7 @@ export async function getAllTimetables(userId: Id, id: Id) {
                uc.company_id = t.company_id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
+        AND t.deleted_at IS NULL
   `, [userId, id]);
   return emptyOrRows(rows)
 }

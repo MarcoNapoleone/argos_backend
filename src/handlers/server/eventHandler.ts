@@ -1,4 +1,5 @@
 import createError from "http-errors";
+import {formattedResponse} from "../http/formattedResponse";
 
 export function onError(error: any, port: string) {
   if (error.syscall !== 'listen') {
@@ -32,6 +33,12 @@ export function onListening(server: any) {
 }
 
 export function notFound(req: any, res: any, next: any) {
-  res.status(404).json({message: 'Not Found'})
+  res.status(404).json(
+    formattedResponse({
+        status: 404,
+        object: "route",
+        message: "Route not found",
+      }
+    ));
   next(createError(404));
 }

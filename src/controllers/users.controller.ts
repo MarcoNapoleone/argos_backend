@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
 import * as UsersService from "../services/users.service";
 import {User} from "../models/users.model";
-import {Id} from "../entities/Id";
+import {Id} from "../types/Id";
 
 @Route("users")
 @Tags("User")

@@ -5,7 +5,7 @@ export const emptyOrRows = (rows: any) => {
     return [];
   }
 
-  //return from [snake_case] to [camelCase]
+  // return from [snake_case] to [camelCase]
   return rows.map((row: any) => {
     return _.mapKeys(row, (v, k) => _.camelCase(k));
   });
@@ -16,6 +16,6 @@ export const emptyOrRow = (row: any) => {
     return {};
   }
 
-  //return from snake_case to camelCase
+  // return from snake_case to camelCase
   return _.mapKeys(row[0], (v, k) => _.camelCase(k));
 }

@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
-import {serverStatus} from "../utils/serverStatus";
-import {formattedResponse} from "../utils/formattedResponse";
+import {serverStatus} from "../handlers/server/serverStatus";
+import {formattedResponse} from "../handlers/http/formattedResponse";
 
 const indexRouter = express.Router();
 

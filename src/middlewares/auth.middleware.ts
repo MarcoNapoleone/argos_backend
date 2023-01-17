@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import {NextFunction, Request, Response} from "express";
 import {getByUUID} from "../services/users.service";
-import {formattedResponse} from "../utils/formattedResponse";
-import {UUID} from "../utils/uuid";
+import {formattedResponse} from "../handlers/http/formattedResponse";
+import {UUID} from "../types/UUID";
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
 

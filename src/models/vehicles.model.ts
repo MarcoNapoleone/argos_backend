@@ -1,7 +1,7 @@
-import {query} from '../utils/query';
-import {emptyOrRow} from "../utils/emptyOrRows";
-import {Id} from "../entities/Id";
-import {UUID} from "../utils/uuid";
+import {query} from '../handlers/db/query';
+import {emptyOrRow} from "../handlers/db/emptyOrRows";
+import {Id} from "../types/Id";
+import {UUID} from "../types/UUID";
 
 export class Vehicle {
   id?: Id;

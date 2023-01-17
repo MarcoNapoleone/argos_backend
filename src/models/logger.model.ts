@@ -1,6 +1,6 @@
-import {Id} from "../entities/Id";
-import {query} from "../utils/query";
-import {Event} from "../entities/Event";
+import {Id} from "../types/Id";
+import {query} from "../handlers/db/query";
+import {Event} from "../types/Event";
 
 type Response = 'SUCCESS' | 'ERROR';
 

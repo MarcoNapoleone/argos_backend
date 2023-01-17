@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
 import {HRController} from "../controllers/hr.controller";
 import {User} from "../models/users.model";
-import {formattedResponse} from "../utils/formattedResponse";
-import {objectParser} from "../middleware/objectParser.middleware";
+import {formattedResponse} from "../handlers/http/formattedResponse";
+import {objectParser} from "../handlers/objects/objectParser";
 
 const hrRouter = express.Router({mergeParams: true});
 

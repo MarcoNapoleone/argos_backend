@@ -1,7 +1,7 @@
 import * as UsersModel from "../models/users.model";
 import {User} from "../models/users.model";
-import {getUuid, UUID} from "../utils/uuid";
-import {Id} from "../entities/Id";
+import {getUuid, UUID} from "../types/UUID";
+import {Id} from "../types/Id";
 
 export async function getAll(): Promise<User[]> {
   return await UsersModel.getAll();

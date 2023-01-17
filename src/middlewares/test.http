@@ -1,0 +1,49 @@
+# curl -X 'POST'
+#  'http://localhost:8080/api/v1/auth/login'
+#  -H 'accept: application/json'
+#  -H 'Content-Type: application/json'
+#  -d '{
+#  "password": "admin",
+#  "email": "massimo@getnada.com"
+#'
+POST http://localhost:8080/api/v1/auth/login
+accept: application/json
+Content-Type: application/json
+
+{
+  "password": "admin",
+  "email": "massimo@getnada.com"
+}
+
+###
+
+PUT http://localhost:8080/api/v1/companies/1
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MTI5ZGRlMy0zYzY5LTQ5NDMtODY4OS1mYzNkNzNkNDI1ZjgiLCJpYXQiOjE2NzM5NDU2NDUsImV4cCI6MjI3Mzk0NTY0NX0.tvxQXb_DTlIBmTfroRUU1bDKxnKp7dFcCEFG_H-tD2w
+Content-Type: application/json
+
+{
+  "id": 2,
+  "uuid": "5604e1bd-4079-46ea-a2c6-1ef81f27082d",
+  "name": "max-soft.net",
+  "email": "email.you@gmail.com",
+  "address": "via dei fiori, 1",
+  "postalCode": "04020",
+  "province": "Napoli",
+  "municipality": "Napoli",
+  "country": "Italia",
+  "fiscalCode": "crtzfn0b23hw88t",
+  "vatCode": "0045300453",
+  "registeredMunicipality": "Napoli",
+  "phone": "3890462367",
+  "companyType": null,
+  "logoFile": null,
+  "pec": null,
+  "createdAt": null,
+  "deletedAt": null,
+  "version": null,
+  "updatedAt": null
+}
+
+###
+

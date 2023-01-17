@@ -1,4 +1,4 @@
-import {getHashedPassword, verifyPassword} from "../utils/password";
+import {getHashedPassword, verifyPassword} from "../handlers/security/password";
 import jwt from "jsonwebtoken";
 import {create, findOne} from "./users.service";
 
