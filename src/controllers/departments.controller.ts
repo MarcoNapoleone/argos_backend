@@ -1,6 +1,7 @@
-import {Body, Controller, Delete, Get, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags} from "tsoa";
-import {LocalUnit} from "../models/localUnits.model";
+import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
+import * as DepartmentService from "../services/departments.service";
 import {Id} from "../types/Id";
+import {Department} from "../models/departments.model";
 
 @Route("/departments")
 @Tags("Department")
@@ -8,21 +9,21 @@ export class DepartmentsController extends Controller {
 
   @Security("jwt", [])
   @Get("/:id")
-  async getById(@Request() userId: Id, @Path() id: Id) {
-    return {}
+  async getById(@Path() id: Id) {
+    return await DepartmentService.getById(id)
   }
 
   @Security("jwt", [])
   @SuccessResponse('201', 'Created')
   @Post("/")
-  async create(@Body() localUnit: LocalUnit) {
-    return {}
+  async create(@Body() department: Department) {
+    return await DepartmentService.create(department)
   }
 
   @Security("jwt", [])
   @Put("/:id")
-  async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
-    return {}
+  async update(@Path() id: Id, @Body() department: Department) {
+    return await DepartmentService.update(id, department)
   }
 
   /**
@@ -32,21 +33,21 @@ export class DepartmentsController extends Controller {
   @SuccessResponse("204")
   @Delete("/:id")
   async logicDelete(@Path() id: Id) {
-    return {}
+    return await DepartmentService.logicDelete(id)
   }
 
   @Security("jwt", [])
   @Get("/:id/hr")
   @Tags("Department")
-  async getAllHR(@Request() userId: Id, @Path() id: Id) {
-    return {}
+  async getAllHR(@Path() id: Id) {
+    return await DepartmentService.getAllHR(id)
   }
 
   @Security("jwt", [])
-  @Get("/:id/equipment")
+  @Get("/:id/equipments")
   @Tags("Equipment")
-  async getAllVehicles(@Request() userId: Id, @Path() id: Id) {
-    return {}
+  async getAllEquipments(@Path() id: Id) {
+    return await DepartmentService.getAllEquipments(id)
   }
 
 }

@@ -1597,8 +1597,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Department"
 								}
 							}
 						}
@@ -1631,8 +1630,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Department"
 								}
 							}
 						}
@@ -1661,7 +1659,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LocalUnit"
+								"$ref": "#/components/schemas/Department"
 							}
 						}
 					}
@@ -1675,8 +1673,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Department"
 								}
 							}
 						}
@@ -1712,8 +1709,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Department"
 								}
 							}
 						}
@@ -1733,7 +1729,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LocalUnit"
+								"$ref": "#/components/schemas/Department"
 							}
 						}
 					}
@@ -1749,8 +1745,10 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"items": {
+										"$ref": "#/components/schemas/HR"
+									},
+									"type": "array"
 								}
 							}
 						}
@@ -1777,17 +1775,19 @@
 				]
 			}
 		},
-		"/departments/{id}/equipment": {
+		"/departments/{id}/equipments": {
 			"get": {
-				"operationId": "GetAllVehicles",
+				"operationId": "GetAllEquipments",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"items": {
+										"$ref": "#/components/schemas/Equipment"
+									},
+									"type": "array"
 								}
 							}
 						}

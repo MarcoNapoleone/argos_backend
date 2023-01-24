@@ -2,6 +2,7 @@ import {query} from '../handlers/db/query';
 import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {UUID} from "../types/UUID";
+import {queryDate} from "../handlers/dateTime/queryDate";
 
 export class Department {
   id?: Id;
@@ -12,6 +13,11 @@ export class Department {
   deletedAt?: Date;
   version?: number;
   updatedAt?: Date;
+}
+
+export const defaultDepartment: Department = {
+  localUnitId: null,
+  name: null
 }
 
 export async function getById(id: Id) {
@@ -49,21 +55,31 @@ export async function update(id: Id, document: Department) {
 }
 
 export async function logicDelete(id: Id) {
-  const now = Date();
+  const now = queryDate(new Date());
   return await query(`
       UPDATE departments t
-      SET t.deleted_at = ${now}
+      SET t.deleted_at = "${now}"
       WHERE t.id = ?;
   `, [id]);
 }
 
-export async function getDepartments(id: Id) {
+export async function getAllHR(id: Id) {
   const rows = await query(`
-      SELECT *
-      FROM departments d
-      WHERE d.local_unit_id = ?
+      SELECT hr.*
+      FROM hr
+               join hr_departments hrd on hr.id = hrd.hr_id
+      WHERE hrd.department_id = ?
+        AND hr.deleted_at IS NULL
   `, [id]);
-  return emptyOrRows(rows);
+  return emptyOrRows(rows)
 }
 
-
+export async function getAllEquipments(id: Id) {
+  const rows = await query(`
+      SELECT e.*
+      FROM equipments e
+      WHERE e.department_id = ?
+        AND e.deleted_at IS NULL
+  `, [id]);
+  return emptyOrRows(rows)
+}

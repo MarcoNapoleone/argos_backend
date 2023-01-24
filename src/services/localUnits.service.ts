@@ -7,7 +7,7 @@ import {Vehicle} from "../models/vehicles.model";
 import {objectFiller} from "../handlers/objects/objectFiller";
 
 
-export async function getById(id?: Id): Promise<LocalUnit> {
+export async function getById(id: Id): Promise<LocalUnit> {
   return await LocalUnitsModel.getById(id);
 }
 
