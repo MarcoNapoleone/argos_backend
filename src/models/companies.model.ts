@@ -119,7 +119,6 @@ export async function update(id: Id, company: Company) {
 }
 
 export async function logicDelete(id: Id) {
-
   const now = queryDate(new Date());
   return await query(`
       UPDATE companies t

@@ -117,10 +117,13 @@ localUnitsRouter.delete('/:id', async (req: Request, res: Response) => {
     const response = await controller.logicDelete(id);
     res.status(200).json(response);
   } catch (error) {
-    res.status(500).json(formattedResponse({
-      status: 500,
-      object: "local unit",
-    }));
+    res.status(500).json(
+      formattedResponse({
+        status: 500,
+        Error: error,
+        object: "local unit",
+      })
+    );
   }
 });
 

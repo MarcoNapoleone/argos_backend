@@ -105,7 +105,6 @@ companiesRouter.delete('/:id', isAdmin, async (req: Request, res: Response) => {
   } = req;
   if (!id) return;
 
-
   try {
     const user: User = req.body.user
     const controller = new CompaniesController();

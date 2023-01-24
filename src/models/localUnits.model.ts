@@ -2,6 +2,7 @@ import {query} from '../handlers/db/query';
 import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {UUID} from "../types/UUID";
+import {queryDate} from "../handlers/dateTime/queryDate";
 
 export class LocalUnit {
   id?: Id;
@@ -62,6 +63,7 @@ export async function getById(id: Id) {
       SELECT *
       FROM local_units lu
       WHERE lu.id = ?
+        AND lu.deleted_at IS NULL
   `, [id]);
   return emptyOrRow(row)
 }
@@ -167,11 +169,11 @@ export async function update(id: Id, localUnit: LocalUnit) {
 }
 
 export async function logicDelete(id: Id) {
-  const now = Date();
+  const now = queryDate(new Date());
   return await query(`
-      UPDATE local_units t
-      SET t.deleted_at = ${now}
-      WHERE t.id = ?;
+      UPDATE local_units lu
+      SET lu.deleted_at = "${now}"
+      WHERE lu.id = ?;
   `, [id]);
 }
 
