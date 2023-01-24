@@ -24,9 +24,9 @@ export const objectParser = (object: any) => {
     }
 
     // if key contains "Id" delete it
-    if (key.includes("Id")) {
-      delete object[key];
-    }
+    /* if (key.includes("Id")) {
+       delete object[key];
+     }*/
   }
   return object;
 }

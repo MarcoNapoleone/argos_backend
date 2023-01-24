@@ -6,6 +6,8 @@ import {UUID} from "../types/UUID";
 export class LocalUnit {
   id?: Id;
   uuid?: UUID;
+  propertyId?: Id;
+  companyId?: Id;
   name?: string;
   email?: string;
   address?: string;
@@ -25,8 +27,6 @@ export class LocalUnit {
   itPreposto?: string;
   itRspp?: string;
   itAspp?: string;
-  propertyId?: Id;
-  companyId?: Id;
   createdAt?: Date;
   deletedAt?: Date;
   version?: number;
@@ -34,6 +34,8 @@ export class LocalUnit {
 }
 
 export const defaultLocalUnit: LocalUnit = {
+  companyId: null,
+  propertyId: null,
   name: null,
   email: null,
   address: null,
@@ -67,10 +69,10 @@ export async function getById(id: Id) {
 export async function create(localUnit: LocalUnit) {
   return await query(`
       INSERT INTO local_units(uuid,
-                              name,
-                              email,
                               company_id,
                               property_id,
+                              name,
+                              email,
                               address,
                               municipality,
                               province,
@@ -91,9 +93,10 @@ export async function create(localUnit: LocalUnit) {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `, [
     localUnit?.uuid,
-    localUnit?.name,
     localUnit?.companyId,
     localUnit?.propertyId,
+    localUnit?.name,
+    localUnit?.email,
     localUnit?.address,
     localUnit?.municipality,
     localUnit?.province,
@@ -117,11 +120,48 @@ export async function create(localUnit: LocalUnit) {
 export async function update(id: Id, localUnit: LocalUnit) {
   return await query(`
       UPDATE local_units lu
-      SET lu.name       = ?,
-          lu.company_id = ?
+      SET lu.property_id            = ?,
+          lu.name                   = ?,
+          lu.email                  = ?,
+          lu.address                = ?,
+          lu.municipality           = ?,
+          lu.province               = ?,
+          lu.postal_code            = ?,
+          lu.phone                  = ?,
+          lu.it_rea                 = ?,
+          lu.it_codice_ateco        = ?,
+          lu.it_attivita_prevalente = ?,
+          lu.it_cciaa               = ?,
+          lu.it_is_artigiana        = ?,
+          lu.it_is_agricola         = ?,
+          lu.it_responsabile        = ?,
+          lu.it_datore_di_lavoro    = ?,
+          lu.it_dirigente           = ?,
+          lu.it_preposto            = ?,
+          lu.it_rspp                = ?,
+          lu.it_aspp                = ?
       WHERE lu.id = ?;
-  `, [localUnit?.name,
-    localUnit?.companyId,
+  `, [
+    localUnit?.propertyId,
+    localUnit?.name,
+    localUnit?.email,
+    localUnit?.address,
+    localUnit?.municipality,
+    localUnit?.province,
+    localUnit?.postalCode,
+    localUnit?.phone,
+    localUnit?.itRea,
+    localUnit?.itCodiceAteco,
+    localUnit?.itAttivitaPrevalente,
+    localUnit?.itCciaa,
+    localUnit?.itIsArtigiana,
+    localUnit?.itIsAgricola,
+    localUnit?.itResponsabile,
+    localUnit?.itDatoreDiLavoro,
+    localUnit?.itDirigente,
+    localUnit?.itPreposto,
+    localUnit?.itRspp,
+    localUnit?.itAspp,
     id
   ]);
 }

@@ -3,6 +3,8 @@ import {LocalUnitsController} from "../controllers/localUnits.controller";
 import {User} from "../models/users.model";
 import {formattedResponse} from "../handlers/http/formattedResponse";
 import {objectParser} from "../handlers/objects/objectParser";
+import {check, validationResult} from "express-validator";
+import {validationMessage} from "../handlers/http/validationMessage";
 
 const localUnitsRouter = express.Router({mergeParams: true});
 
@@ -36,22 +38,47 @@ localUnitsRouter.get('/:id', async (req: Request, res: Response) => {
 });
 
 /* POST local-units/:id - create new localUnit */
-localUnitsRouter.post('/', async (req: Request, res: Response) => {
+localUnitsRouter.post('/',
+  [
+    check("object.name")
+      .isLength({min: 3})
+      .withMessage("the name must have minimum length of 3")
+      .trim(),
+    check("object.email")
+      .isEmail()
+      .withMessage("invalid email address")
+      .normalizeEmail(),
+    check("object.postalCode")
+      .isLength({min: 5, max: 5}),
+    check("object.companyId")
+      .not().isEmpty()
+      .withMessage('Company id cannot be empty'),
+  ],
+  async (req: Request, res: Response) => {
 
-  try {
-    const controller = new LocalUnitsController();
-    const response = await controller.create(req.body.object);
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json(
-      formattedResponse({
-        status: 500,
-        Error: error,
-        object: "local unit",
-      }))
-  }
+    if (!validationResult(req).isEmpty()) {
+      return res.status(400).json(
+        formattedResponse({
+          status: 400,
+          object: "local unit",
+          message: validationMessage(req)
+        })
+      );
+    }
 
-});
+    try {
+      const controller = new LocalUnitsController();
+      const response = await controller.create(req.body.object);
+      res.status(200).json(response);
+    } catch (error) {
+      res.status(500).json(
+        formattedResponse({
+          status: 500,
+          Error: error,
+          object: "local unit",
+        }))
+    }
+  });
 
 /* PUT local-units/:id - update localUnit */
 localUnitsRouter.put('/:id', async (req: Request, res: Response) => {
@@ -64,7 +91,7 @@ localUnitsRouter.put('/:id', async (req: Request, res: Response) => {
   try {
     const user: User = req.body.user
     const controller = new LocalUnitsController();
-    const response = await controller.update(id, objectParser(req.body));
+    const response = await controller.update(id, objectParser(req.body.object));
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(

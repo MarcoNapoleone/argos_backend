@@ -4,6 +4,7 @@ import {getUuid} from "../types/UUID";
 import {Id} from "../types/Id";
 import {Department} from "../models/departments.model";
 import {Vehicle} from "../models/vehicles.model";
+import {objectFiller} from "../handlers/objects/objectFiller";
 
 
 export async function getById(id?: Id): Promise<LocalUnit> {
@@ -19,8 +20,9 @@ export async function create(localUnit: LocalUnit): Promise<LocalUnit> {
 export async function update(id: Id, localUnit: LocalUnit): Promise<LocalUnit> {
   const _localUnit: LocalUnit = await LocalUnitsModel.getById(id);
 
+  console.log('localUnit', localUnit)
   // updates only new passed fields
-  const response = await LocalUnitsModel.update(id, Object.assign({}, _localUnit, localUnit))
+  const response = await LocalUnitsModel.update(id, objectFiller(localUnit, _localUnit))
   return await LocalUnitsModel.getById(response.insertId);
 
 }
