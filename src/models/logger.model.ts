@@ -14,12 +14,12 @@ export class Log {
 
 export const create = (log: Log) => {
   query(`
-        INSERT INTO logs(user_id,
-                         event,
-                         response,
-                         message)
-        VALUES (?, ?, ?, ?)
-    `, [
+      INSERT INTO logs(user_id,
+                       event,
+                       response,
+                       message)
+      VALUES (?, ?, ?, ?)
+  `, [
     log?.userId,
     log?.event,
     log?.response,

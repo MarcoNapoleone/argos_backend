@@ -30,7 +30,7 @@ export function guard(moduleName: moduleName) {
     const {user} = req.body;
     const {params: {companyId}} = req;
 
-    //todo: get module id from SERVICE module name
+    // todo: get module id from SERVICE module name
     const {id: moduleId} = await ModulesModel.getByName(moduleName)
 
     if (!user) return res.status(401).json(

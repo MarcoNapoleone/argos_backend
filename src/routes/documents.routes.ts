@@ -6,7 +6,7 @@ import {objectParser} from "../handlers/objects/objectParser";
 
 const documentsRouter = express.Router({mergeParams: true});
 
-/* GET local-units/:id - get document by id */
+/* GET vehicles/:id - get document by id */
 documentsRouter.get('/:id', async (req: Request, res: Response) => {
 
   const {params: {id}} = req;
@@ -14,7 +14,7 @@ documentsRouter.get('/:id', async (req: Request, res: Response) => {
   try {
     const controller = new DepartmentsController();
     const user: User = req.body.user
-    const response = await controller.getById(user.id, id);
+    const response = await controller.getById(id);
     if (Object.keys(response).length === 0) {
       return res.status(404).json(
         formattedResponse({
@@ -35,7 +35,7 @@ documentsRouter.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* POST local-units/:id - create new document */
+/* POST vehicles/:id - create new document */
 documentsRouter.post('/', async (req: Request, res: Response) => {
 
   try {
@@ -53,7 +53,7 @@ documentsRouter.post('/', async (req: Request, res: Response) => {
 
 });
 
-/* PUT local-units/:id - update document */
+/* PUT documents/:id - update document */
 documentsRouter.put('/:id', async (req: Request, res: Response) => {
 
   const {
@@ -77,7 +77,7 @@ documentsRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT local-units/:id - logic delete document */
+/* PUT documents/:id - logic delete document */
 documentsRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},

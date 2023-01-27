@@ -1,5 +1,6 @@
-import {Body, Controller, Delete, Get, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags} from "tsoa";
-import {LocalUnit} from "../models/localUnits.model";
+import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
+import {HR} from "../models/hr.model";
+import * as HRService from "../services/hr.service";
 import {Id} from "../types/Id";
 
 @Route("/hr")
@@ -8,31 +9,31 @@ export class HRController extends Controller {
 
   @Security("jwt", [])
   @Get("/:id")
-  async getById(@Request() userId: Id, @Path() id: Id) {
-    return {}
+  async getById(@Path() id: Id) {
+    return await HRService.getById(id)
   }
 
   @Security("jwt", [])
   @SuccessResponse('201', 'Created')
   @Post("/")
-  async create(@Body() localUnit: LocalUnit) {
-    return {}
+  async create(@Body() hr: HR) {
+    return await HRService.create(hr)
   }
 
   @Security("jwt", [])
   @Put("/:id")
-  async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
-    return {}
+  async update(@Path() id: Id, @Body() hr: HR) {
+    return await HRService.update(id, hr)
   }
 
   /**
-   * Logic delete a localUnit
+   * Logic delete a hr
    */
   @Security("jwt", [])
   @SuccessResponse("204")
   @Delete("/:id")
   async logicDelete(@Path() id: Id) {
-    return await {}
+    return await HRService.logicDelete(id)
   }
 
 }

@@ -272,11 +272,32 @@
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
 					},
-					"name": {
-						"type": "string"
+					"hrId": {
+						"$ref": "#/components/schemas/Id"
 					},
 					"localUnitId": {
 						"$ref": "#/components/schemas/Id"
+					},
+					"name": {
+						"type": "string"
+					},
+					"brand": {
+						"type": "string"
+					},
+					"model": {
+						"type": "string"
+					},
+					"serialNumber": {
+						"type": "string"
+					},
+					"licensePlate": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string"
+					},
+					"owner": {
+						"type": "string"
 					},
 					"createdAt": {
 						"type": "string",
@@ -306,11 +327,28 @@
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
 					},
+					"departmentId": {
+						"$ref": "#/components/schemas/Id"
+					},
 					"name": {
 						"type": "string"
 					},
-					"departmentId": {
-						"$ref": "#/components/schemas/Id"
+					"type": {
+						"type": "string"
+					},
+					"brand": {
+						"type": "string"
+					},
+					"serialNumber": {
+						"type": "string"
+					},
+					"purchaseDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"firstTestDate": {
+						"type": "string",
+						"format": "date-time"
 					},
 					"createdAt": {
 						"type": "string",
@@ -346,8 +384,64 @@
 					"surname": {
 						"type": "string"
 					},
-					"departmentId": {
-						"$ref": "#/components/schemas/Id"
+					"fiscalCode": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"birthPlace": {
+						"type": "string"
+					},
+					"birthDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"nationality": {
+						"type": "string"
+					},
+					"recruitmentDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"contractQualification": {
+						"type": "string"
+					},
+					"contractLevel": {
+						"type": "string"
+					},
+					"duty": {
+						"type": "string"
+					},
+					"isApprentice": {
+						"type": "boolean"
+					},
+					"isProfessional": {
+						"type": "boolean"
+					},
+					"isItOrganigrammaSicurezza": {
+						"type": "boolean"
+					},
+					"itCcnl": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"municipality": {
+						"type": "string"
+					},
+					"province": {
+						"type": "string"
+					},
+					"postalCode": {
+						"type": "string"
+					},
+					"country": {
+						"type": "string"
 					},
 					"createdAt": {
 						"type": "string",
@@ -377,17 +471,53 @@
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
 					},
+					"companyId": {
+						"$ref": "#/components/schemas/Id"
+					},
 					"name": {
 						"type": "string"
 					},
 					"address": {
 						"type": "string"
 					},
-					"phone": {
+					"municipality": {
 						"type": "string"
 					},
-					"companyId": {
-						"$ref": "#/components/schemas/Id"
+					"postalCode": {
+						"type": "string"
+					},
+					"province": {
+						"type": "string"
+					},
+					"country": {
+						"type": "string"
+					},
+					"itDestinazioneUso": {
+						"type": "string"
+					},
+					"itTitoloUtilizzo": {
+						"type": "string"
+					},
+					"itFoglio": {
+						"type": "string"
+					},
+					"itParticella": {
+						"type": "string"
+					},
+					"itSub": {
+						"type": "string"
+					},
+					"itClassamento": {
+						"type": "string"
+					},
+					"itClasseEnergetica": {
+						"type": "string"
+					},
+					"itConsistenza": {
+						"type": "string"
+					},
+					"itRendita": {
+						"type": "string"
 					},
 					"createdAt": {
 						"type": "string",
@@ -517,8 +647,7 @@
 			"jwt": {
 				"type": "http",
 				"scheme": "bearer",
-				"bearerFormat": "JWT",
-				"name": "access_token"
+				"bearerFormat": "JWT"
 			}
 		}
 	},
@@ -1823,8 +1952,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/HR"
 								}
 							}
 						}
@@ -1857,8 +1985,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/HR"
 								}
 							}
 						}
@@ -1887,7 +2014,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LocalUnit"
+								"$ref": "#/components/schemas/HR"
 							}
 						}
 					}
@@ -1901,14 +2028,13 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/HR"
 								}
 							}
 						}
 					}
 				},
-				"description": "Logic delete a localUnit",
+				"description": "Logic delete a hr",
 				"tags": [
 					"HR"
 				],
@@ -1938,8 +2064,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/HR"
 								}
 							}
 						}
@@ -1959,7 +2084,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LocalUnit"
+								"$ref": "#/components/schemas/HR"
 							}
 						}
 					}
@@ -1975,8 +2100,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Vehicle"
 								}
 							}
 						}
@@ -2009,8 +2133,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Vehicle"
 								}
 							}
 						}
@@ -2039,7 +2162,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LocalUnit"
+								"$ref": "#/components/schemas/Vehicle"
 							}
 						}
 					}
@@ -2053,14 +2176,13 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Vehicle"
 								}
 							}
 						}
 					}
 				},
-				"description": "Logic delete a localUnit",
+				"description": "Logic delete a vehicle",
 				"tags": [
 					"Vehicle"
 				],
@@ -2090,8 +2212,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {},
-									"type": "object"
+									"$ref": "#/components/schemas/Vehicle"
 								}
 							}
 						}
@@ -2111,7 +2232,303 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LocalUnit"
+								"$ref": "#/components/schemas/Vehicle"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/equipments/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Equipment"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equipment"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Equipment"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equipment"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Equipment"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "LogicDelete",
+				"responses": {
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Equipment"
+								}
+							}
+						}
+					}
+				},
+				"description": "Logic delete a equipment",
+				"tags": [
+					"Equipment"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/equipments": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Equipment"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equipment"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Equipment"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/properties/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Property"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Property"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Property"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Property"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Property"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "LogicDelete",
+				"responses": {
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Property"
+								}
+							}
+						}
+					}
+				},
+				"description": "Logic delete a property",
+				"tags": [
+					"Property"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/properties": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Property"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Property"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Property"
 							}
 						}
 					}

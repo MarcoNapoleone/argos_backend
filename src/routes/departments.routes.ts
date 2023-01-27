@@ -8,7 +8,7 @@ import {validationMessage} from "../handlers/http/validationMessage";
 
 const departmentsRouter = express.Router({mergeParams: true});
 
-/* GET local-units/:id - get department by id */
+/* GET departments/:id - get department by id */
 departmentsRouter.get('/:id', async (req: Request, res: Response) => {
 
   const {params: {id}} = req;
@@ -37,7 +37,7 @@ departmentsRouter.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* POST local-units/:id - create new department */
+/* POST departments/:id - create new department */
 departmentsRouter.post('/',
   [
     check("object.name")
@@ -68,10 +68,10 @@ departmentsRouter.post('/',
           Error: error,
           object: "department",
         }))
-  }
-});
+    }
+  });
 
-/* PUT local-units/:id - update department */
+/* PUT departments/:id - update department */
 departmentsRouter.put('/:id', async (req: Request, res: Response) => {
 
   const {
@@ -95,7 +95,7 @@ departmentsRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT local-units/:id - logic delete department */
+/* PUT departments/:id - logic delete department */
 departmentsRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},
@@ -115,7 +115,7 @@ departmentsRouter.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* GET local-units - get all localUnits */
+/* GET departments - get all departments */
 departmentsRouter.get('/:id/hr', async (req: Request, res: Response) => {
 
   const {params: {id}} = req;
@@ -135,7 +135,7 @@ departmentsRouter.get('/:id/hr', async (req: Request, res: Response) => {
   }
 });
 
-/* GET local-units - get all localUnits */
+/* GET departments - get all departments */
 departmentsRouter.get('/:id/equipments', async (req: Request, res: Response) => {
 
   const {params: {id}} = req;

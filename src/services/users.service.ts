@@ -22,7 +22,7 @@ export async function findOne(param: string, value: string | number): Promise<Us
 
 export async function create(user: User): Promise<User> {
 
-  let _user: User = {
+  const _user: User = {
     uuid: getUuid(),
     ...user
   }
@@ -31,7 +31,7 @@ export async function create(user: User): Promise<User> {
 }
 
 export async function update(id: Id, user: User): Promise<User> {
-  let _user: User = await UsersModel.getById(id);
+  const _user: User = await UsersModel.getById(id);
 
   // updates only new passed fields
   const response = await UsersModel.update(id, Object.assign({}, _user, user))

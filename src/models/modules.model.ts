@@ -16,9 +16,9 @@ export class Module {
 
 export async function getAll() {
   const rows = await query(`
-        SELECT *
-        FROM modules
-    `);
+      SELECT *
+      FROM modules
+  `);
   return emptyOrRows(rows)
 }
 

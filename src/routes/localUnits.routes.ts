@@ -49,7 +49,8 @@ localUnitsRouter.post('/',
       .withMessage("invalid email address")
       .normalizeEmail(),
     check("object.postalCode")
-      .isLength({min: 5, max: 5}),
+      .isLength({min: 5, max: 5})
+      .withMessage("Postal code must have 5 numbers"),
     check("object.companyId")
       .not().isEmpty()
       .withMessage('Company id cannot be empty'),

@@ -1,5 +1,6 @@
-import {Body, Controller, Get, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags} from "tsoa";
-import {LocalUnit} from "../models/localUnits.model";
+import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
+import {Property} from "../models/properties.model";
+import * as PropertiesServices from "../services/properties.service";
 import {Id} from "../types/Id";
 
 @Route("/properties")
@@ -8,20 +9,30 @@ export class PropertiesController extends Controller {
 
   @Security("jwt", [])
   @Get("/:id")
-  async getById(@Request() userId: Id, @Path() id: Id) {
-    return {}
+  async getById(@Path() id: Id) {
+    return await PropertiesServices.getById(id)
   }
 
   @Security("jwt", [])
   @SuccessResponse('201', 'Created')
   @Post("/")
-  async create(@Body() localUnit: LocalUnit) {
-    return {}
+  async create(@Body() property: Property) {
+    return await PropertiesServices.create(property)
   }
 
   @Security("jwt", [])
   @Put("/:id")
-  async update(@Path() id: Id, @Body() localUnit: LocalUnit) {
-    return {}
+  async update(@Path() id: Id, @Body() property: Property) {
+    return await PropertiesServices.update(id, property)
+  }
+
+  /**
+   * Logic delete a property
+   */
+  @Security("jwt", [])
+  @SuccessResponse("204")
+  @Delete("/:id")
+  async logicDelete(@Path() id: Id) {
+    return await PropertiesServices.logicDelete(id)
   }
 }

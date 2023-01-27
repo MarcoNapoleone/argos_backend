@@ -1,20 +1,20 @@
 import express, {Request, Response} from 'express';
-import {VehiclesController} from "../controllers/vehicles.controller";
 import {User} from "../models/users.model";
 import {formattedResponse} from "../handlers/http/formattedResponse";
 import {objectParser} from "../handlers/objects/objectParser";
 import {check, validationResult} from "express-validator";
 import {validationMessage} from "../handlers/http/validationMessage";
+import {EquipmentsController} from "../controllers/equipments.controller";
 
-const vehiclesRouter = express.Router({mergeParams: true});
+const equipmentsRouter = express.Router({mergeParams: true});
 
-/* GET vehicles/:id - get vehicle by id */
-vehiclesRouter.get('/:id', async (req: Request, res: Response) => {
+/* GET equipments/:id - get equipment by id */
+equipmentsRouter.get('/:id', async (req: Request, res: Response) => {
 
   const {params: {id}} = req;
 
   try {
-    const controller = new VehiclesController();
+    const controller = new EquipmentsController();
     const user: User = req.body.user
     const response = await controller.getById(id);
 
@@ -22,7 +22,7 @@ vehiclesRouter.get('/:id', async (req: Request, res: Response) => {
       return res.status(404).json(
         formattedResponse({
           status: 404,
-          object: "vehicle",
+          object: "equipment",
         })
       )
     }
@@ -32,27 +32,21 @@ vehiclesRouter.get('/:id', async (req: Request, res: Response) => {
       formattedResponse({
         status: 500,
         Error: error,
-        object: "vehicle",
+        object: "equipment",
       })
     )
   }
 });
 
-/* POST vehicles/:id - create new vehicle */
-vehiclesRouter.post('/',
+/* POST equipments/:id - create new equipment */
+equipmentsRouter.post('/',
   [
-    check("object.plate")
-      .isLicensePlate('any')
-      .withMessage("the plate must have 7 characters"),
-    check("object.brand")
-      .isLength({min: 3})
-      .withMessage("the brand must have minimum length of 3"),
     check("object.name")
       .isLength({min: 3})
       .withMessage("the name must have minimum length of 3"),
-    check("object.localUnitId")
+    check("object.departmentId")
       .not().isEmpty()
-      .withMessage("local unit id cannot be empty"),
+      .withMessage("department id cannot be empty"),
   ],
   async (req: Request, res: Response) => {
 
@@ -61,14 +55,14 @@ vehiclesRouter.post('/',
       return res.status(400).json(
         formattedResponse({
           status: 400,
-          object: "vehicle",
+          object: "equipment",
           message: validationMessage(req)
         })
       );
     }
 
     try {
-      const controller = new VehiclesController();
+      const controller = new EquipmentsController();
       const response = await controller.create(objectParser(req.body.object));
       res.status(200).json(response);
     } catch (error) {
@@ -76,14 +70,14 @@ vehiclesRouter.post('/',
         formattedResponse({
           status: 500,
           Error: error,
-          object: "vehicle",
+          object: "equipment",
         }))
     }
 
   });
 
-/* PUT vehicles/:id - update vehicle */
-vehiclesRouter.put('/:id', async (req: Request, res: Response) => {
+/* PUT equipments/:id - update equipment */
+equipmentsRouter.put('/:id', async (req: Request, res: Response) => {
 
   const {
     params: {id},
@@ -92,7 +86,7 @@ vehiclesRouter.put('/:id', async (req: Request, res: Response) => {
 
   try {
     const user: User = req.body.user
-    const controller = new VehiclesController();
+    const controller = new EquipmentsController();
     const response = await controller.update(id, objectParser(req.body.object));
     res.status(200).json(response);
   } catch (error) {
@@ -100,14 +94,14 @@ vehiclesRouter.put('/:id', async (req: Request, res: Response) => {
       formattedResponse({
         status: 500,
         Error: error,
-        object: "vehicle",
+        object: "equipment",
       })
     )
   }
 });
 
-/* PUT vehicles/:id - logic delete vehicle */
-vehiclesRouter.delete('/:id', async (req: Request, res: Response) => {
+/* PUT equipments/:id - logic delete equipment */
+equipmentsRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},
   } = req;
@@ -115,15 +109,15 @@ vehiclesRouter.delete('/:id', async (req: Request, res: Response) => {
 
   try {
     const user: User = req.body.user
-    const controller = new VehiclesController();
+    const controller = new EquipmentsController();
     const response = await controller.logicDelete(id);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(formattedResponse({
       status: 500,
-      object: "vehicle",
+      object: "equipment",
     }));
   }
 });
 
-export default vehiclesRouter;
+export default equipmentsRouter;
