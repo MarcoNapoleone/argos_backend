@@ -183,23 +183,8 @@ export async function getAllVehicles(userId: Id, id: Id) {
 export async function getAllHR(userId: Id, id: Id) {
   const rows = await query(`
       SELECT hr.*
-      FROM user_companies uc
-               INNER JOIN
-           local_units lu
-           ON
-               uc.company_id = lu.company_id
-               INNER JOIN
-           departments d
-           ON
-               lu.id = d.local_unit_id
-               INNER JOIN
-           hr_departments hrd
-           ON
-               d.id = hrd.department_id
-               INNER JOIN
-           hr
-           ON
-               hrd.hr_id = hr.id
+      FROM hr
+               join user_companies uc on uc.company_id = hr.company_id
       WHERE uc.user_id = ?
         AND uc.company_id = ?
         AND hr.deleted_at IS NULL
