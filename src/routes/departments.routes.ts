@@ -95,7 +95,7 @@ departmentsRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT departments/:id - logic delete department */
+/* DELETE departments/:id - logic delete department */
 departmentsRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},

@@ -105,7 +105,7 @@ localUnitsRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT local-units/:id - logic delete localUnit */
+/* DELETE local-units/:id - logic delete localUnit */
 localUnitsRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},

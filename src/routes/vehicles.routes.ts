@@ -41,9 +41,6 @@ vehiclesRouter.get('/:id', async (req: Request, res: Response) => {
 /* POST vehicles/:id - create new vehicle */
 vehiclesRouter.post('/',
   [
-    check("object.plate")
-      .isLicensePlate('any')
-      .withMessage("the plate must have 7 characters"),
     check("object.brand")
       .isLength({min: 3})
       .withMessage("the brand must have minimum length of 3"),
@@ -106,7 +103,7 @@ vehiclesRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT vehicles/:id - logic delete vehicle */
+/* DELETE vehicles/:id - logic delete vehicle */
 vehiclesRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},

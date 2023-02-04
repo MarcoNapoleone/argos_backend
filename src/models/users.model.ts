@@ -3,6 +3,7 @@ import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {Role} from "../types/Role";
 import {UUID} from "../types/UUID";
+import {queryDate} from "../handlers/dateTime/queryDate";
 
 type Status = 'ACTIVE' | 'INACTIVE' | 'DISABLED';
 
@@ -109,8 +110,7 @@ export async function update(id: Id, user: User) {
 }
 
 export async function logicDelete(id: Id) {
-
-  const now = Date();
+    const now = queryDate(new Date());
   return await query(`
       UPDATE users t
       SET t.deleted_at = ?

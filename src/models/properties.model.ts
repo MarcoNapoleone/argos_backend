@@ -22,8 +22,8 @@ export class Property {
   itClassamento?: string;
   itClasseEnergetica?: string;
   itConsistenza?: string;
-  itRendita?: string;
-  createdAt?: Date;
+    itRendita?: number;
+    createdAt?: Date;
   deletedAt?: Date;
   version?: number;
   updatedAt?: Date;
@@ -144,7 +144,7 @@ export async function logicDelete(id: Id) {
   const now = queryDate(new Date());
   return await query(`
       UPDATE properties t
-      SET t.deleted_at = ${now}
+      SET t.deleted_at = "${now}"
       WHERE t.id = ?;
   `, [id]);
 }

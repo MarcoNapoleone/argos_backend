@@ -50,7 +50,6 @@ equipmentsRouter.post('/',
   ],
   async (req: Request, res: Response) => {
 
-
     if (!validationResult(req).isEmpty()) {
       return res.status(400).json(
         formattedResponse({
@@ -100,7 +99,7 @@ equipmentsRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT equipments/:id - logic delete equipment */
+/* DELETE equipments/:id - logic delete equipment */
 equipmentsRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},

@@ -97,7 +97,7 @@ usersRouter.put('/:id', isAdmin, async (req: Request, res: Response) => {
   }
 });
 
-/* PUT users/:id - logic delete user */
+/* DELETE users/:id - logic delete user */
 usersRouter.delete('/:id', isAdmin, async (req: Request, res: Response) => {
   const {
     params: {id},

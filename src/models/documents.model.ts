@@ -2,6 +2,7 @@ import {query} from '../handlers/db/query';
 import {emptyOrRow} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {UUID} from "../types/UUID";
+import {queryDate} from "../handlers/dateTime/queryDate";
 
 export class Document {
   id?: Id;
@@ -54,12 +55,12 @@ export async function update(id: Id, document: Document) {
 }
 
 export async function logicDelete(id: Id) {
-  const now = Date();
-  return await query(`
-      UPDATE documents t
-      SET t.deleted_at = ${now}
-      WHERE t.id = ?;
-  `, [id]);
+    const now = queryDate(new Date());
+    return await query(`
+        UPDATE documents t
+        SET t.deleted_at = "${now}"
+        WHERE t.id = ?;
+    `, [id]);
 }
 
 

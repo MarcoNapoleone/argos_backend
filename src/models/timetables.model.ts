@@ -2,6 +2,7 @@ import {query} from '../handlers/db/query';
 import {emptyOrRow} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {UUID} from "../types/UUID";
+import {queryDate} from "../handlers/dateTime/queryDate";
 
 export class Timetable {
   id?: Id;
@@ -55,10 +56,10 @@ export async function update(userId: Id, id: Id, timetable: Timetable) {
 }
 
 export async function logicDelete(userId: Id, id: Id) {
-  const now = Date();
+    const now = queryDate(new Date());
   return await query(`
       UPDATE timetables t
-      SET t.deleted_at = ${now}
+      SET t.deleted_at = "${now}"
       WHERE t.id = ?;
   `, [id]);
 }

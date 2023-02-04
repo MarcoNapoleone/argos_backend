@@ -53,12 +53,9 @@ hrRouter.post('/',
       .isLength({min: 10, max: 10})
       .withMessage("Phone number must have 10 numbers"),
     check("object.email")
-      .isEmail()
-      .withMessage("invalid email address")
-      .normalizeEmail(),
-    check("object.postalCode")
-      .isLength({min: 5, max: 5})
-      .withMessage("Postal code must have 5 numbers")
+        .isEmail()
+        .withMessage("invalid email address")
+        .normalizeEmail()
   ],
   async (req: Request, res: Response) => {
 
@@ -111,7 +108,7 @@ hrRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT hr/:id - logic delete hr */
+/* DELETE hr/:id - logic delete hr */
 hrRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},

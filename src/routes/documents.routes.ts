@@ -77,7 +77,7 @@ documentsRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-/* PUT documents/:id - logic delete document */
+/* DELETE documents/:id - logic delete document */
 documentsRouter.delete('/:id', async (req: Request, res: Response) => {
   const {
     params: {id},

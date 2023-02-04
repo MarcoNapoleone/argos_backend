@@ -102,7 +102,7 @@ export async function logicDelete(id: Id) {
   const now = queryDate(new Date());
   return await query(`
       UPDATE vehicles t
-      SET t.deleted_at = ${now}
+      SET t.deleted_at = "${now}"
       WHERE t.id = ?;
   `, [id]);
 }

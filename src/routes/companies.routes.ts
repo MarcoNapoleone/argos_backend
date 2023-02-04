@@ -125,7 +125,7 @@ companiesRouter.put('/:id', isAdmin, async (req: Request, res: Response) => {
   }
 });
 
-/* PUT companies/:id - logic delete company */
+/* DELETE companies/:id - logic delete company */
 companiesRouter.delete('/:id', isAdmin, async (req: Request, res: Response) => {
   const {
     params: {id},
