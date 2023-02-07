@@ -44,6 +44,9 @@ departmentsRouter.post('/',
       .isLength({min: 3})
       .withMessage("the name must have minimum length of 3")
       .trim(),
+    check("object.localUnitId")
+      .not().isEmpty()
+      .withMessage('Local unit id cannot be empty'),
   ],
   async (req: Request, res: Response) => {
 

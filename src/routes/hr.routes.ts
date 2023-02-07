@@ -46,16 +46,25 @@ hrRouter.post('/',
     check("object.surname")
       .isLength({min: 3})
       .withMessage("the surname must have minimum length of 3"),
+    check("object.contractLevel")
+      .isLength({max: 30})
+      .withMessage("the contract level must have maximum length of 30"),
     check("object.fiscalCode")
       .isTaxID('it-IT')
       .withMessage("Invalid fiscal code"),
+    check("object.postalCode")
+      .isLength({min: 5, max: 5})
+      .withMessage("Postal code must have 5 numbers"),
     check("object.phone")
       .isLength({min: 10, max: 10})
       .withMessage("Phone number must have 10 numbers"),
     check("object.email")
-        .isEmail()
-        .withMessage("invalid email address")
-        .normalizeEmail()
+      .isEmail()
+      .withMessage("invalid email address")
+      .normalizeEmail(),
+    check("object.companyId")
+      .not().isEmpty()
+      .withMessage('Company id cannot be empty'),
   ],
   async (req: Request, res: Response) => {
 
