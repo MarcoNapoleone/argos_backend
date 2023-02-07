@@ -182,6 +182,7 @@ export async function getAllDepartments(id: Id) {
       SELECT *
       FROM departments d
       WHERE d.local_unit_id = ?
+        AND d.deleted_at IS NULL
   `, [id]);
   return emptyOrRows(rows);
 }
@@ -191,6 +192,7 @@ export async function getAllVehicles(id: Id) {
       SELECT *
       FROM vehicles v
       WHERE v.local_unit_id = ?
+        AND v.deleted_at IS NULL
   `, [id]);
   return emptyOrRows(rows);
 }
