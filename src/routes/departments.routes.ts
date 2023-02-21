@@ -3,7 +3,7 @@ import {DepartmentsController} from "../controllers/departments.controller";
 import {User} from "../models/users.model";
 import {formattedResponse} from "../handlers/http/formattedResponse";
 import {objectParser} from "../handlers/objects/objectParser";
-import {check, validationResult} from "express-validator";
+import {body, check, validationResult} from "express-validator";
 import {validationMessage} from "../handlers/http/validationMessage";
 
 const departmentsRouter = express.Router({mergeParams: true});
@@ -46,7 +46,7 @@ departmentsRouter.post('/',
       .trim(),
     check("object.localUnitId")
       .not().isEmpty()
-      .withMessage('Local unit id cannot be empty'),
+      .withMessage('Local unit id cannot be empty')
   ],
   async (req: Request, res: Response) => {
 
@@ -119,26 +119,6 @@ departmentsRouter.delete('/:id', async (req: Request, res: Response) => {
 });
 
 /* GET departments - get all departments */
-departmentsRouter.get('/:id/hr', async (req: Request, res: Response) => {
-
-  const {params: {id}} = req;
-  try {
-    const user: User = req.body.user
-    const controller = new DepartmentsController();
-    const response = await controller.getAllHR(id);
-    return res.json(response);
-  } catch (error) {
-    res.status(500).json(
-      formattedResponse({
-        status: 500,
-        Error: error,
-        object: "department",
-      })
-    );
-  }
-});
-
-/* GET departments - get all departments */
 departmentsRouter.get('/:id/equipments', async (req: Request, res: Response) => {
 
   const {params: {id}} = req;
@@ -155,6 +135,120 @@ departmentsRouter.get('/:id/equipments', async (req: Request, res: Response) => 
         object: "department",
       })
     );
+  }
+});
+
+/* GET departments - get all hr */
+departmentsRouter.get('/:id/hr', async (req: Request, res: Response) => {
+
+  const {params: {id}} = req;
+  try {
+    const user: User = req.body.user
+    const controller = new DepartmentsController();
+    const response = await controller.getAllHRDepartments(id);
+    return res.json(response);
+  } catch (error) {
+    res.status(500).json(
+      formattedResponse({
+        status: 500,
+        Error: error,
+        object: "department",
+      })
+    );
+  }
+});
+
+/* PUT departments/:departmentId/hr/:hrId - add hr to department */
+departmentsRouter.put('/:departmentId/hr/:hrId',
+  [
+    check("object.startDate")
+      .isISO8601().toDate().optional({nullable: true})
+      .withMessage("invalid start date format"),
+    check("object.endDate")
+      .isISO8601().toDate().optional({nullable: true})
+      .withMessage('invalid end date format'),
+    body('object.startDate').custom((value, {req}) => {
+      const startDate = new Date(value);
+      const endDate = new Date(req.body.object.endDate);
+      if (startDate > endDate) {
+        throw new Error('start date cannot be greater than end date');
+      }
+      return true;
+    })
+  ],
+  async (req: Request, res: Response) => {
+
+    if (!validationResult(req).isEmpty()) {
+      return res.status(400).json(
+        formattedResponse({
+          status: 400,
+          object: "department",
+          message: validationMessage(req)
+        })
+      );
+    }
+    const {
+      params: {departmentId, hrId},
+    } = req;
+    if (!departmentId || !hrId) return;
+
+    const dates = objectParser(req.body.object);
+
+    try {
+      const user: User = req.body.user
+      const controller = new DepartmentsController();
+      const response = await controller.addHR(departmentId, hrId, dates);
+
+      if (!response.result) {
+        return res.status(400).json(
+          formattedResponse({
+            status: 400,
+            object: "department",
+            message: response.message
+          })
+        );
+      }
+      res.status(200).json({});
+    } catch (error) {
+      res.status(500).json(
+        formattedResponse({
+          status: 500,
+          Error: error,
+          object: "department",
+        })
+      )
+    }
+  });
+
+/* DELETE departments/:departmentId/hr/:hrId - remove hr from department */
+departmentsRouter.delete('/:departmentId/hr/:hrId', async (req: Request, res: Response) => {
+  const {
+    params: {departmentId, hrId},
+  } = req;
+  if (!departmentId || !hrId) return;
+
+  try {
+    const user: User = req.body.user
+    const controller = new DepartmentsController();
+    const response = await controller.removeHR(departmentId, hrId);
+
+    if (!response.result) {
+      return res.status(400).json(
+        formattedResponse({
+          status: 400,
+          object: "department",
+          message: response.message
+        })
+      );
+    }
+
+    res.status(200).json({});
+  } catch (error) {
+    res.status(500).json(formattedResponse({
+      status: 500,
+      Error: error,
+      object: "department",
+    }));
   }
 });
 

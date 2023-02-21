@@ -137,4 +137,24 @@ hrRouter.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
+/* GET hr/:id/departments - get all departments of hr */
+hrRouter.get('/:id/departments', async (req: Request, res: Response) => {
+
+  const {params: {id}} = req;
+
+  try {
+    const controller = new HRController();
+    const response = await controller.getAllDepartments(id);
+    return res.json(response);
+  } catch (error) {
+    res.status(500).json(
+      formattedResponse({
+        status: 500,
+        Error: error,
+        object: "hr",
+      })
+    )
+  }
+});
+
 export default hrRouter;

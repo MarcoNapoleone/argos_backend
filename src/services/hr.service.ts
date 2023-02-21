@@ -26,3 +26,7 @@ export async function logicDelete(id: Id): Promise<HR> {
   await HRModel.logicDelete(id);
   return {}
 }
+
+export async function getAllDepartments(id: Id): Promise<HR[]> {
+  return await HRModel.getAllDepartments(id);
+}

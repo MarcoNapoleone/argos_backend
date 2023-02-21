@@ -1,5 +1,5 @@
 import {query} from '../handlers/db/query';
-import {emptyOrRow} from "../handlers/db/emptyOrRows";
+import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {UUID} from "../types/UUID";
 import {queryDate} from "../handlers/dateTime/queryDate";
@@ -183,6 +183,18 @@ export async function logicDelete(id: Id) {
       WHERE t.id = ?;
   `, [id]);
 }
+
+export async function getAllDepartments(id: Id) {
+  const rows = await query(`
+      SELECT *
+      FROM hr_departments hd
+      WHERE hd.hr_id = ?
+        AND hd.deleted_at IS NULL
+  `, [id]);
+  return emptyOrRows(rows)
+}
+
+
 
 
 

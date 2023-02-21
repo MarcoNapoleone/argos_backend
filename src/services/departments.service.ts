@@ -1,10 +1,12 @@
 import * as DepartmentsModel from "../models/departments.model";
-import {defaultDepartment, Department} from "../models/departments.model";
+import {defaultDepartment, Department, HRDepartment} from "../models/departments.model";
+import * as HRModel from "../models/hr.model";
+import {HR} from "../models/hr.model";
 import {Id} from "../types/Id";
 import {getUuid} from "../types/UUID";
 import {objectFiller} from "../handlers/objects/objectFiller";
-import {HR} from "../models/hr.model";
 import {Equipment} from "../models/equipments.model";
+import {toNumber} from "lodash";
 
 
 export async function getById(id: Id): Promise<Department> {
@@ -35,6 +37,50 @@ export async function getAllEquipments(id: Id): Promise<Equipment[]> {
   return await DepartmentsModel.getAllEquipments(id);
 }
 
-export async function getAllHR(id: Id): Promise<HR[]> {
-  return await DepartmentsModel.getAllHR(id);
+export async function getAllHRDepartments(id: Id): Promise<HRDepartment[]> {
+  return await DepartmentsModel.getAllHRDepartments(id);
+}
+
+export async function addHR(departmentId: Id, hrId: Id, dates: { startDate?: Date, endDate?: Date }): Promise<{ result: boolean, message: string }> {
+  const hr: HR = await HRModel.getById(hrId);
+  const department: Department = await getById(departmentId);
+  const departmentHRs: HRDepartment[] = await getAllHRDepartments(departmentId);
+
+  if (!Object.keys(hr).length
+    || !Object.keys(department).length
+    || departmentHRs.filter(e => e.hrId === toNumber(hrId) && e.endDate === null).length > 0
+  ) {
+    return {
+      result: false,
+      message: "HR or Department not found or an active HR is currently in department"
+    }
+  }
+  await DepartmentsModel.addHR(departmentId, hrId, dates);
+
+  return {
+    result: true,
+    message: "HR added to department"
+  }
+}
+
+export async function removeHR(departmentId: Id, hrId: Id): Promise<{ result: boolean, message: string }> {
+  const hr: HR = await HRModel.getById(hrId);
+  const department: Department = await getById(departmentId);
+  const departmentHRs: HRDepartment[] = await getAllHRDepartments(departmentId);
+
+  if (!Object.keys(hr).length
+    || !Object.keys(department).length
+    || departmentHRs.filter(e => e.hrId === toNumber(hrId) && e.endDate === null).length === 0
+  ) {
+    return {
+      result: false,
+      message: "HR or Department not found or HR not in department"
+    }
+  }
+
+  await DepartmentsModel.removeHR(departmentId, hrId);
+  return {
+    result: true,
+    message: "HR removed from department"
+  }
 }

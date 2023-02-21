@@ -37,17 +37,40 @@ export class DepartmentsController extends Controller {
   }
 
   @Security("jwt", [])
-  @Get("/:id/hr")
-  @Tags("Department")
-  async getAllHR(@Path() id: Id) {
-    return await DepartmentService.getAllHR(id)
-  }
-
-  @Security("jwt", [])
   @Get("/:id/equipments")
   @Tags("Equipment")
   async getAllEquipments(@Path() id: Id) {
     return await DepartmentService.getAllEquipments(id)
+  }
+
+  @Security("jwt", [])
+  @Get("/:id/hr")
+  @Tags("Department")
+  async getAllHRDepartments(@Path() id: Id) {
+    return await DepartmentService.getAllHRDepartments(id)
+  }
+
+  /**
+   * Add HR to department
+   * @param departmentId
+   * @param hrId
+   * @param dates {startDate?: Date, endDate?: Date} - optional
+   */
+  @Security("jwt", [])
+  @Put("/:departmentId/hr/:hrId")
+  @Tags("Department", "HR")
+  async addHR(@Path() departmentId: Id, @Path() hrId: Id, @Body() dates: { startDate?: Date, endDate?: Date }) {
+    return await DepartmentService.addHR(departmentId, hrId, dates)
+  }
+
+  /**
+   * Remove HR from department
+   */
+  @Security("jwt", [])
+  @Delete("/:departmentId/hr/:hrId")
+  @Tags("Department", "HR")
+  async removeHR(@Path() departmentId: Id, @Path() hrId: Id) {
+    return await DepartmentService.removeHR(departmentId, hrId)
   }
 
 }

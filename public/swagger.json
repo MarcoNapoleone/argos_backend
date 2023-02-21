@@ -9,11 +9,11 @@
 			"Id": {
 				"anyOf": [
 					{
-						"type": "number",
-						"format": "double"
+						"type": "string"
 					},
 					{
-						"type": "string"
+						"type": "number",
+						"format": "double"
 					}
 				]
 			},
@@ -625,6 +625,45 @@
 					},
 					"companyId": {
 						"$ref": "#/components/schemas/Id"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HRDepartment": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"hrId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"departmentId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
 					},
 					"createdAt": {
 						"type": "string",
@@ -1869,45 +1908,6 @@
 				}
 			}
 		},
-		"/departments/{id}/hr": {
-			"get": {
-				"operationId": "GetAllHR",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/HR"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Department",
-					"Department"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
 		"/departments/{id}/equipments": {
 			"get": {
 				"operationId": "GetAllEquipments",
@@ -1939,6 +1939,181 @@
 					{
 						"in": "path",
 						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/departments/{id}/hr": {
+			"get": {
+				"operationId": "GetAllHRDepartments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/HRDepartment"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department",
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/departments/{departmentId}/hr/{hrId}": {
+			"put": {
+				"operationId": "AddHR",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"result": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"result"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Add HR to department",
+				"tags": [
+					"Department",
+					"HR",
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "departmentId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "path",
+						"name": "hrId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"description": ": Date, endDate?: Date} - optional",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"endDate": {
+										"type": "string",
+										"format": "date-time"
+									},
+									"startDate": {
+										"type": "string",
+										"format": "date-time"
+									}
+								},
+								"type": "object",
+								"description": ": Date, endDate?: Date} - optional"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "RemoveHR",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"result": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"result"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Remove HR from department",
+				"tags": [
+					"Department",
+					"HR",
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "departmentId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "path",
+						"name": "hrId",
 						"required": true,
 						"schema": {
 							"$ref": "#/components/schemas/Id"
@@ -2093,6 +2268,45 @@
 						}
 					}
 				}
+			}
+		},
+		"/hr/{id}/departments": {
+			"get": {
+				"operationId": "GetAllDepartments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/HR"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department",
+					"HR"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
 			}
 		},
 		"/vehicles/{id}": {

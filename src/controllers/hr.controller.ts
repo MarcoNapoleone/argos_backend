@@ -36,4 +36,12 @@ export class HRController extends Controller {
     return await HRService.logicDelete(id)
   }
 
+  @Security("jwt", [])
+  @Get("/:id/departments")
+  @Tags("Department")
+  async getAllDepartments(@Path() id: Id) {
+    return await HRService.getAllDepartments(id)
+  }
+
+
 }
