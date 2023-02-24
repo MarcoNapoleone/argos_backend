@@ -168,6 +168,8 @@ departmentsRouter.put('/:departmentId/hr/:hrId',
       .isISO8601().toDate().optional({nullable: true})
       .withMessage('invalid end date format'),
     body('object.startDate').custom((value, {req}) => {
+      if (req.body.object.endDate === null) return true;
+
       const startDate = new Date(value);
       const endDate = new Date(req.body.object.endDate);
       if (startDate > endDate) {
