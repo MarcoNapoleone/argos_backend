@@ -94,7 +94,7 @@ export async function getAllHRDepartments(id: Id) {
       WHERE hrd.department_id = ?
         AND hr.deleted_at IS NULL
         AND d.deleted_at IS NULL
-        AND hrd.end_date IS NULL
+        AND hrd.end_date >= NOW()
   `, [id]);
   return emptyOrRows(rows)
 }
