@@ -91,10 +91,11 @@ export async function getAllHRDepartments(id: Id) {
       FROM hr
                join hr_departments hrd on hr.id = hrd.hr_id
                join departments d on d.id = hrd.department_id
-      WHERE hrd.department_id = ?
+      WHERE hrd.department_id = 3
         AND hr.deleted_at IS NULL
         AND d.deleted_at IS NULL
-        AND hrd.end_date >= NOW()
+        AND (DATE(hrd.end_date) >= DATE(NOW())
+          OR hrd.end_date IS NULL)
   `, [id]);
   return emptyOrRows(rows)
 }

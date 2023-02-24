@@ -68,9 +68,12 @@ export async function removeHR(departmentId: Id, hrId: Id): Promise<{ result: bo
   const department: Department = await getById(departmentId);
   const departmentHRs: HRDepartment[] = await getAllHRDepartments(departmentId);
 
+  console.log(departmentHRs.filter(e => e.hrId === toNumber(hrId) && new Date(e.endDate) >= new Date()))
+
+
   if (!Object.keys(hr).length
     || !Object.keys(department).length
-    || departmentHRs.filter(e => e.hrId === toNumber(hrId) && e.endDate === null).length === 0
+    || departmentHRs.filter(e => e.hrId === toNumber(hrId) && new Date(e.endDate) >= new Date()).length === 0
   ) {
     return {
       result: false,
