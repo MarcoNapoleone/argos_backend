@@ -91,7 +91,7 @@ export async function getAllHRDepartments(id: Id) {
       FROM hr
                join hr_departments hrd on hr.id = hrd.hr_id
                join departments d on d.id = hrd.department_id
-      WHERE hrd.department_id = 3
+      WHERE hrd.department_id = ?
         AND hr.deleted_at IS NULL
         AND d.deleted_at IS NULL
         AND (DATE(hrd.end_date) >= DATE(NOW())
