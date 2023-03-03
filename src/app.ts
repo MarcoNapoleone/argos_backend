@@ -5,7 +5,7 @@ import path from "path";
 import express, {json, urlencoded} from "express";
 import dotenv from "dotenv";
 import http from "http";
-import {notFound, onError, onListening} from "./handlers/server/eventHandler";
+import {notFound, onError, onListening} from "./handlers/server/events";
 import usersRouter from "./routes/users.routes";
 import indexRouter from "./routes/index.routes";
 import companiesRouter from "./routes/companies.routes";

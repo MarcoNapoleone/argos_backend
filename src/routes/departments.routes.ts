@@ -15,7 +15,6 @@ departmentsRouter.get('/:id', async (req: Request, res: Response) => {
 
   try {
     const controller = new DepartmentsController();
-    const user: User = req.body.user
     const response = await controller.getById(id);
     if (Object.keys(response).length === 0) {
       return res.status(404).json(

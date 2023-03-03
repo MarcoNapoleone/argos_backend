@@ -1,6 +1,6 @@
 import * as CompaniesModel from "../models/companies.model";
 import {Company, defaultCompany} from "../models/companies.model";
-import {getUuid} from "../types/UUID";
+import {getUUID} from "../types/UUID";
 import {Id} from "../types/Id";
 import {LocalUnit} from "../models/localUnits.model";
 import {Department} from "../models/departments.model";
@@ -21,7 +21,7 @@ export async function getById(userId: Id, id: Id): Promise<Company> {
 }
 
 export async function create(userId: Id, company: Company): Promise<Company> {
-  const _company = Object.assign({}, defaultCompany, {uuid: getUuid(), ...company})
+  const _company = Object.assign({}, defaultCompany, {uuid: getUUID(), ...company})
   const response = await CompaniesModel.create(_company)
   return await CompaniesModel.getById(userId, response.insertId);
 }

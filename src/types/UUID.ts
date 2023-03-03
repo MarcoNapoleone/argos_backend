@@ -14,6 +14,6 @@ export const UUIDTest = (uuid: UUID) => {
   return regexUUID.test(uuid)
 }
 
-export function getUuid(): UUID {
+export function getUUID(): UUID {
   return uuidv4();
 }

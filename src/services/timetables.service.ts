@@ -1,6 +1,6 @@
 import * as timetablesModel from "../models/timetables.model";
 import {Timetable} from "../models/timetables.model";
-import {getUuid} from "../types/UUID";
+import {getUUID} from "../types/UUID";
 import {Id} from "../types/Id";
 
 
@@ -11,7 +11,7 @@ export async function getById(userId: Id, id: Id): Promise<Timetable> {
 export async function create(userId: Id, timetable: Timetable): Promise<Timetable> {
 
   const _timetable: Timetable = {
-    uuid: getUuid(), ...timetable
+    uuid: getUUID(), ...timetable
   }
   const response = await timetablesModel.create(userId, _timetable)
   return await timetablesModel.getById(userId, response.insertId);

@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags} from "tsoa";
-import * as DepartmentService from "../services/departments.service";
+import * as DepartmentsService from "../services/departments.service";
 import {Id} from "../types/Id";
 import {Department} from "../models/departments.model";
 
@@ -10,20 +10,20 @@ export class DepartmentsController extends Controller {
   @Security("jwt", [])
   @Get("/:id")
   async getById(@Path() id: Id) {
-    return await DepartmentService.getById(id)
+    return await DepartmentsService.getById(id)
   }
 
   @Security("jwt", [])
   @SuccessResponse('201', 'Created')
   @Post("/")
   async create(@Body() department: Department) {
-    return await DepartmentService.create(department)
+    return await DepartmentsService.create(department)
   }
 
   @Security("jwt", [])
   @Put("/:id")
   async update(@Path() id: Id, @Body() department: Department) {
-    return await DepartmentService.update(id, department)
+    return await DepartmentsService.update(id, department)
   }
 
   /**
@@ -33,21 +33,21 @@ export class DepartmentsController extends Controller {
   @SuccessResponse("204")
   @Delete("/:id")
   async logicDelete(@Path() id: Id) {
-    return await DepartmentService.logicDelete(id)
+    return await DepartmentsService.logicDelete(id)
   }
 
   @Security("jwt", [])
   @Get("/:id/equipments")
   @Tags("Equipment")
   async getAllEquipments(@Path() id: Id) {
-    return await DepartmentService.getAllEquipments(id)
+    return await DepartmentsService.getAllEquipments(id)
   }
 
   @Security("jwt", [])
   @Get("/:id/hr")
   @Tags("Department")
   async getAllHRDepartments(@Path() id: Id) {
-    return await DepartmentService.getAllHRDepartments(id)
+    return await DepartmentsService.getAllHRDepartments(id)
   }
 
   /**
@@ -60,7 +60,7 @@ export class DepartmentsController extends Controller {
   @Put("/:departmentId/hr/:hrId")
   @Tags("Department", "HR")
   async addHR(@Path() departmentId: Id, @Path() hrId: Id, @Body() dates: { startDate?: Date, endDate?: Date }) {
-    return await DepartmentService.addHR(departmentId, hrId, dates)
+    return await DepartmentsService.addHR(departmentId, hrId, dates)
   }
 
   /**
@@ -70,7 +70,7 @@ export class DepartmentsController extends Controller {
   @Delete("/:departmentId/hr/:hrId")
   @Tags("Department", "HR")
   async removeHR(@Path() departmentId: Id, @Path() hrId: Id) {
-    return await DepartmentService.removeHR(departmentId, hrId)
+    return await DepartmentsService.removeHR(departmentId, hrId)
   }
 
 }

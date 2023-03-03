@@ -151,7 +151,7 @@ authRouter.post('/register',
         formattedResponse({
           status: 500,
           object: "authentication",
-          message: `There was an error while login.`
+          message: `There was an error while registering.`
         }))
     }
 

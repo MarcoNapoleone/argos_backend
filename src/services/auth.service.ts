@@ -6,7 +6,7 @@ export async function login(params: { email: string, password: string }) {
 
   const user = await findOne("email", params.email)
 
-  if (!user) return {result: false, token: {}}
+  if (Object.keys(user).length === 0) return {result: false, token: {}}
 
   if (!await verifyPassword(params.password, user.password)) return {result: false, token: {}}
 

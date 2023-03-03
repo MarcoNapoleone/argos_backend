@@ -3,7 +3,7 @@ import {defaultDepartment, Department, HRDepartment} from "../models/departments
 import * as HRModel from "../models/hr.model";
 import {HR} from "../models/hr.model";
 import {Id} from "../types/Id";
-import {getUuid} from "../types/UUID";
+import {getUUID} from "../types/UUID";
 import {objectFiller} from "../handlers/objects/objectFiller";
 import {Equipment} from "../models/equipments.model";
 import {toNumber} from "lodash";
@@ -14,7 +14,7 @@ export async function getById(id: Id): Promise<Department> {
 }
 
 export async function create(department: Department): Promise<Department> {
-  const _department = Object.assign({}, defaultDepartment, {uuid: getUuid(), ...department})
+  const _department = Object.assign({}, defaultDepartment, {uuid: getUUID(), ...department})
   const response = await DepartmentsModel.create(_department)
   return await DepartmentsModel.getById(response.insertId);
 }
@@ -67,9 +67,6 @@ export async function removeHR(departmentId: Id, hrId: Id): Promise<{ result: bo
   const hr: HR = await HRModel.getById(hrId);
   const department: Department = await getById(departmentId);
   const departmentHRs: HRDepartment[] = await getAllHRDepartments(departmentId);
-
-  console.log(departmentHRs.filter(e => e.hrId === toNumber(hrId)))
-
 
   if (!Object.keys(hr).length
     || !Object.keys(department).length

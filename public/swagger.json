@@ -551,26 +551,30 @@
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
 					},
-					"name": {
-						"type": "string"
-					},
 					"companyId": {
 						"$ref": "#/components/schemas/Id"
-					},
-					"path": {
-						"type": "string"
 					},
 					"refId": {
 						"$ref": "#/components/schemas/Id"
 					},
-					"description": {
-						"type": "string"
-					},
 					"moduleId": {
 						"$ref": "#/components/schemas/Id"
 					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"path": {
+						"type": "string"
+					},
 					"fileType": {
 						"type": "string"
+					},
+					"size": {
+						"type": "number",
+						"format": "double"
 					},
 					"createdAt": {
 						"type": "string",
@@ -2599,6 +2603,191 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/Equipment"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/documents/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Document"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Document"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Document"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Document"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Document"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "LogicDelete",
+				"responses": {
+					"204": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Document"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Document"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/documents/?companyId={companyId}&refId={refId}&moduleId={moduleId}": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Document"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Document"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "companyId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "path",
+						"name": "refId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					},
+					{
+						"in": "path",
+						"name": "moduleId",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary"
+									},
+									"description": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"file",
+									"description"
+								]
 							}
 						}
 					}
