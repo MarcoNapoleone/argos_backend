@@ -8,10 +8,10 @@ const storage = new Storage({
   projectId: process.env.GCLOUD_PROJECT_ID,
   credentials: {
     client_email: process.env.GCLOUD_CLIENT_EMAIL,
-    private_key: process.env.GCLOUD_PRIVATE_KEY.replace(/\\n/g, '\n')
+    private_key: process.env.GCLOUD_PRIVATE_KEY
   }
 });
-const bucket = storage.bucket(process.env.GCLOUD_BUCKET_NAME);
+const bucket = storage.bucket(process.env.GCLOUD_BUCKET_NAME || 'argos-364809');
 
 // get temporary link for file download from google cloud storage bucket (expires in 5 minutes)
 export async function getTemporaryLink(path: string, expires: number = 300000) {
