@@ -6,6 +6,8 @@ import {Id} from "../types/Id";
 
 export async function getById(id: Id): Promise<Document> {
   const _document = await DocumentsModel.getById(id);
+  if (Object.keys(_document).length === 0)
+    return _document;
   return {..._document, path: await getTemporaryLink(_document.path)};
 }
 
