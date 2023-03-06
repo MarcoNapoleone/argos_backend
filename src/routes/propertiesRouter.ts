@@ -7,20 +7,20 @@ import {validationMessage} from "../handlers/http/validationMessage";
 import {objectParser} from "../handlers/objects/objectParser";
 
 
-const propertiesRoutes = express.Router({mergeParams: true});
+const propertiesRouter = express.Router({mergeParams: true});
 
 /* GET properties/:id - get property by id */
-propertiesRoutes.get('/:id', async (req: Request, res: Response) => {
+propertiesRouter.get('/:id', async (req: Request, res: Response) => {
 
-    const {params: {id}} = req;
+  const {params: {id}} = req;
 
-    try {
-        const controller = new PropertiesController();
-        const user: User = req.body.user
-        const response = await controller.getById(id);
+  try {
+    const controller = new PropertiesController();
+    const user: User = req.body.user
+    const response = await controller.getById(id);
 
-        if (Object.keys(response).length === 0) {
-            return res.status(404).json(
+    if (Object.keys(response).length === 0) {
+      return res.status(404).json(
                 formattedResponse({
                     status: 404,
                     object: "property",
@@ -40,17 +40,17 @@ propertiesRoutes.get('/:id', async (req: Request, res: Response) => {
 });
 
 /* POST properties/:id - create new property */
-propertiesRoutes.post('/',
-    [
-        check("object.name")
-            .isLength({min: 3})
-            .withMessage("the name must have minimum length of 3"),
-        check("object.postalCode")
-            .isLength({min: 5, max: 5})
-            .withMessage("Postal code must have 5 numbers"),
-        check("object.companyId")
-            .not().isEmpty()
-            .withMessage('Company id cannot be empty'),
+propertiesRouter.post('/',
+  [
+    check("object.name")
+      .isLength({min: 3})
+      .withMessage("the name must have minimum length of 3"),
+    check("object.postalCode")
+      .isLength({min: 5, max: 5})
+      .withMessage("Postal code must have 5 numbers"),
+    check("object.companyId")
+      .not().isEmpty()
+      .withMessage('Company id cannot be empty'),
     ],
     async (req: Request, res: Response) => {
 
@@ -83,17 +83,17 @@ propertiesRoutes.post('/',
 );
 
 /* PUT properties/:id - update property by id */
-propertiesRoutes.put('/:id', async (req: Request, res: Response) => {
+propertiesRouter.put('/:id', async (req: Request, res: Response) => {
 
-    const {
-        params: {id},
-    } = req;
-    if (!id) return;
-    ;
+  const {
+    params: {id},
+  } = req;
+  if (!id) return;
 
-    try {
-        const user: User = req.body.user
-        const controller = new PropertiesController();
+
+  try {
+    const user: User = req.body.user
+    const controller = new PropertiesController();
         const response = await controller.update(id, objectParser(req.body.object));
         res.status(200).json(response);
     } catch (error) {
@@ -108,17 +108,17 @@ propertiesRoutes.put('/:id', async (req: Request, res: Response) => {
 });
 
 /* DELETE properties/:id - delete property by id */
-propertiesRoutes.delete('/:id', async (req: Request, res: Response) => {
-    const {
-        params: {id},
-    } = req;
-    if (!id) return;
+propertiesRouter.delete('/:id', async (req: Request, res: Response) => {
+  const {
+    params: {id},
+  } = req;
+  if (!id) return;
 
-    try {
-        const user: User = req.body.user
-        const controller = new PropertiesController();
-        const response = await controller.logicDelete(id);
-        res.status(200).json(response);
+  try {
+    const user: User = req.body.user
+    const controller = new PropertiesController();
+    const response = await controller.logicDelete(id);
+    res.status(200).json(response);
     } catch (error) {
         res.status(500).json(
             formattedResponse({
@@ -130,4 +130,4 @@ propertiesRoutes.delete('/:id', async (req: Request, res: Response) => {
     }
 });
 
-export default propertiesRoutes;
+export default propertiesRouter;

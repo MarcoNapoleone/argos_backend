@@ -1,5 +1,5 @@
 import {query} from '../handlers/db/query';
-import {emptyOrRow} from "../handlers/db/emptyOrRows";
+import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {UUID} from "../types/UUID";
 import {queryDate} from "../handlers/dateTime/queryDate";
@@ -88,5 +88,14 @@ export async function logicDelete(id: Id) {
   `, [id]);
 }
 
-
+export async function getByModule(refId: Id, moduleId: Id) {
+  const rows = await query(`
+      SELECT *
+      FROM documents d
+      WHERE d.module_id = ?
+        AND d.ref_id = ?
+        AND d.deleted_at IS NULL
+  `, [refId, moduleId]);
+  return emptyOrRows(rows)
+}
 

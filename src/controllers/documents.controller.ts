@@ -25,7 +25,7 @@ export class DocumentsController extends Controller {
   @Security("jwt", [])
   @Get("/:id")
   async getById(@Path() id: Id) {
-    return DocumentsService.getById(id)
+    return await DocumentsService.getById(id)
   }
 
   @Security("jwt", [])
@@ -43,19 +43,25 @@ export class DocumentsController extends Controller {
       moduleId,
       description
     }
-    return DocumentsService.create(_document, file)
+    return await DocumentsService.create(_document, file)
   }
 
   @Security("jwt", [])
   @Put("/:id")
   async update(@Path() id: Id, @Body() document: Document) {
-    return DocumentsService.update(id, document)
+    return await DocumentsService.update(id, document)
   }
 
   @Security("jwt", [])
   @SuccessResponse("204")
   @Delete("/:id")
   async logicDelete(@Path() id: Id) {
-    return DocumentsService.logicDelete(id)
+    return await DocumentsService.logicDelete(id)
+  }
+
+  @Security("jwt", [])
+  @Get("/?refId={refId}&moduleId={moduleId}")
+  async getByModule(@Path() refId: Id, @Path() moduleId: Id) {
+    return await DocumentsService.getByModule(refId, moduleId)
   }
 }

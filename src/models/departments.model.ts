@@ -133,3 +133,5 @@ export async function removeHR(departmentId: Id, hrId: Id) {
   `, [hrId, departmentId]);
 }
 
+
+

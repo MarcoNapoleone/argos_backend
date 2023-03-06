@@ -44,3 +44,11 @@ export async function logicDelete(id: Id): Promise<Document> {
   await DocumentsModel.logicDelete(id);
   return {}
 }
+
+export async function getByModule(refId: Id, moduleId: Id,): Promise<Document[]> {
+  const rows = await DocumentsModel.getByModule(refId, moduleId);
+  for (const row of rows) {
+    row.path = await getTemporaryLink(row.path);
+  }
+  return rows;
+}
