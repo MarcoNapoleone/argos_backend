@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express';
 import {User} from "../models/users.model";
 import {formattedResponse} from "../handlers/http/formattedResponse";
-import {TimetablesController} from "../controllers/Timetables.controller";
+import {TimetablesController} from "../controllers/timetables.controller";
 import {check, validationResult} from "express-validator";
 import {validationMessage} from "../handlers/http/validationMessage";
 import {objectParser} from "../handlers/objects/objectParser";
