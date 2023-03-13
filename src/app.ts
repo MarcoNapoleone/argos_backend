@@ -21,6 +21,7 @@ import equipmentsRouter from "./routes/equipments.routes";
 import documentsRouter from "./routes/documents.routes";
 import propertiesRouter from "./routes/propertiesRouter";
 import timetablesRouter from "./routes/timetables.routes";
+import modulesRouter from "./routes/modules.routes";
 
 const app = express();
 const server = http.createServer(app);
@@ -66,6 +67,7 @@ router.use('/equipments', auth, equipmentsRouter);
 router.use('/properties', auth, propertiesRouter);
 router.use('/documents', auth, documentsRouter);
 router.use('/timetables', auth, timetablesRouter);
+router.use('/modules', auth, modulesRouter);
 
 router.use('/favicon.ico', express.static('public/icons/api.ico'));
 router.use("/docs", swaggerUi.serve, swaggerSetup);

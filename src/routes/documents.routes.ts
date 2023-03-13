@@ -140,7 +140,7 @@ documentsRouter.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
-
+/* GET documents/ - get documents by module */
 documentsRouter.get('/', async (req: Request, res: Response) => {
   const {
     query: {moduleId, refId},

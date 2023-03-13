@@ -688,6 +688,37 @@
 				},
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Module": {
+				"properties": {
+					"id": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"uuid": {
+						"$ref": "#/components/schemas/UUID"
+					},
+					"name": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -3177,6 +3208,76 @@
 						"required": true,
 						"schema": {
 							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/modules/{id}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Module"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Module"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
+		"/modules/?name={name}": {
+			"get": {
+				"operationId": "GetByName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Module"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Module"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "name",
+						"required": true,
+						"schema": {
+							"type": "string"
 						}
 					}
 				]
