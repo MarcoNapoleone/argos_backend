@@ -8,13 +8,17 @@ const storage = new Storage({
   projectId: process.env.GCLOUD_PROJECT_ID,
   credentials: {
     client_email: process.env.GCLOUD_CLIENT_EMAIL,
-    private_key: process.env.GCLOUD_PRIVATE_KEY
+    private_key: "-----BEGIN PRIVATE KEY-----\n" + process.env.GCLOUD_PRIVATE_KEY + "\n-----END PRIVATE KEY-----\n"
   }
+
 });
+
 const bucket = storage.bucket(process.env.GCLOUD_BUCKET_NAME || 'argos-364809');
 
 // get temporary link for file download from google cloud storage bucket (expires in 5 minutes)
 export async function getTemporaryLink(path: string, expires: number = 300000) {
+
+
   const blob = bucket.file(path);
   const data = await blob.getSignedUrl({
     action: 'read',
@@ -25,7 +29,6 @@ export async function getTemporaryLink(path: string, expires: number = 300000) {
 
 export async function upload(folder: Folder, name: string, file: Express.Multer.File): Promise<{ path: string }> {
   return new Promise((resolve, reject) => {
-
     const blob = bucket.file(`${folder}/${name.replace(/ /g, "_")}`)
     const blobStream = blob.createWriteStream({
       resumable: false
