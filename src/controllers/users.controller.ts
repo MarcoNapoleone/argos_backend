@@ -2,6 +2,7 @@ import {Body, Controller, Delete, Get, Path, Post, Put, Route, Security, Success
 import * as UsersService from "../services/users.service";
 import {User} from "../models/users.model";
 import {Id} from "../types/Id";
+import {UUID} from "../types/UUID";
 
 @Route("users")
 @Tags("User")
@@ -28,7 +29,7 @@ export class UsersController extends Controller {
 
   @Security("jwt", ["ADMIN"])
   @Put("/:id")
-  async update(@Path() id: Id, @Body() user: User) {
+  async update(@Path() id: Id | UUID, @Body() user: User) {
     return await UsersService.update(id, user)
   }
 

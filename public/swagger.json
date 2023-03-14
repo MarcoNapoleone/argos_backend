@@ -9,18 +9,18 @@
 			"Id": {
 				"anyOf": [
 					{
-						"type": "string"
-					},
-					{
 						"type": "number",
 						"format": "double"
+					},
+					{
+						"type": "string"
 					}
 				]
 			},
 			"UUID": {
 				"type": "string",
 				"format": "uuid",
-				"description": "Stringified UUIDv4.\nSee [RFC 4112](https://tools.ietf.org/html/rfc4122)",
+				"description": "Stringified UUIDv4.\r\nSee [RFC 4112](https://tools.ietf.org/html/rfc4122)",
 				"pattern": "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}"
 			},
 			"Status": {
@@ -378,9 +378,6 @@
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
 					},
-					"companyId": {
-						"$ref": "#/components/schemas/Id"
-					},
 					"name": {
 						"type": "string"
 					},
@@ -551,30 +548,26 @@
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
 					},
-					"companyId": {
-						"$ref": "#/components/schemas/Id"
-					},
-					"refId": {
-						"$ref": "#/components/schemas/Id"
-					},
-					"moduleId": {
-						"$ref": "#/components/schemas/Id"
-					},
 					"name": {
 						"type": "string"
 					},
-					"description": {
-						"type": "string"
+					"companyId": {
+						"$ref": "#/components/schemas/Id"
 					},
 					"path": {
 						"type": "string"
 					},
-					"fileType": {
+					"refId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"description": {
 						"type": "string"
 					},
-					"size": {
-						"type": "number",
-						"format": "double"
+					"moduleId": {
+						"$ref": "#/components/schemas/Id"
+					},
+					"fileType": {
+						"type": "string"
 					},
 					"createdAt": {
 						"type": "string",
@@ -604,21 +597,18 @@
 					"uuid": {
 						"$ref": "#/components/schemas/UUID"
 					},
-					"companyId": {
-						"$ref": "#/components/schemas/Id"
+					"name": {
+						"type": "string"
 					},
 					"moduleId": {
 						"$ref": "#/components/schemas/Id"
 					},
-					"refId": {
-						"$ref": "#/components/schemas/Id"
-					},
-					"name": {
-						"type": "string"
-					},
-					"expiringDate": {
+					"date": {
 						"type": "string",
 						"format": "date-time"
+					},
+					"refId": {
+						"$ref": "#/components/schemas/Id"
 					},
 					"alert": {
 						"type": "boolean"
@@ -630,75 +620,8 @@
 					"status": {
 						"type": "string"
 					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"deletedAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"version": {
-						"type": "number",
-						"format": "double"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"HRDepartment": {
-				"properties": {
-					"id": {
+					"companyId": {
 						"$ref": "#/components/schemas/Id"
-					},
-					"hrId": {
-						"$ref": "#/components/schemas/Id"
-					},
-					"departmentId": {
-						"$ref": "#/components/schemas/Id"
-					},
-					"startDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"endDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"deletedAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"version": {
-						"type": "number",
-						"format": "double"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Module": {
-				"properties": {
-					"id": {
-						"$ref": "#/components/schemas/Id"
-					},
-					"uuid": {
-						"$ref": "#/components/schemas/UUID"
-					},
-					"name": {
-						"type": "string"
 					},
 					"createdAt": {
 						"type": "string",
@@ -1943,6 +1866,45 @@
 				}
 			}
 		},
+		"/departments/{id}/hr": {
+			"get": {
+				"operationId": "GetAllHR",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/HR"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Department",
+					"Department"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/Id"
+						}
+					}
+				]
+			}
+		},
 		"/departments/{id}/equipments": {
 			"get": {
 				"operationId": "GetAllEquipments",
@@ -1974,181 +1936,6 @@
 					{
 						"in": "path",
 						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
-		"/departments/{id}/hr": {
-			"get": {
-				"operationId": "GetAllHRDepartments",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/HRDepartment"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Department",
-					"Department"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
-		"/departments/{departmentId}/hr/{hrId}": {
-			"put": {
-				"operationId": "AddHR",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
-										},
-										"result": {
-											"type": "boolean"
-										}
-									},
-									"required": [
-										"message",
-										"result"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"description": "Add HR to department",
-				"tags": [
-					"Department",
-					"HR",
-					"Department"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "departmentId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					},
-					{
-						"in": "path",
-						"name": "hrId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				],
-				"requestBody": {
-					"description": ": Date, endDate?: Date} - optional",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"endDate": {
-										"type": "string",
-										"format": "date-time"
-									},
-									"startDate": {
-										"type": "string",
-										"format": "date-time"
-									}
-								},
-								"type": "object",
-								"description": ": Date, endDate?: Date} - optional"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "RemoveHR",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
-										},
-										"result": {
-											"type": "boolean"
-										}
-									},
-									"required": [
-										"message",
-										"result"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"description": "Remove HR from department",
-				"tags": [
-					"Department",
-					"HR",
-					"Department"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "departmentId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					},
-					{
-						"in": "path",
-						"name": "hrId",
 						"required": true,
 						"schema": {
 							"$ref": "#/components/schemas/Id"
@@ -2303,45 +2090,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/hr/{id}/departments": {
-			"get": {
-				"operationId": "GetAllDepartments",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/HR"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Department",
-					"HR"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
 			}
 		},
 		"/vehicles/{id}": {
@@ -2640,237 +2388,6 @@
 				}
 			}
 		},
-		"/documents/{id}": {
-			"get": {
-				"operationId": "GetById",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Document"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Document"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			},
-			"put": {
-				"operationId": "Update",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Document"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Document"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Document"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "LogicDelete",
-				"responses": {
-					"204": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Document"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Document"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
-		"/documents/?companyId={companyId}&refId={refId}&moduleId={moduleId}": {
-			"post": {
-				"operationId": "Create",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Document"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Document"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "companyId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					},
-					{
-						"in": "path",
-						"name": "refId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					},
-					{
-						"in": "path",
-						"name": "moduleId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"multipart/form-data": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"file": {
-										"type": "string",
-										"format": "binary"
-									},
-									"description": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"file",
-									"description"
-								]
-							}
-						}
-					}
-				}
-			}
-		},
-		"/documents/?refId={refId}&moduleId={moduleId}": {
-			"get": {
-				"operationId": "GetByModule",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Document"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Document"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "refId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					},
-					{
-						"in": "path",
-						"name": "moduleId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
 		"/properties/{id}": {
 			"get": {
 				"operationId": "GetById",
@@ -3017,270 +2534,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/timetables/{id}": {
-			"get": {
-				"operationId": "GetById",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Timetable"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Timetable"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			},
-			"put": {
-				"operationId": "Update",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Timetable"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Timetable"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Timetable"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "LogicDelete",
-				"responses": {
-					"204": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Timetable"
-								}
-							}
-						}
-					}
-				},
-				"description": "Logic delete a timetable",
-				"tags": [
-					"Timetable"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
-		"/timetables": {
-			"post": {
-				"operationId": "Create",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Timetable"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Timetable"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Timetable"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/timetables/?refId={refId}&moduleId={moduleId}": {
-			"get": {
-				"operationId": "GetByModule",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Timetable"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Timetable"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "refId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					},
-					{
-						"in": "path",
-						"name": "moduleId",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
-		"/modules/{id}": {
-			"get": {
-				"operationId": "GetById",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Module"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Module"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"$ref": "#/components/schemas/Id"
-						}
-					}
-				]
-			}
-		},
-		"/modules/?name={name}": {
-			"get": {
-				"operationId": "GetByName",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Module"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Module"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "name",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
 			}
 		}
 	},
