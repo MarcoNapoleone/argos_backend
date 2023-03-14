@@ -1,5 +1,5 @@
 import {query} from '../handlers/db/query';
-import {emptyOrRow} from "../handlers/db/emptyOrRows";
+import {emptyOrRow, emptyOrRows} from "../handlers/db/emptyOrRows";
 import {Id} from "../types/Id";
 import {UUID} from "../types/UUID";
 import {queryDate} from "../handlers/dateTime/queryDate";
@@ -7,56 +7,95 @@ import {queryDate} from "../handlers/dateTime/queryDate";
 export class Timetable {
   id?: Id;
   uuid?: UUID;
-  name?: string;
+  companyId?: Id;
   moduleId?: Id;
-  date?: Date;
   refId?: Id;
+  name?: string;
+  expiringDate?: Date;
   alert?: boolean;
   closedAt?: Date;
   status?: string;
-  companyId?: Id;
   createdAt?: Date;
   deletedAt?: Date;
   version?: number;
   updatedAt?: Date;
 }
 
-export async function getById(userId: Id, id: Id) {
+export const defaultTimetable: Timetable = {
+  companyId: null,
+  moduleId: null,
+  refId: null,
+  name: null,
+  expiringDate: null,
+  alert: null,
+  closedAt: null,
+  status: null
+}
+
+export async function getById(id: Id) {
   const row = await query(`
       SELECT *
-      FROM timetables lu
-      WHERE lu.id = ?
+      FROM timetables t
+      WHERE t.id = ?
   `, [id]);
   return emptyOrRow(row)
 }
 
-export async function create(userId: Id, timetable: Timetable) {
+export async function create(timetable: Timetable) {
+  const expiringDate = timetable.expiringDate ? queryDate(new Date(timetable.expiringDate)) : null;
+  const closedAt = timetable.closedAt ? queryDate(new Date(timetable.closedAt)) : null;
   return await query(`
       INSERT INTO timetables(uuid,
+                             company_id,
+                             module_id,
+                             ref_id,
                              name,
-                             company_id)
-      VALUES (?, ?, ?)
+                             expiring_date,
+                             alert,
+                             closed_at,
+                             status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `, [
     timetable.uuid,
+    timetable.companyId,
+    timetable.moduleId,
+    timetable.refId,
     timetable.name,
-    timetable.companyId
+    expiringDate,
+    timetable.alert,
+    closedAt,
+    timetable.status
   ]);
 }
 
-export async function update(userId: Id, id: Id, timetable: Timetable) {
+export async function update(id: Id, timetable: Timetable) {
+  const expiringDate = timetable.expiringDate ? `'${queryDate(new Date(timetable.expiringDate))}'` : null;
+  const closedAt = timetable.closedAt ? `'${queryDate(new Date(timetable.closedAt))}'` : null;
+
   return await query(`
-      UPDATE timetables lu
-      SET lu.name       = ?,
-          lu.company_id = ?
-      WHERE lu.id = ?;
-  `, [timetable.name,
+      UPDATE timetables t
+      SET t.company_id    = ?,
+          t.module_id     = ?,
+          t.ref_id        = ?,
+          t.name          = ?,
+          t.expiring_date = ${expiringDate},
+          t.alert         = ?,
+          t.closed_at     = ${closedAt},
+          t.status        = ?
+      WHERE t.id = ?;
+  `, [
     timetable.companyId,
+    timetable.moduleId,
+    timetable.refId,
+    timetable.name,
+    timetable.alert,
+    timetable.status,
     id
   ]);
 }
 
-export async function logicDelete(userId: Id, id: Id) {
-    const now = queryDate(new Date());
+export async function logicDelete(id: Id) {
+  const now = queryDate(new Date());
   return await query(`
       UPDATE timetables t
       SET t.deleted_at = "${now}"
@@ -64,5 +103,15 @@ export async function logicDelete(userId: Id, id: Id) {
   `, [id]);
 }
 
+export async function getByModule(refId: Id, moduleId: Id) {
+  const rows = await query(`
+      SELECT *
+      FROM timetables t
+      WHERE t.ref_id = ?
+        AND t.module_id = ?
+        AND t.deleted_at IS NULL
+  `, [refId, moduleId]);
+  return emptyOrRows(rows)
+}
 
 

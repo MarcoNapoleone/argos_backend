@@ -35,7 +35,7 @@ export async function getByName(name: string) {
   const row = await query(`
       SELECT *
       FROM modules
-      WHERE name like '${name}'
+      WHERE name = '${name}'
   `);
   return emptyOrRow(row)
 }

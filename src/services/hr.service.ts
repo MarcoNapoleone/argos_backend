@@ -1,6 +1,6 @@
 import * as HRModel from "../models/hr.model";
 import {defaultHR, HR} from "../models/hr.model";
-import {getUuid} from "../types/UUID";
+import {getUUID} from "../types/UUID";
 import {Id} from "../types/Id";
 import {objectFiller} from "../handlers/objects/objectFiller";
 
@@ -9,7 +9,7 @@ export async function getById(id: Id): Promise<HR> {
 }
 
 export async function create(hr: HR): Promise<HR> {
-  const _hr = Object.assign({}, defaultHR, {uuid: getUuid(), ...hr})
+  const _hr = Object.assign({}, defaultHR, {uuid: getUUID(), ...hr})
   const response = await HRModel.create(_hr)
   return await HRModel.getById(response.insertId);
 }
@@ -25,4 +25,8 @@ export async function update(id: Id, hr: HR): Promise<HR> {
 export async function logicDelete(id: Id): Promise<HR> {
   await HRModel.logicDelete(id);
   return {}
+}
+
+export async function getAllDepartments(id: Id): Promise<HR[]> {
+  return await HRModel.getAllDepartments(id);
 }

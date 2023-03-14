@@ -8,8 +8,8 @@
     "predev": "npm run swagger",
     "prebuild": "npm run swagger",
     "build": "tsc --build",
-    "dev": "concurrently \"nodemon\"\"nodemon -x tsoa spec\"",
-    "dev-no-tsoa": "nodemon",
+    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
+    "dev-no-swagger": "nodemon",
     "swagger": "tsoa spec",
     "copy-files": "copyfiles -u 1 public/*.html public/*.css public/*.ico build/"
   },

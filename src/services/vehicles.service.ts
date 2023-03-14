@@ -1,6 +1,6 @@
 import * as vehiclesModel from "../models/vehicles.model";
 import {defaultVehicle, Vehicle} from "../models/vehicles.model";
-import {getUuid} from "../types/UUID";
+import {getUUID} from "../types/UUID";
 import {Id} from "../types/Id";
 import {objectFiller} from "../handlers/objects/objectFiller";
 
@@ -9,7 +9,7 @@ export async function getById(id: Id): Promise<Vehicle> {
 }
 
 export async function create(vehicle: Vehicle): Promise<Vehicle> {
-  const _vehicle = Object.assign({}, defaultVehicle, {uuid: getUuid(), ...vehicle})
+  const _vehicle = Object.assign({}, defaultVehicle, {uuid: getUUID(), ...vehicle})
   const response = await vehiclesModel.create(_vehicle)
   return await vehiclesModel.getById(response.insertId);
 }

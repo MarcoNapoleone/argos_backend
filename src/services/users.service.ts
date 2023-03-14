@@ -1,6 +1,6 @@
 import * as UsersModel from "../models/users.model";
 import {User} from "../models/users.model";
-import {checkUUID, getUuid, UUID} from "../types/UUID";
+import {checkUUID, getUUID, UUID} from "../types/UUID";
 import {Id} from "../types/Id";
 
 export async function getAll(): Promise<User[]> {
@@ -26,7 +26,7 @@ export async function findOne(param: string, value: string | number): Promise<Us
 export async function create(user: User): Promise<User> {
 
   const _user: User = {
-    uuid: getUuid(),
+    uuid: getUUID(),
     ...user
   }
   const response = await UsersModel.create(_user)

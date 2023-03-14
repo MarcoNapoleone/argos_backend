@@ -46,16 +46,25 @@ hrRouter.post('/',
     check("object.surname")
       .isLength({min: 3})
       .withMessage("the surname must have minimum length of 3"),
+    check("object.contractLevel")
+      .isLength({max: 30})
+      .withMessage("the contract level must have maximum length of 30"),
     check("object.fiscalCode")
       .isTaxID('it-IT')
       .withMessage("Invalid fiscal code"),
+    check("object.postalCode")
+      .isLength({min: 5, max: 5})
+      .withMessage("Postal code must have 5 numbers"),
     check("object.phone")
       .isLength({min: 10, max: 10})
       .withMessage("Phone number must have 10 numbers"),
     check("object.email")
-        .isEmail()
-        .withMessage("invalid email address")
-        .normalizeEmail()
+      .isEmail()
+      .withMessage("invalid email address")
+      .normalizeEmail(),
+    check("object.companyId")
+      .not().isEmpty()
+      .withMessage('Company id cannot be empty'),
   ],
   async (req: Request, res: Response) => {
 
@@ -125,6 +134,26 @@ hrRouter.delete('/:id', async (req: Request, res: Response) => {
       status: 500,
       object: "hr",
     }));
+  }
+});
+
+/* GET hr/:id/departments - get all departments of hr */
+hrRouter.get('/:id/departments', async (req: Request, res: Response) => {
+
+  const {params: {id}} = req;
+
+  try {
+    const controller = new HRController();
+    const response = await controller.getAllDepartments(id);
+    return res.json(response);
+  } catch (error) {
+    res.status(500).json(
+      formattedResponse({
+        status: 500,
+        Error: error,
+        object: "hr",
+      })
+    )
   }
 });
 

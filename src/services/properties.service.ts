@@ -1,7 +1,7 @@
 import * as propertiesModel from "../models/properties.model";
 import {defaultProperty, Property} from "../models/properties.model";
 import {Id} from "../types/Id";
-import {getUuid} from "../types/UUID";
+import {getUUID} from "../types/UUID";
 import {objectFiller} from "../handlers/objects/objectFiller";
 
 
@@ -10,7 +10,7 @@ export async function getById(id: Id): Promise<Property> {
 }
 
 export async function create(property: Property): Promise<Property> {
-  const _property = Object.assign({}, defaultProperty, {uuid: getUuid(), ...property})
+  const _property = Object.assign({}, defaultProperty, {uuid: getUUID(), ...property})
   const response = await propertiesModel.create(_property)
   return await propertiesModel.getById(response.insertId);
 }

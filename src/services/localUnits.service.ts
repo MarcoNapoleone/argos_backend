@@ -1,6 +1,6 @@
 import * as LocalUnitsModel from "../models/localUnits.model";
 import {defaultLocalUnit, LocalUnit} from "../models/localUnits.model";
-import {getUuid} from "../types/UUID";
+import {getUUID} from "../types/UUID";
 import {Id} from "../types/Id";
 import {Department} from "../models/departments.model";
 import {Vehicle} from "../models/vehicles.model";
@@ -12,7 +12,7 @@ export async function getById(id: Id): Promise<LocalUnit> {
 }
 
 export async function create(localUnit: LocalUnit): Promise<LocalUnit> {
-  const _localUnit = Object.assign({}, defaultLocalUnit, {uuid: getUuid(), ...localUnit})
+  const _localUnit = Object.assign({}, defaultLocalUnit, {uuid: getUUID(), ...localUnit})
   const response = await LocalUnitsModel.create(_localUnit)
   return await LocalUnitsModel.getById(response.insertId);
 }
