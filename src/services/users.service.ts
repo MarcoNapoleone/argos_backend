@@ -1,6 +1,6 @@
 import * as UsersModel from "../models/users.model";
 import {User} from "../models/users.model";
-import {getUuid, UUID} from "../types/UUID";
+import {checkUUID, getUuid, UUID} from "../types/UUID";
 import {Id} from "../types/Id";
 
 export async function getAll(): Promise<User[]> {
@@ -8,7 +8,10 @@ export async function getAll(): Promise<User[]> {
 }
 
 export async function getById(id: Id): Promise<User> {
-  return await UsersModel.getById(id);
+  if (checkUUID(id))
+    return await UsersModel.getByUUID(id as UUID);
+  else
+    return await UsersModel.getById(id);
 }
 
 export async function getByUUID(uuid: UUID): Promise<User> {

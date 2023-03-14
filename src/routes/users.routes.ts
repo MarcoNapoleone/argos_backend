@@ -27,7 +27,7 @@ usersRouter.get('/', isAdmin, async (req: Request, res: Response) => {
 });
 
 /* GET users/:id - get user by id */
-usersRouter.get('/:id', isAdmin, async (req: Request, res: Response) => {
+usersRouter.get('/:id', async (req: Request, res: Response) => {
 
   const {params: {id}} = req;
   if (!id) return;
