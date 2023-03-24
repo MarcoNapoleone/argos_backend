@@ -7,16 +7,15 @@ import {queryDate} from "../handlers/dateTime/queryDate";
 export class Document {
   id?: Id;
   uuid?: UUID;
-  companyId?: Id;
-  refId?: Id;
-  moduleId?: Id;
   name?: string;
-  description?: string;
-
+  companyId?: Id;
   // relative path from folder
   path?: string;
+  refId?: Id;
+  moduleId?: Id;
+  description?: string;
   fileType?: string;
-  size?: number;
+  fileSize?: number;
   createdAt?: Date;
   deletedAt?: Date;
   version?: number;
@@ -30,7 +29,8 @@ export const defaultDocument: Document = {
   refId: null,
   description: null,
   moduleId: null,
-  fileType: null
+  fileType: null,
+  fileSize: null,
 }
 
 export async function getById(id: Id) {
@@ -63,7 +63,7 @@ export async function create(document: Document) {
     document.description,
     document.moduleId,
     document.fileType,
-    document.size,
+    document.fileSize,
   ]);
 }
 

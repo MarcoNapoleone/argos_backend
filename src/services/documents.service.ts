@@ -20,7 +20,7 @@ export async function create(document: Document, file: Express.Multer.File): Pro
     uuid,
     path,
     name: file.originalname,
-    size: file.size,
+    fileSize: file.size,
     fileType: file.mimetype,
     companyId: document.companyId,
     refId: document.refId,
