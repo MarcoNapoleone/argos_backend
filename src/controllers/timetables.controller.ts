@@ -15,10 +15,22 @@ export class TimetablesController extends Controller {
   }
 
   @Security("jwt", [])
+  @Post("/?companyId={companyId}&refId={refId}&moduleId={moduleId}")
   @SuccessResponse('201', 'Created')
-  @Post("/")
-  async create(@Body() timetable: Timetable) {
-    return await TimetablesService.create(timetable)
+  async create(
+    @Path() companyId: Id,
+    @Path() refId: Id,
+    @Path() moduleId: Id,
+    @Body() timetable: Timetable
+  ) {
+    const _timetable: Timetable = {
+      ...timetable,
+      companyId,
+      refId,
+      moduleId
+    }
+
+    return await TimetablesService.create(_timetable)
   }
 
   @Security("jwt", [])

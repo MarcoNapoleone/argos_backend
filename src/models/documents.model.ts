@@ -70,11 +70,18 @@ export async function create(document: Document) {
 export async function update(id: Id, document: Document) {
   return await query(`
       UPDATE documents lu
-      SET lu.name       = ?,
-          lu.company_id = ?
+      SET lu.name        = ?,
+          lu.company_id  = ?,
+          lu.description = ?,
+          lu.module_id   = ?,
+          lu.ref_id      = ?
       WHERE lu.id = ?;
-  `, [document.name,
+  `, [
+    document.name,
     document.companyId,
+    document.description,
+    document.moduleId,
+    document.refId,
     id
   ]);
 }
@@ -92,8 +99,8 @@ export async function getByModule(refId: Id, moduleId: Id) {
   const rows = await query(`
       SELECT *
       FROM documents d
-      WHERE d.module_id = ?
-        AND d.ref_id = ?
+      WHERE d.ref_id = ?
+        AND d.module_id = ?
         AND d.deleted_at IS NULL
   `, [refId, moduleId]);
   return emptyOrRows(rows)

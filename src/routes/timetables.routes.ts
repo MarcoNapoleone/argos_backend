@@ -40,13 +40,13 @@ timetablesRouter.get('/:id', async (req: Request, res: Response) => {
 /* POST timetables/ - upload new timetable */
 timetablesRouter.post('/',
   [
-    check("object.companyId")
+    check("companyId")
       .not().isEmpty()
       .withMessage('Company id id cannot be empty'),
-    check("object.refId")
+    check("refId")
       .not().isEmpty()
       .withMessage('Ref id cannot be empty'),
-    check("object.moduleId")
+    check("moduleId")
       .not().isEmpty()
       .withMessage('Module id cannot be empty')
   ],
@@ -65,7 +65,12 @@ timetablesRouter.post('/',
     try {
       const user: User = req.body.user
       const controller = new TimetablesController();
-      const response = await controller.create(objectParser(req.body.object));
+      const response = await controller.create(
+        req.query.companyId as string,
+        req.query.refId as string,
+        req.query.moduleId as string,
+        objectParser(req.body.object)
+      );
       res.status(200).json(response);
     } catch (error) {
       res.status(500).send(
@@ -126,14 +131,14 @@ timetablesRouter.delete('/:id', async (req: Request, res: Response) => {
 
 timetablesRouter.get('/', async (req: Request, res: Response) => {
   const {
-    query: {moduleId, refId},
+    query: {refId, moduleId},
   } = req;
-  if (!moduleId || !refId) return;
+  if (!refId || !moduleId) return;
 
   try {
     const user: User = req.body.user
     const controller = new TimetablesController();
-    const response = await controller.getByModule(moduleId as string, refId as string);
+    const response = await controller.getByModule(refId as string, moduleId as string);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(

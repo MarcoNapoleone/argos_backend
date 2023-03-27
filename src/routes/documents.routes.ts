@@ -143,14 +143,15 @@ documentsRouter.delete('/:id', async (req: Request, res: Response) => {
 /* GET documents/ - get documents by module */
 documentsRouter.get('/', async (req: Request, res: Response) => {
   const {
-    query: {moduleId, refId},
+    query: {refId, moduleId},
   } = req;
-  if (!moduleId || !refId) return;
+  if (!refId || !moduleId) return;
+
 
   try {
     const user: User = req.body.user
     const controller = new DocumentsController();
-    const response = await controller.getByModule(moduleId as string, refId as string);
+    const response = await controller.getByModule(refId as string, moduleId as string);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(
